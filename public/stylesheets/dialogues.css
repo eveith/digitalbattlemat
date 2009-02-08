@@ -1,0 +1,25 @@
+div.prompt {
+	position: absolute;
+	z-index: 2;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	top: 30%;
+	border: 1px solid black;
+	background-color: white;
+	padding: 0.25em;
+	max-width: 60%;
+	min-width: 20%;
+}
+
+div#shadow {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background-image: url("../images/shadow.png");
+	z-index: 1;
+	display: none;
+}

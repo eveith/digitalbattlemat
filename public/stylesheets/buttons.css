@@ -1,0 +1,45 @@
+div[class|="button"] {
+	background-color: #D4FFA5;
+	background-repeat: no-repeat;
+	background-position: center left;
+	border: 1px solid black;
+	padding: 0.2em 0.2em 0.2em 24px;
+	min-height: 20px;
+	cursor: pointer;
+	display: inline;
+}
+
+div[class|="button"]:hover {
+	background-color: #C8F19C;
+}
+
+div[class|="button"] > a {
+	color: black;
+	text-decoration: none;
+}
+
+div.button-create {
+	background-image: url("../images/icons/add.png");
+}
+
+div.button-ok {
+	background-image: url("../images/icons/accept.png");
+}
+div.button-ok:before {
+	content: "Ok";
+}
+
+div.button-cancel {
+	background-image: url("../images/icons/cancel.png");
+}
+div.button-cancel:before {
+	content: "Cancel";
+}
+
+div.button-mat-show {
+	background-image: url("../images/icons/application_view_icons.png");
+}
+
+div.button-mat-delete {
+	background-image: url("../images/icons/application_delete.png");
+}

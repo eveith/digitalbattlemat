@@ -1,0 +1,14 @@
+<html>
+	<head>
+		<title>Digital Battle Mat</title>
+		<%= stylesheet_link_tag 'fonts' %>
+		<%= stylesheet_link_tag 'buttons' %>
+		<%= stylesheet_link_tag 'dialogues' %>
+		<%= javascript_include_tag :defaults %>
+	</head>
+	<body>
+		<!-- This is the shadow, which can be globally enabled or disabled -->
+		<div id="shadow"></div>
+		<%= yield %>
+	</body>
+</html>
