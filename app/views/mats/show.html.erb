@@ -1,1 +1,20 @@
-<%= params[:id] %>
+<script type="application/javascript">
+	var body = document.body;
+	
+	if("" != "<%= @mat.background %>") {
+		body.style.backgroundImage = 
+			"/images/textures/backgrounds/<%= @mat.background %>";
+	}
+</script>
+
+<div id="mat-container">
+	<table>
+		<% 0.upto(@mat.x_dimension) do |x| %>
+			<tr id="mat-row-<%= x %>">
+				<% 0.upto(@mat.y_dimension) do |y| %>
+					<td id="mat-cell-<%= x %>x<%= y %>"></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</div>

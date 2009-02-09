@@ -1,0 +1,27 @@
+#mat-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0;
+	border: 1px solid black
+}
+
+#mat-container > table {
+	table-layout: fixed;
+	empty-cells: show;
+	border-spacing: 0 0;
+}
+
+#mat-container * tr {
+	height: 2cm;
+	min-height: 2cm;
+}
+
+#mat-container * td {
+	border: 1px solid black;
+	width: 2cm;
+	min-width: 2cm;
+}

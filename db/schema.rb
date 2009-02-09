@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(:version => 20090205233745) do
 
   create_table "battle_mats", :force => true do |t|
     t.string   "description"
+    t.string   "background"
+    t.integer  "x_dimension"
+    t.integer  "y_dimension"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
