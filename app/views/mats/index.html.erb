@@ -9,7 +9,8 @@
 					<strong><%= m.description %></strong>
 				</p>
 				<div class="button-mat-show">
-					<%= link_to 'Show ...', :action => "show", :id => m %>
+					<%= link_to 'Show & Edit ...', 
+						:action => "show", :id => m %>
 				</div>&nbsp;
 				<div class="button-mat-delete">
 					<%= link_to "Delete ...", 
@@ -20,6 +21,16 @@
 	</ol>
 <% end %>
 
-<div class="button-create">
-	<%= link_to 'Create a new Battle Mat ...', :action => 'new' %>
+<div class="container-prompt">
+	<div class="button-create" onclick="display_dropdown_prompt('prompt-new-mat-description');">
+		Create a new Battle Mat ...
+	</div>
+	<div class="prompt-dropdown" id="prompt-new-mat-description">
+		<h2>Describe Battle Mat</h2>
+		<% form_for :mat, :url => { :action => "create" } do |f| %>
+			<%= f.text_area "description", { :rows => "3", :cols => "40" } %><br/>
+			<div class="button-ok" onclick="this.parentNode.submit();"></div>&nbsp;
+			<div class="button-cancel" onclick="hide_dropdown_prompt('prompt-new-mat-description')"></div> 
+		<% end %>
+	</div>
 </div>

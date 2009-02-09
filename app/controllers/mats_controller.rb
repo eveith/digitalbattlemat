@@ -2,6 +2,7 @@ class MatsController < ApplicationController
   def create
     new_mat = BattleMats.new(params[:mat])
     new_mat.save
+    redirect_to :action => 'index'
   end
 
   def destroy
@@ -14,11 +15,20 @@ class MatsController < ApplicationController
   end
   
   def new
-    render :template => 'mats/new_and_edit'    
+    redirect_to :action => 'index'    
   end
   
   def edit
-    render :template => 'mats/new_and_edit'
+    @mat = BattleMats.find_by_id(params[:id])
+  end
+  
+  def update
+    mat = BattleMats.find_by_id(params[:id])
+    mat.description = params[:mat][:description]
+    mat.save
   end
 
+  def show
+    redirect_to :action => "edit"
+  end
 end

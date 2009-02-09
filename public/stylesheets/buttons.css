@@ -3,7 +3,7 @@ div[class|="button"] {
 	background-repeat: no-repeat;
 	background-position: center left;
 	border: 1px solid black;
-	padding: 0.2em 0.2em 0.2em 24px;
+	padding: 0.1em 0.1em 0.1em 24px;
 	min-height: 20px;
 	cursor: pointer;
 	display: inline;
@@ -42,4 +42,32 @@ div.button-mat-show {
 
 div.button-mat-delete {
 	background-image: url("../images/icons/application_delete.png");
+}
+
+div.button-mat-description-edit {
+	background-image: url("../images/icons/application_edit.png");
+}
+
+div.button-image {
+	background-image: url("../images/icons/image.png");
+}
+
+div.button-images {
+	background-image: url("../images/icons/images.png");
+}
+
+#mat-edit-actions-list {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 6em 0;
+}
+
+#mat-edit-actions-list > li {
+	display: block;
+	float: left;
+	margin: 0.2em;	
+}
+
+#mat-edit-actions-list + * {
+	clear: left;
 }

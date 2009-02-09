@@ -4,9 +4,9 @@
 /**
  * Shows a prompt (i. e. a <div> and the shadow) when needed.
  * @param id HTML id of the <div> that shall be shown
- * @see hide_prompt(id)
+ * @see hide_fullscreen_prompt(id)
  */
-function display_prompt(id) {
+function display_fullscreen_prompt(id) {
 	$('shadow').style.display = "block";
 	$(id).style.display = "block";
 }
@@ -15,9 +15,29 @@ function display_prompt(id) {
 /**
  * Hides a prompt (i. e. a <div> and the shadow) when needed.
  * @param id HTML id of the <div> that shall be hidden
- * @see show_prompt(id)
+ * @see show_fullscreen_prompt(id)
  */
-function hide_prompt(id) {
+function hide_fullscreen_prompt(id) {
 	$(id).style.display = "none";
 	$('shadow').style.display = "none";
+}
+
+
+/**
+ * Shows a small dropdown prompt without enabling the shadow.
+ * @param id HTML id of the prompt element container
+ * @see hide_dropdown_prompt
+ */
+function display_dropdown_prompt(id) {
+	$(id).style.display = "block";
+}
+
+
+/**
+ * Hides a dropdown prompt
+ * @param id HTML id of the prompt element container
+ * @see display_dropdown_prompt
+ */
+function hide_dropdown_prompt(id) {
+	$(id).style.display = "none";
 }

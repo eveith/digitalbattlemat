@@ -23,3 +23,21 @@ div#shadow {
 	z-index: 1;
 	display: none;
 }
+
+div.container-prompt {
+	position: relative;
+	z-index: 2;	
+}
+
+div.prompt-dropdown {
+	display: none;
+	border: 1px solid black;
+	background-color: #EAFFCD;
+	position: absolute;
+	top: 1.6em;
+	z-index: 2;
+}
+
+div.prompt-dropdown > h2 {
+	margin-top: 0.1em;
+}
