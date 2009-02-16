@@ -1,21 +1,24 @@
 <script type="application/javascript">
 	var battle_mat_window;
+	
+	/**
+	 * Maximum size of a preview image in the dropdown list, in px.
+	 */
+	var preview_max_width = 175;
+
 
 	function open_battle_mat_window(id) {
 		battle_mat_window = window.open("/mats/" + id, "battle_mat_window", 
 		"location=no,menubar=no,resizable=yes,left=0,screenX=0,top=0,screenY=0,status=no,toolbar=no,scrollbars=no,width=100%,height=100%");
 	}
 
+
 	function show_ajax_failure_window(request) {
 		var error_window = window.open("");
 		error_window.document.write(request.responseText);
 	}	
 	
-	function fill_form_field(id, value) {
-		var e = $(id);
-		e.value = value;
-	}
-	
+
 	function ajax_form_submit(form) {
 		var action = form.action;
 		var method = form.method;
@@ -37,8 +40,22 @@
 		});
 	}
 	
+
+	function scale_image_by_width(image, to_width) {
+		var dimensions = image.getDimensions();
+
+		if(dimensions.width <= to_width) return;
+		
+		var to_height = to_width * (dimensions.height / dimensions.width);
+		image.style.width = to_width + "px";
+		image.style.height = to_height + "px";
+	}
+
+
 	function set_mat_background(url) {
 		battle_mat_window.document.body.style.backgroundImage = 
+			"url(" + url + ")";
+		$("mat-mini-container").style.backgroundImage =
 			"url(" + url + ")";
 	}
 </script>
@@ -48,8 +65,24 @@
 <ul id="mat-edit-actions-list">
 	<li>
 		<div class="container-prompt">
-			<div class="button-images">
+			<div class="button-images" onclick="display_dropdown_prompt('prompt-select-tile')">
 				&#8595 Select Tile ...
+			</div>
+			<div class="prompt-dropdown" id="prompt-select-tile">
+				<% if @tiles.size > 0 then %>
+					<ul>
+						<% @tiles.each do |b| %>
+							<li>
+								<img src="/images/textures/tiles/<%= b %>" onclick="$('prompt-select-tile').style.display = 'none';"/>
+							</li>
+						<% end %>
+					</ul>
+				<% else %>
+					<p>
+						No tile images yet. Please put some image files
+						into <strong>/public/images/textures/tiles</strong>.
+					</p>
+				<% end %>
 			</div>
 		</div>
 	</li>
@@ -59,13 +92,20 @@
 				&#8595 Select Background ...
 			</div>
 			<div class="prompt-dropdown" id="prompt-select-background">
-				<ul>
-					<% @backgrounds.each do |b| %>
-						<li>
-							<img src="/images/textures/backgrounds/<%= b %>" onclick="set_mat_background('/images/textures/backgrounds/<%= b %>'); $('prompt-select-background').style.display = 'none';"/>
-						</li>
-					<% end %>
-				</ul>
+				<% if @backgrounds.length > 0 then %>
+					<ul>
+						<% @backgrounds.each do |b| %>
+							<li>
+								<img src="/images/textures/backgrounds/<%= b %>" onclick="set_mat_background('/images/textures/backgrounds/<%= b %>'); $('prompt-select-background').style.display = 'none';" onload="scale_image_by_width(this, preview_max_width);"/>
+							</li>
+						<% end %>
+					</ul>
+				<% else %>
+					<p>
+						No background images yet. Please put some image files
+						into <strong>/public/images/textures/backgrounds</strong>.
+					</p>
+				<% end %>
 			</div>
 		</div>
 	</li>
@@ -92,6 +132,21 @@
 		</div>
 	</li>
 </ul>
+
+
+<!-- This is the preview/edit container that displays the miniature mat -->
+<div id="mat-mini-container" style="background-image: url('/images/textures/backgrounds/<%= @mat.background %>')">
+	<table>
+		<% 0.upto(@mat.x_dimension) do |x| %>
+			<tr id="mat-row-<%= x %>">
+				<% 0.upto(@mat.y_dimension) do |y| %>
+					<td id="mat-cell-<%= x %>x<%= y %>"></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</div> 
+
 
 <script type="application/javascript">
 	open_battle_mat_window("<%= params[:id] %>");

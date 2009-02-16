@@ -42,4 +42,5 @@ ActionController::Routing::Routes.draw do |map|
   #map.connect ':controller/:action/:id.:format'
   
   map.resources :mats
+  map.root :controller => 'mats'
 end

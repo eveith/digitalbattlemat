@@ -25,3 +25,28 @@
 	width: 2cm;
 	min-width: 2cm;
 }
+
+
+#mat-mini-container {
+	position: absolute;
+	margin: 1em;
+	padding: 0;
+	border: 1px solid black
+}
+
+#mat-mini-container > table {
+	table-layout: fixed;
+	empty-cells: show;
+	border-spacing: 0 0;
+}
+
+#mat-mini-container * tr {
+	height: 50px;
+	min-height: 50px;
+}
+
+#mat-mini-container * td {
+	border: 1px solid black;
+	width: 50px;
+	min-width: 50px;
+}
