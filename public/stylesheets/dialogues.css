@@ -53,4 +53,9 @@ div.prompt-dropdown > h2 {
 }
 
 #prompt-select-tile, #prompt-select-background li {
-	margin: 0.05em 0 0.05em 0;
+	padding: 0 0.5em 1em 0.5em;
+}
+
+#prompt-select-tile, #prompt-select-background img {
+	max-width: 16em;
+}

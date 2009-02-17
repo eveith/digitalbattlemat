@@ -1,11 +1,6 @@
 <script type="application/javascript">
 	var battle_mat_window;
 	
-	/**
-	 * Maximum size of a preview image in the dropdown list, in px.
-	 */
-	var preview_max_width = 175;
-
 
 	function open_battle_mat_window(id) {
 		battle_mat_window = window.open("/mats/" + id, "battle_mat_window", 
@@ -41,16 +36,6 @@
 	}
 	
 
-	function scale_image_by_width(image, to_width) {
-		var dimensions = image.getDimensions();
-
-		if(dimensions.width <= to_width) return;
-		
-		var to_height = to_width * (dimensions.height / dimensions.width);
-		image.style.width = to_width + "px";
-		image.style.height = to_height + "px";
-	}
-
 
 	function set_mat_background(url) {
 		battle_mat_window.document.body.style.backgroundImage = 
@@ -65,15 +50,15 @@
 <ul id="mat-edit-actions-list">
 	<li>
 		<div class="container-prompt">
-			<div class="button-images" onclick="display_dropdown_prompt('prompt-select-tile')">
+			<div class="button-images" onclick="toggle_dropdown('prompt-select-tile')">
 				&#8595 Select Tile ...
 			</div>
 			<div class="prompt-dropdown" id="prompt-select-tile">
 				<% if @tiles.size > 0 then %>
 					<ul>
-						<% @tiles.each do |b| %>
+						<% @tiles.each do |t| %>
 							<li>
-								<img src="/images/textures/tiles/<%= b %>" onclick="$('prompt-select-tile').style.display = 'none';"/>
+								<img src="/images/textures/tiles/<%= t %>" onclick="$('prompt-select-tile').style.display = 'none';"/>
 							</li>
 						<% end %>
 					</ul>
@@ -88,7 +73,7 @@
 	</li>
 	<li>
 		<div class="container-prompt">
-			<div class="button-image" onclick="display_dropdown_prompt('prompt-select-background')">
+			<div class="button-image" onclick="toggle_dropdown('prompt-select-background');">
 				&#8595 Select Background ...
 			</div>
 			<div class="prompt-dropdown" id="prompt-select-background">
@@ -96,7 +81,7 @@
 					<ul>
 						<% @backgrounds.each do |b| %>
 							<li>
-								<img src="/images/textures/backgrounds/<%= b %>" onclick="set_mat_background('/images/textures/backgrounds/<%= b %>'); $('prompt-select-background').style.display = 'none';" onload="scale_image_by_width(this, preview_max_width);"/>
+								<img src="/images/textures/backgrounds/<%= b %>" onclick="set_mat_background('/images/textures/backgrounds/<%= b %>'); toggle_dropdown(null);" />
 							</li>
 						<% end %>
 					</ul>
@@ -111,7 +96,7 @@
 	</li>
 	<li>
 		<div class="container-prompt">
-			<div class="button-mat-description-edit" onclick="display_dropdown_prompt('prompt-mat-change-description')">
+			<div class="button-mat-description-edit" onclick="toggle_dropdown('prompt-mat-change-description')">
 				&#8595 Change Batte Mat Description ...
 			</div>
 			<div id="prompt-mat-change-description" class="prompt-dropdown">
@@ -123,9 +108,9 @@
 						}
 						) do |f| %>
 					<%= f.text_area :description, :rows => "3", :cols => "40" %>
-					<div class="button-ok" onclick="ajax_form_submit(this.parentNode); hide_dropdown_prompt('prompt-mat-change-description');">
+					<div class="button-ok" onclick="ajax_form_submit(this.parentNode); toggle_dropdown(null);">
 					</div>&nbsp;
-					<div class="button-cancel" onclick="hide_dropdown_prompt('prompt-mat-change-description');">
+					<div class="button-cancel" onclick="toggle_dropdown(null);">
 					</div>
 				<% end %>
 			</div>
@@ -135,6 +120,11 @@
 
 
 <!-- This is the preview/edit container that displays the miniature mat -->
+<p>
+	<strong>Current Mat Dimensions:</strong>
+	Width <strong>-</strong>[<strong><%= @mat.y_dimension %></strong>]<strong>+</strong>
+	Height <strong>-</strong>[<strong><%= @mat.x_dimension %></strong>]<strong>+</strong>
+</p>
 <div id="mat-mini-container" style="background-image: url('/images/textures/backgrounds/<%= @mat.background %>')">
 	<table>
 		<% 0.upto(@mat.x_dimension) do |x| %>
