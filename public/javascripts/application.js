@@ -24,63 +24,10 @@ function hide_fullscreen_prompt(id) {
 
 
 /**
- * Shows a small dropdown prompt without enabling the shadow.
- * @param id HTML id of the prompt element container
- * @see hide_dropdown_prompt
- */
-function display_dropdown_prompt(id) {
-	$(id).style.display = "block";
-}
-
-
-/**
- * Hides a dropdown prompt
- * @param id HTML id of the prompt element container
- * @see display_dropdown_prompt
- */
-function hide_dropdown_prompt(id) {
-	$(id).style.display = "none";
-}
-
-/**
- * This function scales an element if its size exceeds certain values in width
- * or height. While doing this, it keeps the original aspect ratio.
- * @param element The element that is to be scaled
- * @param width Maximum width, -1 indicates that the width does not matter
- * @param height Maximum height, -1 indicates that the height does not matter
- */
-function scale_if_bigger_than(element, max_width, max_height) {
-	var dimensions = element.getDimensions;
-	var ratio = dimensions.height / dimensions.width;
-	var new_dimensions = {
-		width: dimensions.width,
-		height: dimensions.height
-	};
-	
-	if(-1 == max_width) max_width = dimensions.width;
-	if(-1 == max_height) max_height = dimensions.height;
-	
-	
-	if((dimensions.width - max_width) 
-			> (dimensions.height - max_height)) {
-		/* Its broader than high, so scale because of width. */
-		new_dimensions.width = max_width;
-		new_dimensions.height = max_width * ratio; 
-	} else {
-		/* Its higher than broad, scale because of height. */
-		new_dimensions.height = max_height;
-		new_dimensions.width = max_height * ratio;
-	}
-	
-	element.style.width = new_dimensions.width + "px";
-	element.style.height = new_dimensions.height + "px";
-}
-
-
-/**
  * The currently shown dropdown
  */
 var current_dropdown_id = null;
+
 
 /**
  * Toggles a dropdown prompt. If no prompt is shown, it displays the clicked.
@@ -101,4 +48,174 @@ function toggle_dropdown(id) {
 		$(current_dropdown_id).style.display = "none";
 	
 	current_dropdown_id = new_dropdown_id;
+}
+
+
+/**
+ * Window in which the mat pops up.
+ */
+var battle_mat_window = null;
+
+
+/**
+ * Used to modifiy the number of rows a Mat has.
+ * @param n Number of rows that are to be added or removed. Positive values add
+ * 	n rows to the mat, while negative values remove n rows.
+ */
+function mat_modify_row_count(n) {
+	var mini_mat = $("mini-mat");
+	var mat = battle_mat_window.document.getElementById("mat");
+	mat = $(mat);
+	var tbody = null;
+	
+	/* Modify Mini Mat first. */
+	/* Get array of minimat elements. */
+	tbody = mini_mat.childElements()[0];
+	
+	/* Sanity check: Don't make it smaller than 1 row. If we check and abort 
+	 * here, the big mat won't be affected, too.
+	 */
+	if(1 == tbody.childElements().length && n < 0) return;
+
+	/* Decided whether to add or remove rows */
+	if(n > 0) {
+		/* Add */
+		for(var i = 0; i != n; ++i) {
+			/* Create new tr */
+			var tr = new Element("tr", {
+				id: "mini-mat-row-" + tbody.childElements().length
+			});
+			
+			/* Add tds to the new row */
+			for(var j = 0; j != tbody.childElements()[0].childElements().length;
+					++j) {
+				var td = new Element("td", {
+					id: "mini-mat-cell-" + tbody.childElements().length +
+						"x" + j
+				});
+				tr.insert(td, { position: "bottom" });
+			}
+			
+			/* Append new tr to the tbody */
+			tbody.insert(tr, { position: "bottom" });
+		}
+	} else {
+		/* Remove */
+		for(var i = 0; i != (n * -1); ++i) {
+			var trs = tbody.childElements();
+			trs[trs.length - 1].remove();
+		}
+	}
+	
+	
+	/* Now the same for the real Mat */
+	tbody = mat.childElements()[0];
+	
+	/* Decided whether to add or remove rows */
+	if(n > 0) {
+		/* Add */
+		for(var i = 0; i != n; ++i) {
+			/* Create new tr */
+			var tr = new Element("tr", {
+				id: "mat-row-" + tbody.childElements().length
+			});
+			
+			/* Add tds to the new row */
+			for(var j = 0; j != tbody.childElements()[0].childElements().length;
+					++j) {
+				var td = new Element("td", {
+					id: "mat-cell-" + tbody.childElements().length + "x" + j
+				});
+				tr.insert(td, { position: "bottom" });
+			}
+			
+			/* Append new tr to the tbody */
+			tbody.insert(tr, { position: "bottom" });
+		}
+	} else {
+		/* Remove */
+		for(var i = 0; i != (n * -1); ++i) {
+			var trs = tbody.childElements();
+			trs[trs.length - 1].remove();
+		}
+	}	
+	/* Update dimension display */
+	$("mat-x-dimension").innerHTML = tbody.childElements().length;
+}
+
+
+/**
+ * Used to modifiy the number of columns a Mat has.
+ * @param n Number of columns that are to be added or removed. Positive values 
+ * 	add n columns to the mat, while negative values remove n columns.
+ */
+function mat_modify_column_count(n) {
+	var mini_mat = $("mini-mat");
+	var mat = battle_mat_window.document.getElementById("mat");
+	mat = $(mat);
+	var tbody = null;
+	
+	/* Mini Mat comes first. */
+	tbody = mini_mat.childElements()[0];
+	
+	/* Sanity first: Check that the number of columns doesn't go below 1.
+	 * We check it with the Mini Mat here first, but exit the whole 
+	 * function, so the real Mat won't get affected, too.
+	 */
+	if(1 == tbody.childElements()[0].childElements().length && n < 0) return;
+
+	/* Add or remove? */
+	if(n > 0) {
+		/* Add column */
+		for(var i = 0; i != n; ++i) {
+			var trs = tbody.childElements();
+			for(var j = 0; j != trs.length; ++j) {
+				var td = new Element("td", {
+					id: "mini-mat-cell-" + (i+1) + "x" + 
+						trs[j].childElements().length
+				});
+				trs[j].insert(td, { position: "bottom" });
+			}
+		}
+	} else {
+		/* Remove column */
+		for(var i = 0; i != (n * -1); ++i) {
+			var trs = tbody.childElements();
+			for(var j = 0; j != trs.length; ++j) {
+				var tds = trs[j].childElements();
+				tds[tds.length - 1].remove();
+			}
+		}
+	}
+	
+	/* Now the real Mat. */
+	tbody = mat.childElements()[0];
+	
+	/* Add or remove? */
+	if(n > 0) {
+		/* Add column */
+		for(var i = 0; i != n; ++i) {
+			var trs = tbody.childElements();
+			for(var j = 0; j != trs.length; ++j) {
+				var td = new Element("td", {
+					id: "mat-cell-" + (i+1) + "x" + 
+						trs[j].childElements().length
+				});
+				trs[j].insert(td, { position: "bottom" });
+			}
+		}
+	} else {
+		/* Remove column */
+		for(var i = 0; i != (n * -1); ++i) {
+			var trs = tbody.childElements();
+			for(var j = 0; j != trs.length; ++j) {
+				var tds = trs[j].childElements();
+				tds[tds.length - 1].remove();
+			}
+		}
+	}
+	
+	/* Set new display size */
+	$("mat-y-dimension").innerHTML = 
+		(tbody.childElements())[0].childElements().length;
 }

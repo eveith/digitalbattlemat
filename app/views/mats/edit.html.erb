@@ -1,7 +1,4 @@
 <script type="application/javascript">
-	var battle_mat_window;
-	
-
 	function open_battle_mat_window(id) {
 		battle_mat_window = window.open("/mats/" + id, "battle_mat_window", 
 		"location=no,menubar=no,resizable=yes,left=0,screenX=0,top=0,screenY=0,status=no,toolbar=no,scrollbars=no,width=100%,height=100%");
@@ -122,15 +119,15 @@
 <!-- This is the preview/edit container that displays the miniature mat -->
 <p>
 	<strong>Current Mat Dimensions:</strong>
-	Width <strong>-</strong>[<strong><%= @mat.y_dimension %></strong>]<strong>+</strong>
-	Height <strong>-</strong>[<strong><%= @mat.x_dimension %></strong>]<strong>+</strong>
+	Width <strong><a href="#" onclick="mat_modify_column_count(-1);">-</a></strong>[<strong><span id="mat-y-dimension"><%= @mat.y_dimension %></span></strong>]<strong><a href="#" onclick="mat_modify_column_count(1);">+</a></strong>
+	Height <strong><a href="#" onclick="mat_modify_row_count(-1);">-</a></strong>[<strong><span id="mat-x-dimension"><%= @mat.x_dimension %></span></strong>]<strong><a href="#" onclick="mat_modify_row_count(1);">+</a></strong>
 </p>
 <div id="mat-mini-container" style="background-image: url('/images/textures/backgrounds/<%= @mat.background %>')">
-	<table>
-		<% 0.upto(@mat.x_dimension) do |x| %>
-			<tr id="mat-row-<%= x %>">
-				<% 0.upto(@mat.y_dimension) do |y| %>
-					<td id="mat-cell-<%= x %>x<%= y %>"></td>
+	<table id="mini-mat">
+		<% 1.upto(@mat.x_dimension) do |x| %>
+			<tr id="mini-mat-row-<%= x %>">
+				<% 1.upto(@mat.y_dimension) do |y| %>
+					<td id="mini-mat-cell-<%= x %>x<%= y %>"></td>
 				<% end %>
 			</tr>
 		<% end %>

@@ -8,10 +8,10 @@
 </script>
 
 <div id="mat-container">
-	<table>
-		<% 0.upto(@mat.x_dimension) do |x| %>
+	<table id="mat">
+		<% 1.upto(@mat.x_dimension) do |x| %>
 			<tr id="mat-row-<%= x %>">
-				<% 0.upto(@mat.y_dimension) do |y| %>
+				<% 1.upto(@mat.y_dimension) do |y| %>
 					<td id="mat-cell-<%= x %>x<%= y %>"></td>
 				<% end %>
 			</tr>

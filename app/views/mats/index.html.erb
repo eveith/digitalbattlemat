@@ -22,7 +22,7 @@
 <% end %>
 
 <div class="container-prompt">
-	<div class="button-create" onclick="display_dropdown_prompt('prompt-new-mat-description');">
+	<div class="button-create" onclick="toggle_dropdown('prompt-new-mat-description');">
 		Create a new Battle Mat ...
 	</div>
 	<div class="prompt-dropdown" id="prompt-new-mat-description">
@@ -30,7 +30,7 @@
 		<% form_for :mat, :url => { :action => "create" } do |f| %>
 			<%= f.text_area "description", { :rows => "3", :cols => "40" } %><br/>
 			<div class="button-ok" onclick="this.parentNode.submit();"></div>&nbsp;
-			<div class="button-cancel" onclick="hide_dropdown_prompt('prompt-new-mat-description')"></div> 
+			<div class="button-cancel" onclick="toggle_dropdown(null)"></div> 
 		<% end %>
 	</div>
 </div>

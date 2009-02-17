@@ -41,12 +41,12 @@
 }
 
 #mat-mini-container * tr {
-	height: 50px;
-	min-height: 50px;
+	height: 30px;
+	min-height: 30px;
 }
 
 #mat-mini-container * td {
 	border: 1px solid black;
-	width: 50px;
-	min-width: 50px;
+	width: 30px;
+	min-width: 30px;
 }

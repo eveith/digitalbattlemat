@@ -2,3 +2,13 @@ body {
 	font-family: Verdana, Arial, sans-serif;
 	background-color: white;
 }
+
+a {
+	color: #7D8B5B;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #C4DA90;
+	text-decoration: none;
+}
