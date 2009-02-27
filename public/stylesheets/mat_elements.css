@@ -18,12 +18,23 @@
 #mat-container * tr {
 	height: 2.5cm;
 	min-height: 2.5cm;
+	max-height: 2.5cm;
+	padding: 0;
+	margin: 0;
 }
 
 #mat-container * td {
 	border: 1px solid black;
 	width: 2.5cm;
 	min-width: 2.5cm;
+	max-width: 2.5cm;
+	height: 2.5cm;
+	min-height: 2.5cm;
+	max-height: 2.5cm;
+	padding: 0;
+	margin: 0;
+	font-family: monospace;
+	font-size: 2.5cm;
 }
 
 
