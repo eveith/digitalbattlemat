@@ -12,7 +12,7 @@
 		<% 1.upto(@mat.x_dimension) do |x| %>
 			<tr id="mat-row-<%= x %>">
 				<% 1.upto(@mat.y_dimension) do |y| %>
-					<td id="mat-cell-<%= x %>x<%= y %>"></td>
+					<td id="mat-cell-<%= x %>x<%= y %>">&nbsp;</td>
 				<% end %>
 			</tr>
 		<% end %>

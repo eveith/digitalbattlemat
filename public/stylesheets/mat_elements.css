@@ -16,14 +16,14 @@
 }
 
 #mat-container * tr {
-	height: 2cm;
-	min-height: 2cm;
+	height: 2.5cm;
+	min-height: 2.5cm;
 }
 
 #mat-container * td {
 	border: 1px solid black;
-	width: 2cm;
-	min-width: 2cm;
+	width: 2.5cm;
+	min-width: 2.5cm;
 }
 
 

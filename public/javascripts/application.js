@@ -64,83 +64,62 @@ var battle_mat_window = null;
  */
 function mat_modify_row_count(n) {
 	var mini_mat = $("mini-mat");
-	var mat = battle_mat_window.document.getElementById("mat");
-	mat = $(mat);
-	var tbody = null;
+	var mat = $(battle_mat_window.document.getElementById("mat"));
+	var mats = new Array(mini_mat, mat);
 	
-	/* Modify Mini Mat first. */
-	/* Get array of minimat elements. */
-	tbody = mini_mat.childElements()[0];
+	/* Get number of visible rows: Loop until we've either found the first row
+	 * that's marked with the style directive "display: none" or the end of the
+	 * array. */
+	var visible_rows_num = 0;
+	for(; visible_rows_num != mat.rows.length; ++visible_rows_num)
+		if("hidden" == mat.rows[visible_rows_num].cells[0].style.visibility)
+			break;
 	
-	/* Sanity check: Don't make it smaller than 1 row. If we check and abort 
-	 * here, the big mat won't be affected, too.
-	 */
-	if(1 == tbody.childElements().length && n < 0) return;
-
-	/* Decided whether to add or remove rows */
-	if(n > 0) {
-		/* Add */
-		for(var i = 0; i != n; ++i) {
-			/* Create new tr */
-			var tr = new Element("tr", {
-				id: "mini-mat-row-" + tbody.childElements().length
-			});
-			
-			/* Add tds to the new row */
-			for(var j = 0; j != tbody.childElements()[0].childElements().length;
-					++j) {
-				var td = new Element("td", {
-					id: "mini-mat-cell-" + tbody.childElements().length +
-						"x" + j
-				});
-				tr.insert(td, { position: "bottom" });
+	for(var m = 0; m != mats.length; ++m) {
+		/* Add rows */
+		if(n > 0) {
+			for(var r = visible_rows_num - 1; r != visible_rows_num + n; ++r) {
+				/* There are two cases: Either the row exists, but its cells are
+				 * hidden, then we just set the "visibility" style attribute to
+				 * "show". If there _is_ no row, we add a new one.
+				 */
+				if(r != mats[m].rows.length) {
+					/* Row's just hidden */
+					for(var c = 0; c != mats[m].rows[r].cells.length; ++c) {
+						mats[m].rows[r].cells[c].style.visibility = "visible";
+					}
+				} else {
+					/* Add a new row */
+					var id_prefix = "mat";
+					if(mini_mat == mats[m]) id_prefix = "mini-" + id_prefix;
+					
+					var tr = mats[m].insertRow(r);
+					tr.id = id_prefix + "-row-" + (r+1);
+					for(var c = 0; c != mats[m].rows[r-1].cells.length; ++c) {
+						var td = tr.insertCell(c);
+						td.id = id_prefix + "-cell-" + (r+1) + "x" + (c+1);
+						td.innerHTML = "&nbsp;";
+					}
+				}
 			}
-			
-			/* Append new tr to the tbody */
-			tbody.insert(tr, { position: "bottom" });
 		}
-	} else {
-		/* Remove */
-		for(var i = 0; i != (n * -1); ++i) {
-			var trs = tbody.childElements();
-			trs[trs.length - 1].remove();
+		
+		/* Remove rows, which means setting their display 
+		 * attribute to "none". */
+		if(n < 0) {
+			/* Safety check to make sure we've got always at least one row */ 
+			if(visible_rows_num + n < 1) return;
+			
+			for(var r = visible_rows_num - 1; r >= visible_rows_num + n; --r) {
+				for(var c = 0; c != mats[m].rows[r].cells.length; ++c) {
+					mats[m].rows[r].cells[c].style.visibility = "hidden";
+				}
+			}
 		}
 	}
-	
-	
-	/* Now the same for the real Mat */
-	tbody = mat.childElements()[0];
-	
-	/* Decided whether to add or remove rows */
-	if(n > 0) {
-		/* Add */
-		for(var i = 0; i != n; ++i) {
-			/* Create new tr */
-			var tr = new Element("tr", {
-				id: "mat-row-" + tbody.childElements().length
-			});
-			
-			/* Add tds to the new row */
-			for(var j = 0; j != tbody.childElements()[0].childElements().length;
-					++j) {
-				var td = new Element("td", {
-					id: "mat-cell-" + tbody.childElements().length + "x" + j
-				});
-				tr.insert(td, { position: "bottom" });
-			}
-			
-			/* Append new tr to the tbody */
-			tbody.insert(tr, { position: "bottom" });
-		}
-	} else {
-		/* Remove */
-		for(var i = 0; i != (n * -1); ++i) {
-			var trs = tbody.childElements();
-			trs[trs.length - 1].remove();
-		}
-	}	
-	/* Update dimension display */
-	$("mat-x-dimension").innerHTML = tbody.childElements().length;
+
+	/* Update mat dimension display */
+	$("mat-x-dimension").innerHTML = (visible_rows_num + n);
 }
 
 
@@ -151,71 +130,53 @@ function mat_modify_row_count(n) {
  */
 function mat_modify_column_count(n) {
 	var mini_mat = $("mini-mat");
-	var mat = battle_mat_window.document.getElementById("mat");
-	mat = $(mat);
-	var tbody = null;
+	var mat = $(battle_mat_window.document.getElementById("mat"));
+	var mats = new Array(mini_mat, mat);
 	
-	/* Mini Mat comes first. */
-	tbody = mini_mat.childElements()[0];
+	var visible_cols_num = 0;
+	for(; visible_cols_num != mat.rows[0].cells.length; ++visible_cols_num)
+		if("hidden" == mat.rows[0].cells[visible_cols_num].style.visibility)
+			break;
 	
-	/* Sanity first: Check that the number of columns doesn't go below 1.
-	 * We check it with the Mini Mat here first, but exit the whole 
-	 * function, so the real Mat won't get affected, too.
-	 */
-	if(1 == tbody.childElements()[0].childElements().length && n < 0) return;
+	/* Add cols? */
+	if(n > 0) {
+		for(var m = 0; m != mats.length; ++m) {
+			for(var r = 0; r != mats[m].rows.length; ++r) {
+				for(var c = visible_cols_num - 1; c != visible_cols_num + n;
+						++c) {
+					/* Decide whether to just show the col or add a new one */
+					if(c != mats[m].rows[r].cells.length) {
+						/* Just show */
+						mats[m].rows[r].cells[c].style.visibility = "visible";
+					} else {
+						/* Really add */
+						var id_prefix = "mat";
+						if(mats[m] == mini_mat) id_prefix = "mini-" + id_prefix;
+						
+						var td = mats[m].rows[r].insertCell(c);
+						td.id = id_prefix + "-cell-" + (r+1) + "x" + (c+1);
+						td.innerHTML = "&nbsp;";
+					}
+				}
+			}
+		}
+		
+	}
 
-	/* Add or remove? */
-	if(n > 0) {
-		/* Add column */
-		for(var i = 0; i != n; ++i) {
-			var trs = tbody.childElements();
-			for(var j = 0; j != trs.length; ++j) {
-				var td = new Element("td", {
-					id: "mini-mat-cell-" + (i+1) + "x" + 
-						trs[j].childElements().length
-				});
-				trs[j].insert(td, { position: "bottom" });
-			}
-		}
-	} else {
-		/* Remove column */
-		for(var i = 0; i != (n * -1); ++i) {
-			var trs = tbody.childElements();
-			for(var j = 0; j != trs.length; ++j) {
-				var tds = trs[j].childElements();
-				tds[tds.length - 1].remove();
+	/* Hide columns? */
+	if(n < 0) {
+		/* Sanity check: Make sure there's at least one column. */
+		if(visible_cols_num + n < 1) return;
+		
+		for(var m = 0; m != mats.length; ++m) {
+			for(var r = 0; r != mats[m].rows.length; ++r) {
+				for(var c = visible_cols_num - 1; c >= visible_cols_num + n; 
+						--c) {
+					mats[m].rows[r].cells[c].style.visibility = "hidden";
+				}
 			}
 		}
 	}
 	
-	/* Now the real Mat. */
-	tbody = mat.childElements()[0];
-	
-	/* Add or remove? */
-	if(n > 0) {
-		/* Add column */
-		for(var i = 0; i != n; ++i) {
-			var trs = tbody.childElements();
-			for(var j = 0; j != trs.length; ++j) {
-				var td = new Element("td", {
-					id: "mat-cell-" + (i+1) + "x" + 
-						trs[j].childElements().length
-				});
-				trs[j].insert(td, { position: "bottom" });
-			}
-		}
-	} else {
-		/* Remove column */
-		for(var i = 0; i != (n * -1); ++i) {
-			var trs = tbody.childElements();
-			for(var j = 0; j != trs.length; ++j) {
-				var tds = trs[j].childElements();
-				tds[tds.length - 1].remove();
-			}
-		}
-	}
-	
-	/* Set new display size */
-	$("mat-y-dimension").innerHTML = 
-		(tbody.childElements())[0].childElements().length;
+	$("mat-y-dimension").innerHTML = (visible_cols_num + n);
 }
