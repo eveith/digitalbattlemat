@@ -98,7 +98,11 @@ function mat_modify_row_count(n) {
 					for(var c = 0; c != mats[m].rows[r-1].cells.length; ++c) {
 						var td = tr.insertCell(c);
 						td.id = id_prefix + "-cell-" + (r+1) + "x" + (c+1);
-						td.innerHTML = "&nbsp;";
+						td.innerHTML = "<img " +
+							"src=\"/images/textures/tiles/Spacer.png\" " +
+							"alt=\"Spacer\" class=\"spacer\" " +
+							"id=\"" + id_prefix + "-tile-" + 
+							(r+1) + "x" + (c+1) + "\" />";
 					}
 				}
 			}
@@ -155,7 +159,11 @@ function mat_modify_column_count(n) {
 						
 						var td = mats[m].rows[r].insertCell(c);
 						td.id = id_prefix + "-cell-" + (r+1) + "x" + (c+1);
-						td.innerHTML = "&nbsp;";
+						td.innerHTML = "<img " +
+							"src=\"/images/textures/tiles/Spacer.png\" " +
+							"alt=\"Spacer\" class=\"spacer\" " +
+							"id=\"" + id_prefix + "-tile-" + 
+							(r+1) + "x" + (c+1) + "\" />";
 					}
 				}
 			}

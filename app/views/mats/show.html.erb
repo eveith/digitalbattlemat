@@ -12,7 +12,9 @@
 		<% 1.upto(@mat.x_dimension) do |x| %>
 			<tr id="mat-row-<%= x %>">
 				<% 1.upto(@mat.y_dimension) do |y| %>
-					<td id="mat-cell-<%= x %>x<%= y %>">&nbsp;</td>
+					<td id="mat-cell-<%= x %>x<%= y %>">
+						<img src="/images/textures/tiles/Spacer.png" class="spacer" alt="Spacer" id="mat-tile-<%= x %>x<%= y %>" />
+					</td>
 				<% end %>
 			</tr>
 		<% end %>

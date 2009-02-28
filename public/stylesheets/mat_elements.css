@@ -37,6 +37,16 @@
 	font-size: 2.5cm;
 }
 
+#mat-container * img {
+	max-width: 2.5cm;
+	max-height: 2.5cm;
+}
+
+#mat-container * img.spacer {
+	min-width: 2.5cm;
+	min-height: 2.5cm;
+}
+
 
 #mat-mini-container {
 	position: absolute;
@@ -54,10 +64,27 @@
 #mat-mini-container * tr {
 	height: 30px;
 	min-height: 30px;
+	max-height: 30px;
 }
 
 #mat-mini-container * td {
 	border: 1px solid black;
 	width: 30px;
 	min-width: 30px;
+	max-width: 30px;
+	height: 30px;
+	min-height: 30px;
+	max-height: 30px;
+	padding: 0;
+	margin: 0;
+}
+
+#mat-mini-container * img {
+	max-width: 30px;
+	max-height: 30px;
+}
+
+#mat-mini-container * img.spacer {
+	min-width: 30px;
+	min-height: 3px;
 }
