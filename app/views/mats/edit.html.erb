@@ -93,7 +93,10 @@
 	<% end %>
 </div>
 
-<!-- This loads the actual mat window -->
+<!-- This loads the actual mat window and applies its background -->
 <script type="application/javascript">
  	open_battle_mat_window("<%= params[:id] %>");
+ 	<% if @mat.background then %>
+ 		set_mat_background("<%= @mat.background %>");
+ 	<% end %>
 </script>
