@@ -34,6 +34,8 @@ class MatsController < ApplicationController
   def update
     mat = BattleMats.find_by_id(params[:id])
     mat.description = params[:mat][:description]
+    mat.x_dimension = params[:mat][:x_dimension]
+    mat.y_dimension = params[:mat][:y_dimension]
     mat.save
   end
 

@@ -3,6 +3,7 @@ div[class|="button"] {
 	background-repeat: no-repeat;
 	background-position: center left;
 	border: 1px solid black;
+	line-height: 2em;
 	padding: 0.1em 0.1em 0.1em 24px;
 	min-height: 20px;
 	cursor: pointer;

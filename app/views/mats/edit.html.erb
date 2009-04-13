@@ -11,10 +11,12 @@
 	}	
 	
 
-	function ajax_form_submit(form) {
+	function save_mat(form, mat) {
 		var action = form.action;
 		var method = form.method;
+		var mat = $("mini-mat");
 		
+		// Update HTTP request method
 		for(element in form.elements) {
 			if("_method" == element.name) {
 				method = element.value;
@@ -22,9 +24,16 @@
 			} 
 		}
 		
+		// Create artifical form elements for the Mat dimensions (total)
+		var dimensions = "mat[x_dimension]=" + mat.rows.length +
+			"&mat[y_dimension]=" + mat.rows[0].cells.length;
+			
+		// Create a pseudo-list of all tiles in the format
+		// mat[tile][row][column] = "visible;/path/to/tile/source".
+		
 		new Ajax.Request(action, {
 			method: method,
-			parameters: Form.serialize(form),
+			parameters: Form.serialize(form) + "&" + encodeURI(dimensions),
 			onFailure: function(transport) {
 				show_ajax_failure_window(transport);
 				document.location.reload();
@@ -91,28 +100,6 @@
 			</div>
 		</div>
 	</li>
-	<li>
-		<div class="container-prompt">
-			<div class="button-mat-description-edit" onclick="toggle_dropdown('prompt-mat-change-description')">
-				&#8595 Change Batte Mat Description ...
-			</div>
-			<div id="prompt-mat-change-description" class="prompt-dropdown">
-				<% form_for(:mat, @mat,
-						:url => { :action => "update" },
-						:html => {
-							:id => "mat-change-description-form",
-							:method => :put
-						}
-						) do |f| %>
-					<%= f.text_area :description, :rows => "3", :cols => "40" %>
-					<div class="button-ok" onclick="ajax_form_submit(this.parentNode); toggle_dropdown(null);">
-					</div>&nbsp;
-					<div class="button-cancel" onclick="toggle_dropdown(null);">
-					</div>
-				<% end %>
-			</div>
-		</div>
-	</li>
 </ul>
 
 
@@ -137,6 +124,27 @@
 </div> 
 
 
+<!--
+	Miscellaneous controls: Text box for mat description change, and the
+	"save mat" button
+-->
+<div id="mat-description-and-save-container">
+	<% form_for(:mat, @mat, :url => { :action => "update" },
+			:html => {
+				:id => "mat-change-description-form",
+				:method => :put
+			}) do |f| %>
+		<label for="description">Mat Description</label><br/>
+		<%= f.text_area :description, :rows => "3", :cols => "50" %>
+		<br />
+		<div class="button-ok" onclick="save_mat($('mat-change-description-form')); toggle_dropdown(null);">
+			(Save Description and Layout)
+		</div>&nbsp;
+		<div class="button-cancel" onclick="toggle_dropdown(null);"></div>
+	<% end %>
+</div>
+
+<!-- This loads the actual mat window -->
 <script type="application/javascript">
-	open_battle_mat_window("<%= params[:id] %>");
+ 	open_battle_mat_window("<%= params[:id] %>");
 </script>

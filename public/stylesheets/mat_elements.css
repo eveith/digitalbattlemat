@@ -49,16 +49,16 @@
 
 
 #mat-mini-container {
-	position: absolute;
+	position: relative;
 	margin: 1em;
 	padding: 0;
-	border: 1px solid black
 }
 
 #mat-mini-container > table {
 	table-layout: fixed;
 	empty-cells: show;
 	border-spacing: 0 0;
+	border: 1px solid black;
 }
 
 #mat-mini-container * tr {
@@ -87,4 +87,9 @@
 #mat-mini-container * img.spacer {
 	min-width: 30px;
 	min-height: 3px;
+}
+
+#mat-description-and-save-container {
+	position: relative;
+	top: 2em;
 }

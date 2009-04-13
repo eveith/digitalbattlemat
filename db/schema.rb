@@ -9,15 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090205233745) do
+ActiveRecord::Schema.define(:version => 20090413003319) do
 
   create_table "battle_mat_tiles", :force => true do |t|
     t.integer  "x_position"
     t.integer  "y_position"
-    t.integer  "battle_mat_texture_id"
     t.integer  "battle_mat_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "visibility"
+    t.string   "tile_source"
   end
 
   create_table "battle_mats", :force => true do |t|

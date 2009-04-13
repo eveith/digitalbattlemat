@@ -59,3 +59,8 @@ div.prompt-dropdown > h2 {
 #prompt-select-tile, #prompt-select-background img {
 	max-width: 16em;
 }
+
+label {
+	font-size: small;
+	font-weight: bold;
+}

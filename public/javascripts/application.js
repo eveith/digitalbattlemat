@@ -86,7 +86,13 @@ function mat_modify_row_count(n) {
 				if(r != mats[m].rows.length) {
 					/* Row's just hidden */
 					for(var c = 0; c != mats[m].rows[r].cells.length; ++c) {
-						mats[m].rows[r].cells[c].style.visibility = "visible";
+						if(mats[m].rows[r-1].cells[c].style.visibility) {
+							mats[m].rows[r].cells[c].style.visibility = 
+								mats[m].rows[r-1].cells[c].style.visibility;
+						} else {
+							mats[m].rows[r].cells[c].style.visibility = 
+								"visible";
+						}
 					}
 				} else {
 					/* Add a new row */
@@ -103,6 +109,15 @@ function mat_modify_row_count(n) {
 							"alt=\"Spacer\" class=\"spacer\" " +
 							"id=\"" + id_prefix + "-tile-" + 
 							(r+1) + "x" + (c+1) + "\" />";
+						
+						// Set style for this new cell, because it should match
+						// the style of its counterpart in other rows
+						if(mats[m].rows[r-1].cells[c].style.visibility) {
+							td.style.visibility = 
+								mats[m].rows[r-1].cells[c].style.visibility;
+						} else {
+							td.style.visibility = "visible";
+						}
 					}
 				}
 			}
@@ -151,7 +166,13 @@ function mat_modify_column_count(n) {
 					/* Decide whether to just show the col or add a new one */
 					if(c != mats[m].rows[r].cells.length) {
 						/* Just show */
-						mats[m].rows[r].cells[c].style.visibility = "visible";
+						if(mats[m].rows[r].cells[c-1].style.visibility) {
+							mats[m].rows[r].cells[c].style.visibility = 
+								mats[m].rows[r].cells[c-1].style.visibility;
+						} else {
+							mats[m].rows[r].cells[c].style.visibility = 
+								"visible";
+						}
 					} else {
 						/* Really add */
 						var id_prefix = "mat";
@@ -164,6 +185,13 @@ function mat_modify_column_count(n) {
 							"alt=\"Spacer\" class=\"spacer\" " +
 							"id=\"" + id_prefix + "-tile-" + 
 							(r+1) + "x" + (c+1) + "\" />";
+						if(mats[m].rows[r].cells[c-1].style.visibility) {
+							mats[m].rows[r].cells[c].style.visibility = 
+								mats[m].rows[r].cells[c-1].style.visibility;
+						} else {
+							mats[m].rows[r].cells[c].style.visibility = 
+								"visible";
+						}
 					}
 				}
 			}
