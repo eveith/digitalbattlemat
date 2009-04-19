@@ -13,7 +13,7 @@
 					<ul>
 						<% @tiles.each do |t| %>
 							<li>
-								<img src="/images/textures/tiles/<%= t %>" onclick="$('prompt-select-tile').style.display = 'none';"/>
+								<img src="/images/textures/tiles/<%= t %>" onclick="current_tile = this; $('prompt-select-tile').style.display = 'none';"/>
 							</li>
 						<% end %>
 					</ul>
@@ -76,7 +76,7 @@
 						end
 					%>
 					<td id="mini-mat-cell-<%= x %>x<%= y %>"  style="visibility: <%= visibility %>">
-						<img src="<%= src %>" class="tile" alt="Battle Mat Tile" id="mini-mat-tile-<%= x %>x<%= y %>" />
+						<img src="<%= src %>" class="tile" alt="Battle Mat Tile" id="mini-mat-tile-<%= x %>x<%= y %>" onclick="set_tile(this)" />
 					</td>
 				<% end %>
 			</tr>

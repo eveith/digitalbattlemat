@@ -1,6 +1,8 @@
 function open_battle_mat_window(id) {
 		battle_mat_window = window.open("/mats/" + id, "battle_mat_window", 
-	"location=no,menubar=no,resizable=yes,left=0,screenX=0,top=0,screenY=0,status=no,toolbar=no,scrollbars=no,width=100%,height=100%");
+			"location=no,menubar=no,resizable=yes,left=0,screenX=0,top=0," +
+			"screenY=0,status=no,toolbar=no,scrollbars=no," +
+			"width=100%,height=100%");
 }
 
 
@@ -52,7 +54,7 @@ function save_mat(form) {
 			
 			// Try to get tile image and its src attribute, but keep a default
 			var uri = "/images/textures/tiles/Spacer.png";
-			var tile = $("mini-mat-tile-" + (i+1) + "-" + (j+1));
+			var tile = $("mini-mat-tile-" + i + "x" + j);
 			if(tile) {
 				uri = tile.src;
 			}
@@ -86,4 +88,18 @@ function set_mat_background(url) {
 		"url(" + url + ")";
 	$("mat-mini-container").style.backgroundImage =
 		"url(" + url + ")";
+}
+
+
+var current_tile = null;
+
+
+function set_tile(mini_mat_img) {
+	if(null == current_tile || null == battle_mat_window) return;
+	
+	var mat_img = battle_mat_window.document.getElementById(
+			mini_mat_img.id.replace(/^mini-/, ""));
+	
+	mini_mat_img.src = current_tile.src;
+	mat_img.src = current_tile.src;
 }
