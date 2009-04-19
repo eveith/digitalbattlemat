@@ -60,11 +60,23 @@
 </p>
 <div id="mat-mini-container" style="background-image: url('/images/textures/backgrounds/<%= @mat.background %>')">
 	<table id="mini-mat">
-		<% 1.upto(@mat.x_dimension) do |x| %>
+		<% 0.upto(@mat.x_dimension-1) do |x| %>
 			<tr id="mini-mat-row-<%= x %>">
-				<% 1.upto(@mat.y_dimension) do |y| %>
-					<td id="mini-mat-cell-<%= x %>x<%= y %>">
-						<img src="/images/textures/tiles/Spacer.png" class="spacer" alt="Spacer" id="mini-mat-tile-<%= x %>x<%= y %>" />
+				<% 0.upto(@mat.y_dimension-1) do |y| %>
+					<%
+						src = "/images/textures/tiles/Spacer.png"
+						visibility = "visible"
+						db_tile = BattleMatTiles.first :conditions => [
+							"x_position = ? AND y_position = ? AND battle_mat_id = ?",
+								x.to_s, y.to_s, @mat.id
+						]
+						if nil != db_tile then
+							src = db_tile.tile_source
+							visibility = db_tile.visibility
+						end
+					%>
+					<td id="mini-mat-cell-<%= x %>x<%= y %>"  style="visibility: <%= visibility %>">
+						<img src="<%= src %>" class="tile" alt="Battle Mat Tile" id="mini-mat-tile-<%= x %>x<%= y %>" />
 					</td>
 				<% end %>
 			</tr>
@@ -95,8 +107,21 @@
 
 <!-- This loads the actual mat window and applies its background -->
 <script type="application/javascript">
+	// Open Mat window
  	open_battle_mat_window("<%= params[:id] %>");
+ 	
+ 	// Set Mat background
  	<% if @mat.background then %>
  		set_mat_background("<%= @mat.background %>");
  	<% end %>
+ 	
+ 	// Update Mat size, i. e. the number of shown rows/columns
+ 	for(var i = 0; i != $("mini-mat").rows.length; ++i) {
+ 		if("hidden" == $("mini-mat").rows[i].cells[0].style.visibility) break;
+ 		$("mat-x-dimension").innerHTML = i+1;
+ 	}
+ 	for(var i = 0; i != $("mini-mat").rows[0].cells.length; ++i) {
+ 		if("hidden" == $("mini-mat").rows[0].cells[i].style.visibility) break;
+ 		$("mat-y-dimension").innerHTML = i+1;
+ 	}
 </script>

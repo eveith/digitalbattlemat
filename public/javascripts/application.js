@@ -100,10 +100,10 @@ function mat_modify_row_count(n) {
 					if(mini_mat == mats[m]) id_prefix = "mini-" + id_prefix;
 					
 					var tr = mats[m].insertRow(r);
-					tr.id = id_prefix + "-row-" + (r+1);
+					tr.id = id_prefix + "-row-" + r;
 					for(var c = 0; c != mats[m].rows[r-1].cells.length; ++c) {
 						var td = tr.insertCell(c);
-						td.id = id_prefix + "-cell-" + (r+1) + "x" + (c+1);
+						td.id = id_prefix + "-cell-" + r + "x" + c;
 						td.innerHTML = "<img " +
 							"src=\"/images/textures/tiles/Spacer.png\" " +
 							"alt=\"Spacer\" class=\"spacer\" " +
@@ -179,7 +179,7 @@ function mat_modify_column_count(n) {
 						if(mats[m] == mini_mat) id_prefix = "mini-" + id_prefix;
 						
 						var td = mats[m].rows[r].insertCell(c);
-						td.id = id_prefix + "-cell-" + (r+1) + "x" + (c+1);
+						td.id = id_prefix + "-cell-" + r + "x" + c;
 						td.innerHTML = "<img " +
 							"src=\"/images/textures/tiles/Spacer.png\" " +
 							"alt=\"Spacer\" class=\"spacer\" " +

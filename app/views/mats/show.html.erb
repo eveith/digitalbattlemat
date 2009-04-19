@@ -4,11 +4,23 @@
 
 <div id="mat-container">
 	<table id="mat">
-		<% 1.upto(@mat.x_dimension) do |x| %>
+		<% 0.upto(@mat.x_dimension - 1) do |x| %>
 			<tr id="mat-row-<%= x %>">
-				<% 1.upto(@mat.y_dimension) do |y| %>
-					<td id="mat-cell-<%= x %>x<%= y %>">
-						<img src="/images/textures/tiles/Spacer.png" class="spacer" alt="Spacer" id="mat-tile-<%= x %>x<%= y %>" />
+				<% 0.upto(@mat.y_dimension - 1) do |y| %>
+					<%
+						src = "/images/textures/tiles/Spacer.png"
+						visibility = "visible"
+						db_tile = BattleMatTiles.first :conditions => [
+							"x_position = ? AND y_position = ? AND battle_mat_id = ?",
+								x.to_s, y.to_s, @mat.id
+						]
+						if nil != db_tile then
+							src = db_tile.tile_source
+							visibility = db_tile.visibility
+						end
+					%>
+					<td id="mat-cell-<%= x %>x<%= y %>" style="visibility: <%= visibility %>">
+						<img src="<%= src %>" class="spacer" alt="Spacer" id="mat-tile-<%= x %>x<%= y %>" />
 					</td>
 				<% end %>
 			</tr>

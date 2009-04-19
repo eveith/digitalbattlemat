@@ -55,9 +55,25 @@ class MatsController < ApplicationController
     mat.save
     
     # Save tiles of this mat
-    puts "---"
-    puts params[:mat][:tiles]["1"]["1"]
-    puts "---"
+    0.upto(params[:mat][:x_dimension].to_i - 1) do |i|
+      0.upto(params[:mat][:y_dimension].to_i - 1) do |j|
+        tile = BattleMatTiles.first :conditions => [
+          "x_position = ? AND y_position = ? AND battle_mat_id = ?",
+            i.to_s, j.to_s, params[:id]
+        ]
+        if nil == tile
+          tile = BattleMatTiles.new
+        end
+        
+        tile.x_position = i
+        tile.y_position = j
+        tile.tile_source = params[:mat][:tiles][i.to_s][j.to_s][:src]
+        tile.visibility = params[:mat][:tiles][i.to_s][j.to_s][:visibility]
+        tile.battle_mat_id = params[:id]
+        
+        tile.save
+      end
+    end
   end
 
   def show

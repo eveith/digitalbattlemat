@@ -84,7 +84,7 @@
 	max-height: 30px;
 }
 
-#mat-mini-container * img.spacer {
+#mat-mini-container * img.tile {
 	min-width: 30px;
 	min-height: 3px;
 }

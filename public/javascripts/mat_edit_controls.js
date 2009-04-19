@@ -39,7 +39,8 @@ function save_mat(form) {
 	}
 		
 	// Create a pseudo-list of all tiles in the format
-	// mat[tile][row][column] = "visible;/path/to/tile/source".
+	// mat[tile][row][column][visibility] = "visible"
+	// mat[tile][row][column][src] = "/path/to/tile/source"
 	var tiles = "";
 	for(var i = 0; i != mat.rows.length; ++i) {
 		for(var j = 0; j != mat.rows[i].cells.length; ++j) {
@@ -60,8 +61,10 @@ function save_mat(form) {
 			if((i == 0 && j > 0) || i > 0) {
 				tiles += "&";
 			}
-			tiles += encodeURI("mat[tiles][" + i + "][" + j + "]=" + 
-					visibility + ";" + uri);
+			tiles += encodeURI("mat[tiles][" + i + "][" + j + "][visibility]=" +
+					visibility);
+			tiles += "&" + encodeURI("mat[tiles][" + i + "][" + j + "][src]=" +
+					uri);
 		}
 	}
 	
