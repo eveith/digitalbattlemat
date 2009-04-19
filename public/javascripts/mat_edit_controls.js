@@ -70,6 +70,7 @@ function save_mat(form) {
 		}
 	}
 	
+	
 	new Ajax.Request(action, {
 		method: method,
 		parameters: Form.serialize(form) + "&" + dimensions + "&" + background +
@@ -77,6 +78,11 @@ function save_mat(form) {
 		onFailure: function(transport) {
 			show_ajax_failure_window(transport);
 			document.location.reload();
+		},
+		onSuccess: function(transport) {
+			// Get the "save" button and show some animation.
+			Effect.Shrink($$(".button-mat-save")[0]);
+			setTimeout('Effect.Grow($$(".button-mat-save")[0]);', 2000);
 		}
 	});
 }

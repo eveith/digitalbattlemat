@@ -98,10 +98,15 @@
 		<label for="description">Mat Description</label><br/>
 		<%= f.text_area :description, :rows => "3", :cols => "50" %>
 		<br />
-		<div class="button-ok" onclick="save_mat($('mat-change-description-form')); toggle_dropdown(null);">
-			(Save Description and Layout)
+		<div class="button-mat-save" onclick="save_mat($('mat-change-description-form'));">
+			Save Mat Layout and Description
 		</div>&nbsp;
-		<div class="button-cancel" onclick="toggle_dropdown(null);"></div>
+		<div class="button-mats-list">
+			<%= link_to "Back to Mats List...", :action => "index" %>
+		</div><br/>
+		<p style="display: none" id="mat-successful-save-message">
+			<strong>Mat sucessfully saved.</strong>
+		</p>
 	<% end %>
 </div>
 

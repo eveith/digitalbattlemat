@@ -8,8 +8,11 @@ class MatsController < ApplicationController
   end
 
   def destroy
-    BattleMats.find_by_id(params[:id]).destroy()
+    BattleMats.find(params[:id]).destroy()
     redirect_to :action => 'index'
+  rescue
+    # No such mat? Never mind.
+    redirect_to :action => "index"
   end
   
   def index
@@ -21,28 +24,38 @@ class MatsController < ApplicationController
   end
   
   def edit
-    @mat = BattleMats.find_by_id(params[:id])
-    if not @mat
-      redirect_to :action => "index"
+    @mat = BattleMats.find(params[:id])
+
+    # Fill backgrounds array
+    @backgrounds = []
+    begin
+      Dir.foreach('public/images/textures/backgrounds') do |entry|
+        if entry =~ /\.(png|jp.?g)$/i then
+          @backgrounds << entry
+        end
+      end
+    rescue
+      # Means that there's just no background.
     end
 
-    @backgrounds = []
-    Dir.foreach('public/images/textures/backgrounds') do |entry|
-      if entry =~ /\.(png|jp.?g)$/i then
-        @backgrounds << entry
+    # Fill tiles array
+    @tiles = []      
+    begin
+      Dir.foreach('public/images/textures/tiles') do |entry|
+        if entry =~ /\.(png|jp.?g)$/i then
+          @tiles << entry
+        end
       end
+    rescue
+      # It's ok, just leave the array empty.
     end
-    
-    @tiles = []
-    Dir.foreach('public/images/textures/tiles') do |entry|
-      if entry =~ /\.(png|jp.?g)$/i then
-        @tiles << entry
-      end
-    end
+  rescue
+    # Might be that there is no Mat, so return
+    redirect_to :action => "index"     
   end
   
   def update
-    mat = BattleMats.find_by_id(params[:id])
+    mat = BattleMats.find params[:id]
     mat.description = params[:mat][:description]
     mat.x_dimension = params[:mat][:x_dimension]
     mat.y_dimension = params[:mat][:y_dimension]
@@ -74,6 +87,9 @@ class MatsController < ApplicationController
         tile.save
       end
     end
+  rescue
+    # This propably means that there's no such Mat. That's ok. We should give
+    # some error handling, I guess, but we don't.
   end
 
   def show

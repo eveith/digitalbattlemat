@@ -37,8 +37,16 @@ div.button-cancel:before {
 	content: "Cancel";
 }
 
+div.button-mats-list {
+	background-image: url("../images/icons/application_cascade.png");
+}
+
 div.button-mat-show {
 	background-image: url("../images/icons/application_view_icons.png");
+}
+
+div.button-mat-save {
+	background-image: url("../images/icons/application_go.png");
 }
 
 div.button-mat-delete {
