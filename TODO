@@ -1,2 +1,8 @@
+= TODO
+
+- Create a JavaScript object for each mat
+
+- Clean up JS code
+
 - Switch the whole markup to HTML 5 for the <canvas> tag, implement independant
   image layers that can be rotated, shrinked, and freely moved on a mat.
