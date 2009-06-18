@@ -1,0 +1,1 @@
+page.replace "new-mat-form", :partial => "index_mat_list_item", :locals => { :mat => @new_mat }

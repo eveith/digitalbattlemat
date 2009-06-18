@@ -1,0 +1,6 @@
+<li id="new-mat-form">
+    <% form_remote_for :mat, :url => { :action => "create" } do |f| %>
+        <%= f.text_area "description", { :rows => "3", :cols => "40" } %><br/>
+        <div class="button-ok" onclick="this.parentNode.onsubmit();"></div>
+    <% end %>
+</li>

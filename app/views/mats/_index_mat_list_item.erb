@@ -1,0 +1,17 @@
+<li id="mat-<%= mat.id %>" style="padding: 0.2em 0 0.2em 0">
+    <p style="margin-bottom: 0.2em">
+        <strong><%= mat.description %></strong>
+    </p>
+    <div class="button-mat-show">
+        <%= link_to "Open", 
+            :action => "edit", :id => mat.id %>
+    </div>&nbsp;
+    <div class="button-mat-delete">
+      <%=
+        link_to_remote("Delete", {
+            :url => { :action => "destroy", :id => mat.id },
+            :method => :delete
+        })
+      %>
+    </div>
+</li>

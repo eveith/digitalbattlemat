@@ -1,36 +1,12 @@
 <h1>Battle Mats</h1>
 <p>Below you find a list of previously created Battle Mats, and the possiblity
 	to create a new one.</p>
-<% if @mats and @mats.size > 0 then %>
-	<ol>
-		<% @mats.each do |m| %>
-			<li style="padding: 0.2em 0 0.2em 0">
-				<p style="margin-bottom: 0.2em">
-					<strong><%= m.description %></strong>
-				</p>
-				<div class="button-mat-show">
-					<%= link_to 'Open ...', 
-						:action => "edit", :id => m %>
-				</div>&nbsp;
-				<div class="button-mat-delete">
-					<%= link_to "Delete ...", 
-						{ :action => "destroy", :id => m }, :method => :delete %>
-				</div>
-			</li>
-		<% end %>
-	</ol>
-<% end %>
+<ol id="mats-list">
+	<% @mats.each do |m| %>
+		<%= render :partial => "index_mat_list_item", :locals => { :mat => m } %>
+	<% end %>
+</ol>
 
-<div class="container-prompt">
-	<div class="button-create" onclick="toggle_dropdown('prompt-new-mat-description');">
-		Create a new Battle Mat ...
-	</div>
-	<div class="prompt-dropdown" id="prompt-new-mat-description">
-		<h2>Describe Battle Mat</h2>
-		<% form_for :mat, :url => { :action => "create" } do |f| %>
-			<%= f.text_area "description", { :rows => "3", :cols => "40" } %><br/>
-			<div class="button-ok" onclick="this.parentNode.submit();"></div>&nbsp;
-			<div class="button-cancel" onclick="toggle_dropdown(null)"></div> 
-		<% end %>
-	</div>
+<div class="button-create">
+	<%= link_to_remote "Create a new Battle Mat ...", :url => { :action => "new" }, :method => :get %>
 </div>
