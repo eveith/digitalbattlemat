@@ -13,3 +13,18 @@ game without hassle and "let me just paint this street" breaks.
 
 This project is by no way associated with Chessex, Chessex' "BattleMat" product,
 or similar companies. Hence the space between the two words "Battle" and "Mat".
+
+== Installation
+
+The battle mat software is a mostly self-contained Ruby On Rails application.
+You need the following things to use it:
+
+- A recent version of Ruby
+- A recent version of Ruby On Rails
+- Ruby's SQLite bindings
+- A browser :^)
+
+Just run "rake db:create" in the top level directory, run the "server" program
+in the scripts/ directory and point your browser to http://localhost:3000/
+
+Have a lot of fun!
