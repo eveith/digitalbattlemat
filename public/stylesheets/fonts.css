@@ -3,6 +3,12 @@ body {
 	background-color: white;
 }
 
+
+h1 {
+    font-family: serif;
+    border-bottom: 1px solid #cecece;
+}
+
 a {
 	color: #7D8B5B;
 	text-decoration: none;
