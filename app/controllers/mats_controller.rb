@@ -1,11 +1,10 @@
 class MatsController < ApplicationController
   def create
     new_mat = BattleMats.new(params[:mat])
-    new_mat.x_dimension = 10
-    new_mat.y_dimension = 16
     new_mat.save
     redirect_to :action => 'index'
   end
+
 
   def destroy
     BattleMats.find(params[:id]).destroy()
@@ -15,13 +14,16 @@ class MatsController < ApplicationController
     redirect_to :action => "index"
   end
   
+
   def index
     @mats = BattleMats.find :all
   end
   
+  
   def new
     redirect_to :action => 'index'
   end
+  
   
   def edit
     @mat = BattleMats.find(params[:id])
@@ -54,8 +56,9 @@ class MatsController < ApplicationController
     redirect_to :action => "index"     
   end
   
+
   def update
-    mat = BattleMats.find params[:id]
+    mat = BattleMats.find params[:mat][:id]
     mat.description = params[:mat][:description]
     mat.x_dimension = params[:mat][:x_dimension]
     mat.y_dimension = params[:mat][:y_dimension]
@@ -92,8 +95,16 @@ class MatsController < ApplicationController
     # some error handling, I guess, but we don't.
   end
 
+
   def show
     @mat = BattleMats.find_by_id(params[:id])
-    render :layout => "plain"
+    flash[:error] = "The mat with the ID #{params[:id]} is not stored " \
+      'in the database'
+    redirect_to :action => 'index' unless @mat
+
+    respond_to do |format|
+      format.html { render :layout => 'plain' }
+      format.json { render :json => @mat }
+    end
   end
 end
