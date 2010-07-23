@@ -55,6 +55,28 @@ var BattleMatCell = Class.create({
  *  setSize setAuthenticityToken
  */
 var BattleMat = Class.create({
+    /**
+     * The mat's width in cells
+     */
+    width: 0,
+
+    /**
+     * The mat's height in cells
+     */
+    height: 0,
+
+
+    /**
+     * A textual description of the mat as stored in the database
+     */
+    description: "",
+
+    /**
+     * Create a new instance of a battle mat.
+     * 
+     * @param ID The mat's ID in the database, e.g. for queries in the form
+     *  "/mats/ID"
+     */
     initialize: function(ID) {
         this.ID = ID;
 
@@ -80,25 +102,35 @@ var BattleMat = Class.create({
         // dimension and tile placement from it, and initialize these
         // variables.
 
-        this.width = 0;
-        this.height = 0;
-        this.description = "";
-
         var mat = this;
         new Ajax.Request("/mats/" + ID + ".json", {
             method: "GET",
             asynchronous: false,
             onSuccess: function(transport) {
-                var battle_mat = transport.responseJSON.battle_mat;
+                var battleMat = transport.responseJSON.battle_mat;
 
-                mat.description = battle_mat.description;
-                mat.width = battle_mat.width;
-                mat.height = battle_mat.height;
+                mat.description = battleMat.description;
+                mat.width = battleMat.width;
+                mat.height = battleMat.height;
 
                 for(var r = 0; r != mat.height; ++r) {
                     mat.mat[r] = new Array();
                     for(var c = 0; c != mat.width; ++c) {
-                        mat.mat[r][c] = new BattleMatCell(c, r);
+                        // Create a cell object for exactly that position.
+                        // Check the transmitted information for additional
+                        // stuff, e.g. visibility or a tile.
+
+                        cell = new BattleMatCell(c, r);
+                        for(var savedCell in battleMat.battle_mat_tiles) {
+                            savedCell = battleMat.battle_mat_tiles[savedCell];
+                            if(c == savedCell.x_position
+                                    && r == savedCell.y_position) {
+                                cell.visibility = savedCell.visibility;
+                                cell.setTile(savedCell.tile_source);
+                                continue;
+                            }
+                        }
+                        mat.mat[r][c] = cell;
                     }
                 }
             }
