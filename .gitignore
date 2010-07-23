@@ -1,6 +1,6 @@
 .project
 .buildpath
 tags
-log/*
+log/*.log
 *.bak
 *.sw?
