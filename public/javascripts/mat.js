@@ -6,26 +6,88 @@
 
 
 var BattleMatCell = Class.create({
+
+    /**
+     * The cell's (HTML-) ID in the form "mat-cell-" + x "x" + y.
+     */
+    ID: null,
+
+
+    /** The x coordinate */
+    x: null,
+
+
+    /** The y coordinate */
+    y: null,
+
+
+    /**
+     * The CSS visibility attribute: A tile is invisible when it is outside
+     * the mat's current dimensions.
+     */
+    visibility: "visible",
+
+
+    /**
+     * An object storing the <td> elements associated with the cell, both in
+     * the mini as well as in the full-sized mat.
+     */
+    element: {
+        miniMat: "mat-mini-cell-",
+        mat: "mat-cell-"
+    },
+
+
+    /**
+     * An object storing the relative URIs to the tile image displayed.
+     */
+    tile: null,
+
+
+    /**
+     * A highlighter pseudo-process that is responsible for a nice blinking
+     * effect.
+     */
+    highlighter: null,
+
+
+    /**
+     * Constructs a new cell on the given coordinates.
+     *
+     * @param x The column
+     * @param y The row
+     */
     initialize: function(x, y) {
         this.x = x;
         this.y = y;
         this.ID = "mat-cell-" + x + "x" + y;
-        this.visibility = "visible";
 
 
-        // Create <td> elements that make up the cell
+        // Create <td> elements that make up the cell, thereby replacing the
+        // this.element attribute to make sure following incarnations don't
+        // pick up the changed stuff. (Refs v. copies...)
 
-        this.element = {
-            miniMat: new Element('td', { id: "mat-mini-cell-" + x + "x" + y }),
-            mat: new Element('td', { id: "mat-cell-" + x + "x" + y })
-        };
+        var element = {};
+        ["mat", "miniMat"].each(function(n, i) {
+            var id = this.element[n] + x + "x" + y;
+            element[n] = new Element('td', {
+                id: id,
+                style: "visibility: " + this.visibility
+            });
+
+
+            // Add event handler for highlighting. Save this object's instance
+            // in a new attribute called "cell" so that we can access it from
+            // within the event handler.
+
+            element[n].cell = this;
+            element[n].observe('mouseover', this.highlight);
+            element[n].observe('mouseout', this.dehighlight);
+        }, this);
+        this.element = element;
 
         // Create tile
 
-        this.tile = {
-            miniMat: null,
-            mat: null
-        };
         this.setTile("/images/textures/tiles/Spacer.png");
     },
 
@@ -36,10 +98,77 @@ var BattleMatCell = Class.create({
      * @param url The URI referencing the tile image
      */
     setTile: function(url) {
-        this.tile.miniMat = new Element('img', { src: url });
-        this.element.miniMat.update(this.tile.miniMat);
-        this.tile.mat = new Element('img', { src: url });
-        this.element.mat.update(this.tile.mat);
+        this.tile = { miniMat: null, mat: null };
+        ["mat", "miniMat"].each(function(n, i) {
+            this.tile[n] = new Element('img', { src: url });
+            this.element[n].update(this.tile[n]);
+        }, this);
+
+        return this;
+    },
+
+
+    /**
+     * Highlights the cell; automatically called by the onMouseOver handler of
+     * the cell's <td> element.
+     *
+     * @see dehighlight
+     */
+    highlight: function(event) {
+        // "this" refers to the element, not the class instance, but we
+        // patched the prototype.
+        var cell = this.cell;
+
+        this.cell.highlighter = new PeriodicalExecuter(function(pe) {
+            ["mat", "miniMat"].each(function(n, i) {
+                var e = cell.element[n];
+                if(e.hasClassName("highlighted-0")) {
+                    e.removeClassName("highlighted-0");
+                    e.addClassName("highlighted-1");
+                } else {
+                    e.removeClassName("highlighted-1");
+                    e.addClassName("highlighted-0");
+                }
+            }, this);
+        }, 0.5);
+    },
+
+
+    /**
+     * Removes the visual highlight from a cell's <td> object when the mouse
+     * leaves it.
+     *
+     * @see highlight
+     */
+    dehighlight: function(event) {
+        // "this" refers to the element, not the class instance, but we
+        // patched the prototype.
+
+        ["mat", "miniMat"].each(function(n, i) {
+            this.cell.element[n].removeClassName("highlighted-0");
+            this.cell.element[n].removeClassName("highlighted-1");
+        }, this);
+
+        if(null != this.cell.highlighter) {
+            this.cell.highlighter.stop();
+            this.cell.highlighter = null;
+        }
+    },
+
+
+    /**
+     * Sets the cell's visiblity on both mats, ignoring values other than
+     * "visible" or "hidden".
+     *
+     * @param v The CSS-style visiblity, i.e., either "visible" or "hidden".
+     */
+    setVisibility: function(v) {
+        if("visible" != v && "hidden" != v) return this;
+
+        this.visibility = v;
+        ["mat", "miniMat"].each(function(n, i) {
+            this.element[n].style.visibility = v;
+        }, this);
     }
 });
 
@@ -60,6 +189,7 @@ var BattleMat = Class.create({
      */
     width: 0,
 
+
     /**
      * The mat's height in cells
      */
@@ -70,6 +200,15 @@ var BattleMat = Class.create({
      * A textual description of the mat as stored in the database
      */
     description: "",
+
+
+    /**
+     * The fullscreen mat window reference
+     *
+     * @see openFullscreenWindow
+     */
+    fullscreenWindow: null,
+
 
     /**
      * Create a new instance of a battle mat.
@@ -101,17 +240,18 @@ var BattleMat = Class.create({
         // Get mat info via AJAX from "show" controller. Read description,
         // dimension and tile placement from it, and initialize these
         // variables.
+        // TODO: Refactor.
 
         var mat = this;
         new Ajax.Request("/mats/" + ID + ".json", {
             method: "GET",
             asynchronous: false,
             onSuccess: function(transport) {
-                var battleMat = transport.responseJSON.battle_mat;
+                var savedMat = transport.responseJSON.battle_mat;
 
-                mat.description = battleMat.description;
-                mat.width = battleMat.width;
-                mat.height = battleMat.height;
+                mat.description = savedMat.description;
+                mat.width = savedMat.width;
+                mat.height = savedMat.height;
 
                 for(var r = 0; r != mat.height; ++r) {
                     mat.mat[r] = new Array();
@@ -121,11 +261,11 @@ var BattleMat = Class.create({
                         // stuff, e.g. visibility or a tile.
 
                         cell = new BattleMatCell(c, r);
-                        for(var savedCell in battleMat.battle_mat_tiles) {
-                            savedCell = battleMat.battle_mat_tiles[savedCell];
+                        for(var t in savedMat.battle_mat_tiles) {
+                            savedCell = savedMat.battle_mat_tiles[t];
                             if(c == savedCell.x_position
                                     && r == savedCell.y_position) {
-                                cell.visibility = savedCell.visibility;
+                                cell.setVisibility(savedCell.visibility);
                                 cell.setTile(savedCell.tile_source);
                                 continue;
                             }
@@ -139,9 +279,13 @@ var BattleMat = Class.create({
 
 
     /**
+     * Opens the fullscreen mat window
      */
-    retrieveInformation: function() {
-        return this;
+    openFullscreenWindow: function() {
+        this.fullscreenWindow = window.open("/mats/" + this.ID, "matWindow",
+			"location=no,menubar=no,resizable=yes,left=0,screenX=0,top=0," +
+			"screenY=0,status=no,toolbar=no,scrollbars=no," +
+			"width=100%,height=100%");
     },
 
 
@@ -198,9 +342,6 @@ var BattleMat = Class.create({
      * @param height
      */
     setSize: function(width, height) {
-        this.width = width;
-        this.height = height;
-
         // Init bookkeeping.
 
         for(var row = 0; row != height; ++row) {
@@ -210,6 +351,12 @@ var BattleMat = Class.create({
                 this.mat[row][column] = new BattleMatCell(row, column);
             }
         }
+
+        
+        // Finally, record current values
+
+        this.width = width;
+        this.height = height;
 
         return this;
     },

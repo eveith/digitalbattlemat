@@ -79,6 +79,23 @@
 	margin: 0;
 }
 
+
+
+/*
+ * battle mat cell highlighting classes
+ */
+
+/* A highlighted cell (Version 0) */
+#mat-mini-container * td.highlighted-0, #mat-container * td.highlighted-0 {
+    border-color: #cfcfcf;
+}
+
+/* A highlighted cell (Version 1) */
+#mat-mini-container * td.highlighted-1, #mat-container * td.highlighted-1 {
+    border-color: #2c2c2c;
+}
+
+/* Images within the mini mat */
 #mat-mini-container * img {
 	max-width: 30px;
 	max-height: 30px;
