@@ -6,7 +6,7 @@
 	bottom: 0;
 	margin: 0;
 	padding: 0;
-	border: 1px solid black
+	border: 1px solid black;
 }
 
 #mat-container > table {
@@ -24,7 +24,7 @@
 }
 
 #mat-container * td {
-	border: 1px solid black;
+	border: 1px ridge black;
 	width: 2.5cm;
 	min-width: 2.5cm;
 	max-width: 2.5cm;
@@ -58,7 +58,7 @@
 	table-layout: fixed;
 	empty-cells: show;
 	border-spacing: 0 0;
-	border: 1px solid black;
+	border: 2px black ridge;
 }
 
 #mat-mini-container * tr {
@@ -68,7 +68,7 @@
 }
 
 #mat-mini-container * td {
-	border: 1px solid black;
+	border: 1px ridge black;
 	width: 30px;
 	min-width: 30px;
 	max-width: 30px;
@@ -92,4 +92,21 @@
 #mat-description-and-save-container {
 	position: relative;
 	top: 2em;
+}
+
+
+#mat-description-container {
+    padding-left: 2em;
+}
+
+#mat-description-container > blockquote {
+    margin-left: 0;
+}
+
+#mat-description-container > textarea {
+    font-family: "Times New Roman", serif;
+    font-size: normal;
+    font-style: italic;
+    border: 1px solid gray;
+    background-color: none;
 }

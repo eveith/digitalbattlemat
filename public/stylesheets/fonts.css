@@ -3,6 +3,7 @@ body {
 	background-color: white;
 }
 
+
 a {
 	color: #7D8B5B;
 	text-decoration: none;
@@ -11,4 +12,11 @@ a {
 a:hover {
 	color: #C4DA90;
 	text-decoration: none;
+}
+
+
+blockquote {
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    font-size: normal;
 }
