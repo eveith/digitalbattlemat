@@ -1,13 +1,13 @@
 class MatsController < ApplicationController
   def create
-    new_mat = BattleMats.new(params[:mat])
+    new_mat = BattleMat.new(params[:mat])
     new_mat.save
     redirect_to :action => 'index'
   end
 
 
   def destroy
-    BattleMats.find(params[:id]).destroy()
+    BattleMat.find(params[:id]).destroy()
     redirect_to :action => 'index'
   rescue
     # No such mat? Never mind.
@@ -16,7 +16,7 @@ class MatsController < ApplicationController
   
 
   def index
-    @mats = BattleMats.find :all
+    @mats = BattleMat.find :all
   end
   
   
@@ -26,7 +26,7 @@ class MatsController < ApplicationController
   
   
   def edit
-    @mat = BattleMats.find(params[:id])
+    @mat = BattleMat.find(params[:id])
 
     # Fill backgrounds array
     @backgrounds = []
@@ -58,7 +58,7 @@ class MatsController < ApplicationController
   
 
   def update
-    mat = BattleMats.find params[:mat][:id]
+    mat = BattleMat.find params[:mat][:id]
     mat.description = params[:mat][:description]
     mat.x_dimension = params[:mat][:x_dimension]
     mat.y_dimension = params[:mat][:y_dimension]
@@ -97,14 +97,19 @@ class MatsController < ApplicationController
 
 
   def show
-    @mat = BattleMats.find_by_id(params[:id])
-    flash[:error] = "The mat with the ID #{params[:id]} is not stored " \
-      'in the database'
-    redirect_to :action => 'index' unless @mat
+    @mat = BattleMat.find_by_id(params[:id])
+    unless @mat then
+      flash[:error] = "The mat with the ID #{params[:id]} is not stored " \
+        'in the database'
+      redirect_to :action => 'index' unless @mat
+      return
+    end
 
     respond_to do |format|
       format.html { render :layout => 'plain' }
-      format.json { render :json => @mat }
+      format.json do
+        render :json => @mat.to_json(:include => :battle_mat_tiles)
+      end
     end
   end
 end
