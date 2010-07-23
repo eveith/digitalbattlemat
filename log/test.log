@@ -1,0 +1,88 @@
+# Logfile created on Mon Apr 13 01:46:17 +0200 2009Unable to load battle_mat_tile, underlying cause no such file to load -- battle_mat_tile 
+
+ /usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:355:in `new_constants_in'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:102:in `require_or_load'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:61:in `depend_on'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:457:in `require_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:855:in `try_to_load_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:870:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `each'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:850:in `fixtures'
+./test/test_helper.rb:35
+./test/unit/battle_mat_tiles_test.rb:1:in `require'
+./test/unit/battle_mat_tiles_test.rb:1
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `load'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `each'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+Unable to load battle_mat, underlying cause no such file to load -- battle_mat 
+
+ /usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:355:in `new_constants_in'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:102:in `require_or_load'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:61:in `depend_on'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:457:in `require_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:855:in `try_to_load_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:870:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `each'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:850:in `fixtures'
+./test/test_helper.rb:35
+./test/unit/battle_mat_tiles_test.rb:1:in `require'
+./test/unit/battle_mat_tiles_test.rb:1
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `load'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `each'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+Unable to load battle_mat_tile, underlying cause no such file to load -- battle_mat_tile 
+
+ /usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:355:in `new_constants_in'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:102:in `require_or_load'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:61:in `depend_on'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:457:in `require_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:855:in `try_to_load_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:870:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `each'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:850:in `fixtures'
+./test/test_helper.rb:35
+./test/functional/mat_display_controller_test.rb:1:in `require'
+./test/functional/mat_display_controller_test.rb:1
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `load'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `each'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+Unable to load battle_mat, underlying cause no such file to load -- battle_mat 
+
+ /usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `gem_original_require'
+/usr/lib64/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:31:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:355:in `new_constants_in'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:510:in `require'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:102:in `require_or_load'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:61:in `depend_on'
+/usr/lib64/ruby/gems/1.8/gems/activesupport-2.1.1/lib/active_support/dependencies.rb:457:in `require_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:855:in `try_to_load_dependency'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:870:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `each'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:867:in `require_fixture_classes'
+/usr/lib64/ruby/gems/1.8/gems/activerecord-2.1.1/lib/active_record/fixtures.rb:850:in `fixtures'
+./test/test_helper.rb:35
+./test/functional/mat_display_controller_test.rb:1:in `require'
+./test/functional/mat_display_controller_test.rb:1
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `load'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5:in `each'
+/usr/lib64/ruby/gems/1.8/gems/rake-0.8.3/lib/rake/rake_test_loader.rb:5
