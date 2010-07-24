@@ -49,7 +49,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_BattleMat_session',
+    :key         => '_BattleMat_session',
     :secret      => '4e6ae42c967488c5b6bcb16123b77cefd71844c67a80376dede84f835da4735c414a5c8c97a707a644d08e5f3a4a0ef5236e0a9f029220ca51df730c6beea985'
   }
 
