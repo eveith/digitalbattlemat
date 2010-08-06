@@ -8,14 +8,6 @@
 #mat-mini-container
 
 :javascript
-  var mat = new BattleMat(#{@mat.id});
-  mat.setAuthenticityToken("#{form_authenticity_token}");
-
-  mat.setDescriptionContainerID("mat-description-container");
-  mat.setMiniMatContainerID("mat-mini-container");
-  mat.setMatContainerID("mat-container");
-
-  mat.buildDescription();
-  mat.buildMiniMat();
-
-  mat.openFullscreenWindow();
+  var miniMat = new BattleMat(#{@mat.id}, "mat-mini-container");
+  miniMat.setAuthenticityToken("#{form_authenticity_token}").
+    build();

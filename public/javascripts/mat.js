@@ -7,12 +7,6 @@
 
 var BattleMatCell = Class.create({
 
-    /**
-     * The cell's (HTML-) ID in the form "mat-cell-" + x "x" + y.
-     */
-    ID: null,
-
-
     /** The x coordinate */
     x: null,
 
@@ -28,14 +22,8 @@ var BattleMatCell = Class.create({
     visibility: "visible",
 
 
-    /**
-     * An object storing the <td> elements associated with the cell, both in
-     * the mini as well as in the full-sized mat.
-     */
-    element: {
-        miniMat: "mat-mini-cell-",
-        mat: "mat-cell-"
-    },
+    /** An object storing the <td> element associated with the cell. */
+    element: null,
 
 
     /**
@@ -52,6 +40,13 @@ var BattleMatCell = Class.create({
 
 
     /**
+     * A list of other objects that are to be notified on changes, like
+     * changing the tile or mouse events.
+     */
+    observers: [],
+
+
+    /**
      * Constructs a new cell on the given coordinates.
      *
      * @param x The column
@@ -60,33 +55,26 @@ var BattleMatCell = Class.create({
     initialize: function(x, y) {
         this.x = x;
         this.y = y;
-        this.ID = "mat-cell-" + x + "x" + y;
-
+        this.observers = [];
 
         // Create <td> elements that make up the cell, thereby replacing the
         // this.element attribute to make sure following incarnations don't
         // pick up the changed stuff. (Refs v. copies...)
 
-        var element = {};
-        ["mat", "miniMat"].each(function(n, i) {
-            var id = this.element[n] + x + "x" + y;
-            element[n] = new Element('td', {
-                id: id,
-                style: "visibility: " + this.visibility
-            });
+        this.element = new Element('td',
+                { style: "visibility" + this.visibility });
 
+        // Add event handler for (de-) highlighting.
 
-            // Add event handler for highlighting. Save this object's instance
-            // in a new attribute called "cell" so that we can access it from
-            // within the event handler.
+        var that = this;
+        this.element.observe("mouseover", function(event) {
+            that.highlight();
+        });
+        this.element.observe("mouseout", function(event) {
+            that.dehighlight();
+        });
 
-            element[n].cell = this;
-            element[n].observe('mouseover', this.highlight);
-            element[n].observe('mouseout', this.dehighlight);
-        }, this);
-        this.element = element;
-
-        // Create tile
+        // Create tile, set default blank spacer image.
 
         this.setTile("/images/textures/tiles/Spacer.png");
     },
@@ -98,11 +86,12 @@ var BattleMatCell = Class.create({
      * @param url The URI referencing the tile image
      */
     setTile: function(url) {
-        this.tile = { miniMat: null, mat: null };
-        ["mat", "miniMat"].each(function(n, i) {
-            this.tile[n] = new Element('img', { src: url });
-            this.element[n].update(this.tile[n]);
-        }, this);
+        if(null === this.tile)
+            this.tile = new Element('img');
+
+        this.tile.src = url;
+
+        this.notifyObservers();
 
         return this;
     },
@@ -114,23 +103,22 @@ var BattleMatCell = Class.create({
      *
      * @see dehighlight
      */
-    highlight: function(event) {
-        // "this" refers to the element, not the class instance, but we
-        // patched the prototype.
-        var cell = this.cell;
+    highlight: function() {
+        var e = this.element;
 
-        this.cell.highlighter = new PeriodicalExecuter(function(pe) {
-            ["mat", "miniMat"].each(function(n, i) {
-                var e = cell.element[n];
-                if(e.hasClassName("highlighted-0")) {
-                    e.removeClassName("highlighted-0");
-                    e.addClassName("highlighted-1");
-                } else {
-                    e.removeClassName("highlighted-1");
-                    e.addClassName("highlighted-0");
-                }
-            }, this);
+        this.highlighter = new PeriodicalExecuter(function(pe) {
+            if(e.hasClassName("highlighted-0")) {
+                e.removeClassName("highlighted-0");
+                e.addClassName("highlighted-1");
+            } else {
+                e.removeClassName("highlighted-1");
+                e.addClassName("highlighted-0");
+            }
         }, 0.5);
+
+        this.notifyObservers();
+
+        return this;
     },
 
 
@@ -140,19 +128,18 @@ var BattleMatCell = Class.create({
      *
      * @see highlight
      */
-    dehighlight: function(event) {
-        // "this" refers to the element, not the class instance, but we
-        // patched the prototype.
+    dehighlight: function() {
+        this.element.removeClassName("highlighted-0");
+        this.element.removeClassName("highlighted-1");
 
-        ["mat", "miniMat"].each(function(n, i) {
-            this.cell.element[n].removeClassName("highlighted-0");
-            this.cell.element[n].removeClassName("highlighted-1");
-        }, this);
-
-        if(null != this.cell.highlighter) {
-            this.cell.highlighter.stop();
-            this.cell.highlighter = null;
+        if(null != this.highlighter) {
+            this.highlighter.stop();
+            this.highlighter = null;
         }
+
+        this.notifyObservers();
+
+        return this;
     },
 
 
@@ -163,12 +150,54 @@ var BattleMatCell = Class.create({
      * @param v The CSS-style visiblity, i.e., either "visible" or "hidden".
      */
     setVisibility: function(v) {
-        if("visible" != v && "hidden" != v) return this;
+        if("visible" !== v && "hidden" !== v) return this;
 
-        this.visibility = v;
-        ["mat", "miniMat"].each(function(n, i) {
-            this.element[n].style.visibility = v;
-        }, this);
+        this.element.style.visibility = this.visibility;
+
+        this.notifyObservers();
+
+        return this;
+    },
+
+
+    /**
+     * Adds another object instance to the list of observers that are notified
+     * on changes. An observer has to implement the notifiy() method call.
+     */
+    addObserver: function(o) {
+        this.observers.push(o);
+        return this;
+    },
+
+
+    /**
+     * Receives an update from an observed subject.
+     *
+     * @param subject The subject whose state has changed
+     */
+    update: function(subject) {
+        this.setVisibility(subject.visibility);
+        this.setTile(subject.tile.src);
+
+        // Trigger highlighting/dehighlighting
+        
+        if(null === subject.highlighter)
+            this.dehighlight;
+        else
+            this.highlight();
+
+        return this;
+    },
+
+
+    /**
+     * Notifies all observers of a state change.
+     */
+    notifyObservers: function() {
+        for(var i = 0; i != this.observers.length; ++i) {
+            this.observers[i].notify(this);
+        }
+        return this;
     }
 });
 
@@ -176,38 +205,38 @@ var BattleMatCell = Class.create({
 /**
  * A BattleMat object instance is responsible for the whole HTML-Fu and JS-Fu
  * involved in creating and maintaining a mat and interacting with it. It
- * needs the ID strings of two HTML containers (i.e., div tags) that shall
- * contain the mat later on.
+ * consists of 0 to many BattleMatCell objects that represent the cells
+ * associated with it.
  *
- * @param ID The mat's database ID for AJAX queries
- * @see setMiniMatContainerID setMatContainerID setDescriptionContainerID
- *  setSize setAuthenticityToken
+ * You can chain several BattleMat objects together via the observer pattern
+ * and the corresponding methods. Changes will then be populated to all
+ * observers. This comes handy when two displayed mats share the same data,
+ * but are otherwise different, e.g. for a big-sized and a mini mat.
  */
 var BattleMat = Class.create({
-    /**
-     * The mat's width in cells
-     */
+
+    /** The mat's width in cells */
     width: 0,
 
 
-    /**
-     * The mat's height in cells
-     */
+    /** The mat's height in cells */
     height: 0,
 
 
-    /**
-     * A textual description of the mat as stored in the database
-     */
-    description: "",
+    /** A list of objects observing changes to this one */
+    observers: [],
 
 
-    /**
-     * The fullscreen mat window reference
-     *
-     * @see openFullscreenWindow
-     */
-    fullscreenWindow: null,
+    /** The <div> object housing the mat */
+    container: null,
+
+
+    /** A matrix containing the internal bookkeeping of all cells */
+    cells: [],
+
+
+    /** The Rails authenticity token used for AJAX requests */
+    authenticityToken: null,
 
 
     /**
@@ -215,110 +244,40 @@ var BattleMat = Class.create({
      * 
      * @param ID The mat's ID in the database, e.g. for queries in the form
      *  "/mats/ID"
+     * @param container The HTML ID of the mat's container element
      */
-    initialize: function(ID) {
+    initialize: function(ID, container) {
         this.ID = ID;
+        this.container = $(container);
 
-        // Pre-define instance variables for various container elements.
+        // Get the mat's layout:
 
-        this.descriptionContainerID = null;
-        this.descriptionContainer = null;
-        this.miniMatContainerID = null;
-        this.miniMatContainer = null;
-        this.matContainerID = null;
-        this.matContainer = null;
-
-        // The big mat's window and the authenticity token for AJAX requests:
-
-        this.matWindow = null;
-        this.authenticityToken = null;
-
-        // The bookkeeping array: Row x Column
-
-        this.mat = new Array();
-
-        // Get mat info via AJAX from "show" controller. Read description,
-        // dimension and tile placement from it, and initialize these
-        // variables.
-        // TODO: Refactor.
-
-        var mat = this;
+        var that = this;
         new Ajax.Request("/mats/" + ID + ".json", {
             method: "GET",
             asynchronous: false,
             onSuccess: function(transport) {
                 var savedMat = transport.responseJSON.battle_mat;
 
-                mat.description = savedMat.description;
-                mat.width = savedMat.width;
-                mat.height = savedMat.height;
+                that.width = savedMat.width;
+                that.height = savedMat.height;
 
-                for(var r = 0; r != mat.height; ++r) {
-                    mat.mat[r] = new Array();
-                    for(var c = 0; c != mat.width; ++c) {
-                        // Create a cell object for exactly that position.
-                        // Check the transmitted information for additional
-                        // stuff, e.g. visibility or a tile.
-
-                        cell = new BattleMatCell(c, r);
-                        for(var t in savedMat.battle_mat_tiles) {
-                            savedCell = savedMat.battle_mat_tiles[t];
-                            if(c == savedCell.x_position
-                                    && r == savedCell.y_position) {
-                                cell.setVisibility(savedCell.visibility);
-                                cell.setTile(savedCell.tile_source);
-                                continue;
-                            }
-                        }
-                        mat.mat[r][c] = cell;
+                for(var r = 0; r != that.height; ++r) {
+                    that.cells[r] = [];
+                    for(var c = 0; c != that.width; ++c) {
+                        that.cells[r][c] = new BattleMatCell(c, r);
                     }
                 }
+
+                // Apply changes from saved tiles.
+
+                savedMat.battle_mat_tiles.each(function(cell, i) {
+                    c = that.cells[cell.y_position][cell.x_position];
+                    c.setTile(cell.tile_source);
+                    c.setVisibility(cell.visibility);
+                }, that);
             }
         });
-    },
-
-
-    /**
-     * Opens the fullscreen mat window
-     */
-    openFullscreenWindow: function() {
-        this.fullscreenWindow = window.open("/mats/" + this.ID, "matWindow",
-			"location=no,menubar=no,resizable=yes,left=0,screenX=0,top=0," +
-			"screenY=0,status=no,toolbar=no,scrollbars=no," +
-			"width=100%,height=100%");
-    },
-
-
-    /**
-     * Sets the ID string of the description container <div> element.
-     */
-    setDescriptionContainerID: function(ID) {
-        this.descriptionContainerID = ID;
-        this.descriptionContainer = $(ID);
-
-        return this;
-    },
-
-
-    /**
-     * Sets the HTML ID string of the mini mat container <div> element.
-     */
-    setMiniMatContainerID: function(ID) {
-        this.miniMatContainerID = ID;
-        this.miniMatContainer = $(ID);
-
-        return this;
-    },
-
-
-    /**
-     * Sets the HTML ID string of the mat container <div> element.
-     */
-    setMatContainerID: function(ID) {
-        this.MatContainerID = ID;
-        this.MatContainer = $(ID);
-
-        return this;
     },
 
 
@@ -380,53 +339,31 @@ var BattleMat = Class.create({
 
 
     /**
-     * Creates a mat within the designated container.
-     * 
-     * @param container The mat container
+     * Creates the actual HTML elements that make up the mat within the
+     * designated container. When called, it completely empties the container
+     * and creates every element from scratch. Normally, one has to call this
+     * method only once, i.e. when the mat is initially displayed. However,
+     * calling the method more than once will keep the internal matrix intact.
      */
-    build: function(container) {
-       for(e in container.childElements()) {
-          e.remove();
-       } 
-
-       for(row in this.mat) {
-           for(cell in row) {
-           }
-       }
-    },
-
-
-    /**
-     * This method completely draws the mini mat. It does so by emptying the
-     * container completely and recreating every HTML object from the
-     * scratch. It does not, however, kill the internal bookkeeping.
-     */
-    buildMiniMat: function() {
-        this.miniMatContainer.update(null);
-
+    build: function() {
         var table = new Element('table');
-        this.miniMatContainer.insert(table);
 
         for(var row = 0; row != this.height; ++row) {
             var tr = new Element('tr');
             table.insert(tr);
 
             for(var column = 0; column != this.width; ++column) {
-                tr.insert(this.mat[row][column].element.miniMat);
+                tr.insert(this.cells[row][column].element);
             }
         }
+
+        this.container.update(table);
+
+        return this;
     },
 
     
-    /**
-     * This method completely draws the fullsize mat. It does so by emptying
-     * the container completely and recreating every HTML object from the
-     * scratch. It does not, however, kill the internal bookkeeping.
-     */
-    buildMat: function() {
-    },
-
-
+    // TODO: Refactor the method below into an helper of its own.
     /**
      * Build the mat description blockquote, with all the event handlers
      * included.
