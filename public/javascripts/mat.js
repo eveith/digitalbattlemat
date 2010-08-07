@@ -161,6 +161,28 @@ var BattleMatCell = Class.create({
 
 
     /**
+     * Show the cell by setting its CSS visibility attribute to "visible".
+     *
+     * @see setVisibility
+     */
+    show: function() {
+        this.setVisibility("visibile");
+        return this;
+    },
+
+
+    /**
+     * Hide the cell by settings its CSS visibility attribute to "hidden".
+     *
+     * @see setVisibility
+     */
+    hide: function() {
+        this.setVisibility("hidden");
+        return this;
+    },
+
+
+    /**
      * Adds another object instance to the list of observers that are notified
      * on changes. An observer has to implement the notifiy() method call.
      */
@@ -259,8 +281,7 @@ var BattleMat = Class.create({
             onSuccess: function(transport) {
                 var savedMat = transport.responseJSON.battle_mat;
 
-                that.width = savedMat.width;
-                that.height = savedMat.height;
+                that.setSize(savedMat.width, savedMat.height);
 
                 for(var r = 0; r != that.height; ++r) {
                     that.cells[r] = [];
@@ -276,7 +297,8 @@ var BattleMat = Class.create({
                     c.setTile(cell.tile_source);
                     c.setVisibility(cell.visibility);
                 }, that);
-            }
+            },
+            onFailure: function(transport) { alert("Meep!"); }
         });
     },
 
@@ -297,25 +319,42 @@ var BattleMat = Class.create({
      * size, information will not be deleted. The unneccessary elements will
      * merely become invisible and re-appear when growing the mat again.
      *
-     * @param width
-     * @param height
+     * @param width The new absolute (visible) width of the mat
+     * @param height The new absolute (visible) height of the mat
      */
     setSize: function(width, height) {
-        // Init bookkeeping.
+        for(var row = 0; row !== height && row !== this.cells.length; ++row) {
+            // Init row if not yet present
 
-        for(var row = 0; row != height; ++row) {
-            this.mat[row] = [];
+            if(undefined === this.cells[row]) {
+                this.cells[row] = [];
+            }
 
-            for(var column = 0; column != width; ++column) {
-                this.mat[row][column] = new BattleMatCell(row, column);
+            for(var column = 0;
+                    column !== width && column !== this.cells[row].length;
+                    ++column) {
+                // Create a new cell if the slot is not yet initialized. Else,
+                // toggle visibility as neccessary.
+
+                if(undefined === this.cells[row][column]) {
+                    this.cells[row][column] = new BattleMatCell(row, column);
+                } else {
+                    if(column >= width || row >= height) {
+                        this.cells[row][column].hide();
+                    } else {
+                        this.cells[row][column].show();
+                    }
+                }
             }
         }
 
-        
-        // Finally, record current values
+        // Finally, record current visible dimensions of the mat, and notify
+        // the rest.
 
         this.width = width;
         this.height = height;
+
+        this.notifyObservers();
 
         return this;
     },
@@ -348,11 +387,11 @@ var BattleMat = Class.create({
     build: function() {
         var table = new Element('table');
 
-        for(var row = 0; row != this.height; ++row) {
+        for(var row = 0; row != this.cells.length; ++row) {
             var tr = new Element('tr');
             table.insert(tr);
 
-            for(var column = 0; column != this.width; ++column) {
+            for(var column = 0; column != this.cells[row].length; ++column) {
                 tr.insert(this.cells[row][column].element);
             }
         }
@@ -362,7 +401,40 @@ var BattleMat = Class.create({
         return this;
     },
 
-    
+
+    /**
+     * Adds another object instance to the list of observers that are notified
+     * on changes. An observer has to implement the notifiy() method call.
+     */
+    addObserver: function(o) {
+        this.observers.push(o);
+        return this;
+    },
+
+
+    /**
+     * Receives an update from an observed subject.
+     *
+     * @param subject The subject whose state has changed
+     */
+    update: function(subject) {
+        this.setSize(subject.getWidth(), subject.getHeight());
+
+        return this;
+    },
+
+
+    /**
+     * Notifies all observers of a state change.
+     */
+    notifyObservers: function() {
+        for(var i = 0; i != this.observers.length; ++i) {
+            this.observers[i].notify(this);
+        }
+        return this;
+    },
+
+
     // TODO: Refactor the method below into an helper of its own.
     /**
      * Build the mat description blockquote, with all the event handlers

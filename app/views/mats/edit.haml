@@ -1,13 +1,10 @@
 =javascript_include_tag 'mat_edit_controls.js'
 =javascript_include_tag 'mat.js'
 
-%h1 Battle Mat Control
-
-#mat-description-container
+%h1=@mat.description
 
 #mat-mini-container
 
 :javascript
   var miniMat = new BattleMat(#{@mat.id}, "mat-mini-container");
-  miniMat.setAuthenticityToken("#{form_authenticity_token}").
-    build();
+  miniMat.setAuthenticityToken("#{form_authenticity_token}").build();
