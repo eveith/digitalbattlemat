@@ -1,0 +1,36 @@
+<h1>Listing mats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hash</th>
+      <th>User</th>
+      <th>Title</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @mats.each do |mat| %>
+      <tr>
+        <td><%= mat.title %></td>
+        <td><%= link_to 'Show', mat %></td>
+        <td><%= link_to 'Edit', edit_mat_path(mat) %></td>
+        <td><%= link_to 'Destroy', mat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= form_tag(action: "create") do %>
+  <%= hidden_field(:mat, :title) %>
+  <%= submit_tag 'New Mat' %>
+<% end %>
+
+<script type="application/javascript">
+  $("input[type=submit]").button()
+</script>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hash:</strong>
+  <%= @mat.hash %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @mat.user_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @mat.title %>
+</p>
+
+<%= link_to 'Edit', edit_mat_path(@mat) %> |
+<%= link_to 'Back', mats_path %>
