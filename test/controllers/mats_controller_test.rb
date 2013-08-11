@@ -11,14 +11,14 @@ class MatsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:mats)
   end
 
-  test "should get new" do
+  test "should not get new" do
     get :new
-    assert_response :success
+    assert_redirected_to mats_path
   end
 
   test "should create mat" do
     assert_difference('Mat.count') do
-      post :create, mat: { hash: @mat.hash, title: @mat.title, user_id: @mat.user_id }
+      post :create, mat: { title: @mat.title, user_id: @mat.user_id }
     end
 
     assert_redirected_to mat_path(assigns(:mat))
@@ -35,7 +35,7 @@ class MatsControllerTest < ActionController::TestCase
   end
 
   test "should update mat" do
-    patch :update, id: @mat, mat: { hash: @mat.hash, title: @mat.title, user_id: @mat.user_id }
+    patch :update, id: @mat, mat: { title: @mat.title, user_id: @mat.user_id }
     assert_redirected_to mat_path(assigns(:mat))
   end
 
