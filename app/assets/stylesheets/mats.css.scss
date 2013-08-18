@@ -4,15 +4,19 @@
 
 
 .charactercard {
+    width: 400px;
+
     color: white;
 
     background-image: url('ui-bg_loop_25_000000_21x21.png');
     background-repeat: repeat;
 
-    border: 1px grey;
+    border: 1px solid #333;
     border-radius: 8px;
 
     padding: 12px 24px;
+
+    box-shadow: inset 4px 5px 6px -2px #ccc;
 
     .character-name {
         h1 {
