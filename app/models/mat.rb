@@ -6,7 +6,7 @@ class Mat < ActiveRecord::Base
   validates :unique_hash, uniqueness: true
 
 
-  after_create do
+  before_create do
     sha1 = Digest::SHA1.new
     self.unique_hash = sha1.hexdigest(
         "#{Time.new().strftime("%s")}-#{Random::rand}").slice(0, 8)
