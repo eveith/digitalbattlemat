@@ -8,9 +8,16 @@
 </head>
 <body>
   <div id="navigation-box">
-    <span id="logo"></span>
+    <span id="logo"><%= image_tag 'Logo.png' %></span>
+    <ul>
+      <li><a href="#"><span class="navicon"><%= image_tag 'Icon-Characters.png' %></span>Characters</a></li>
+      <li><a href="#"><span class="navicon"><%= image_tag 'Icon-Swords.png' %></span>Battle Screen</a></li>
+      <li><a href="#"><span class="navicon"><%= image_tag 'Icon-Maps.png' %></span>Maps</a></li>
+    </ul>
   </div>
-<%= yield %>
+  <div id="content-box">
+    <%= yield %>
+  </div>
 
 </body>
 </html>

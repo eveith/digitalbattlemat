@@ -17,12 +17,50 @@
 
 div#navigation-box {
   height: 86px;
+  width: 100%;
+
+  position: absolute;
+
+  top: 0px;
+  left: 0px;
+
+  background-image: url(<%= asset_path 'ui-bg_loop_25_000000_21x21.png' %>);
+  background-repeat: repeat;
 }
 
 
 span#logo {
   width: 350px;
   height: 86px;
-  background-image: url(<%= asset_path 'Logo.png' %>);
-  background-repeat: no-repeat;
+  float: left;
+}
+
+
+#navigation-box li a .navicon {
+  display: block;
+}
+
+
+#navigation-box li {
+  display: block;
+
+  width: 96px;
+  height: 85px;
+
+  float: left;
+
+  text-align: center;
+}
+
+#navigation-box a,a:visited {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: small;
+}
+
+
+div#content-box {
+  position: absolute;
+  top: 86px;
 }
