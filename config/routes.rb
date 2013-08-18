@@ -1,4 +1,6 @@
 Digitalbattlemat::Application.routes.draw do
+  resources :characters
+
   resources :mats
 
   # The priority is based upon order of creation: first created -> highest priority.
