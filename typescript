@@ -1,0 +1,221 @@
+Script wurde gestartet: So 11 Aug 2013 21:28:55 CEST
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Klls
+kls\[0m[01;34mapp[0m  [01;34mbin[0m  [01;34mconfig[0m  config.ru  [01;34mdb[0m  Gemfile  Gemfile.lock  [01;34m.git[0m  .gitignore  [01;34mlib[0m  [01;34mlog[0m  [01;34mpublic[0m  Rakefile  README.rdoc  [01;34mtest[0m  [01;34mtmp[0m  typescript  [01;34mvendor[0m
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Kbbin[1m/[0m[0m 
+kbin\kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat/bin[01;37m]% [00m[Klls
+kls\[0m[01;32mbundle[0m  [01;32mrails[0m  [01;32mrake[0m
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat/bin[01;37m]% [00m[Kccd ..
+kcd\kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Kbbin/ia  rails g
+kbin/rails\[31mCould not find rake-10.1.0 in any of the sources[0m
+[33mRun `bundle install` to install missing gems.[0m
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Kbbundle install
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Krruby -v
+kruby\ruby 1.9.3p286 (2012-10-12 revision 37165) [x86_64-linux]
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Krrvm
+krvm\[?1049h[?1h== rvm[m
+[m
+* https://rvm.io/[m
+* https://github.com/wayneeseguin/rvm/[m
+[m
+== DESCRIPTION:[m
+[m
+RVM is the Ruby enVironment Manager (rvm).[m
+[m
+It manages Ruby application environments and enables switching between them.[m
+[m
+== Installation[m
+[m
+  curl -L https://get.rvm.io | bash -s stable --autolibs=enabled [--ruby] [--rails] [--trace][m
+[m
+stable     :: Install stable RVM, good for servers.[m
+--ruby     :: Additionally install latest ruby version (MRI).[m
+--rails    :: Install gem rails into default gemset (also installs ruby=).[m
+--trace    :: Print trace of the installation, gist output when you have problems.[m
+--autolibs :: Enable or disable autolibs see: https://rvm.io/rvm/autolibs[m
+[m
+More details here: https://rvm.io/rvm/install/[m
+[m
+== Usage[m
+[m
+  rvm [Flags] [Options] Action [Implementation[,Implementation[,...]][m
+[m
+== Flags[m
+[m
+--default      :: with 'rvm use X', sets the default ruby for new shells to X.[m
+--debug        :: Toggle debug mode on for very verbose output.[m
+--trace        :: Toggle trace mode on to see EVERYTHING rvm is doing.[m
+--force        :: Force install, removes old install & source before install.[m
+--summary      :: Used with rubydo to print out a summary of the commands run.[m
+--latest       :: with gemset --dump skips version strings for latest gem.[m
+--gems         :: with uninstall/remove removes gems with the interpreter.[m
+--docs         :: with install, attempt to generate ri after installation.[m
+--reconfigure  :: Force ./configure on install even if Makefile already exists.[m
+--skip-gemsets :: with install, skip the installation of default gemsets.[m
+--quiet-curl   :: Makes curl silent when fetching data[m
+[m
+== Options[m
+[m
+-v|--version     :: Emit rvm version loaded for current shell[m
+-l|--level       :: patch level to use with rvm use / install[m
+   --bin         :: path for binaries to be placed (~/.rvm/bin/)[m
+-S               :: Specify a script file to attempt to load and run (rubydo)[m
+-e               :: Execute code from the command line.[m
+--gems           :: Used to set the 'gems_flag', use with 'remove' to remove[m
+                    gems[m
+--archive        :: Used to set the 'archive_flag', use with 'remove' to remove[m
+                    archive[m
+--patch          :: With MRI Rubies you may specify one or more full paths to[m
+                    patches[m
+[m
+                    for multiple, specify comma separated:[m
+[m
+                      --patch /.../.../a.patch[%prefix],/.../.../.../b.patch[m
+[m
+                    'prefix' is an optional argument, which will be bypassed[m
+                    to the '-p' argument of the 'patch' command. It is separated[m
+                    from patch file name with '%' symbol.[m
+[3mlines 1-62[23m[K[K[?1l>[?1049l[32m
+  Commands available with 'rvm help':
+
+      specs.md notes.md repair.md tests.md wrapper ruby.md wrapper.md rake.md use osx-ssl-certs.md mount.md disk-usage mount list info.md upgrade notes monitor.md tests fetch srcdir reinstall user do debug.md fetch.md get.md gemdir cleanup.md build snapshot reinstall.md alias.md gemset.md list.md install upgrade-notes.txt uninstall.md tools rubygems.md rvmrc.md rake alias cleanup update.md srcdir.md update implode snapshot.md tools.md gemset pkg uninstall repair pkg.md alt.md current info color benchmark.md autolibs.md fix-permissions.md implode.md migrate.md do.md get remove user.md gemdir.md reset upgrade.md install.md migrate remove.md docs cron.md ruby use.md config-get.md cron reset.md rubygems monitor build.md benchmark current.md specs color.md docs.md disk-usage.md debug 
+  [0m
+[32m
+  For additional information please visit RVM's documentation website:
+
+      https://rvm.io/
+
+  If you still cannot find what an answer to your question, find
+  'wayneeseguin', 'mpapis', 'richo', 'lemoinem' or 'rys' in #rvm on irc.freenode.net:
+
+      http://webchat.freenode.net/?channels=rvm
+  [0m
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Krrvr rvm use
+krvm\[32mUsing /home/eveith/.rvm/gems/ruby-1.9.3-p286[0m
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Krrvm list
+krvm\
+rvm rubies
+
+   [32mrbx-head[0m [ x86_64 ]
+=* [32mruby-1.9.3-p286[0m [ x86_64 ]
+   [32mruby-2.0.0-p0[0m [ x86_64 ]
+   [32mruby-2.0.0-p247[0m [ x86_64 ]
+
+# => - current
+# =* - current && default
+#  * - default
+
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Krrvm use ruby-2.0.0-p247
+krvm\[32mUsing /home/eveith/.rvm/gems/ruby-2.0.0-p247[0m
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Krrai r rbr  bbin/rails g
+kbin/rails\Usage: rails generate GENERATOR [args] [options]
+
+General options:
+  -h, [--help]     # Print generator's options and usage
+  -p, [--pretend]  # Run but do not make any changes
+  -f, [--force]    # Overwrite files that already exist
+  -s, [--skip]     # Skip files that already exist
+  -q, [--quiet]    # Suppress status output
+
+Please choose a generator below.
+
+Rails:
+  assets
+  controller
+  generator
+  helper
+  integration_test
+  jbuilder
+  mailer
+  migration
+  model
+  resource
+  scaffold
+  scaffold_controller
+  task
+
+Coffee:
+  coffee:assets
+
+Jquery:
+  jquery:install
+
+Js:
+  js:assets
+
+TestUnit:
+  test_unit:plugin
+
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Kbin/rails g migration
+kbin/rails\Usage:
+  rails generate migration NAME [field[:type][:index] field[:type][:index]] [options]
+
+Options:
+      [--skip-namespace]  # Skip namespace (affects only isolated applications)
+  -o, --orm=NAME          # Orm to be invoked
+                          # Default: active_record
+
+Runtime options:
+  -f, [--force]    # Overwrite files that already exist
+  -p, [--pretend]  # Run but do not make any changes
+  -q, [--quiet]    # Suppress status output
+  -s, [--skip]     # Skip files that already exist
+
+Description:
+    Stubs out a new database migration. Pass the migration name, either
+    CamelCased or under_scored, and an optional list of attribute pairs as arguments.
+
+    A migration class is generated in db/migrate prefixed by a timestamp of the current date and time.
+
+    You can name your migration in either of these formats to generate add/remove
+    column lines from supplied attributes: AddColumnsToTable or RemoveColumnsFromTable
+
+Example:
+    `rails generate migration AddSslFlag`
+
+    If the current date is May 14, 2008 and the current time 09:09:12, this creates the AddSslFlag migration
+    db/migrate/20080514090912_add_ssl_flag.rb
+
+    `rails generate migration AddTitleBodyToPost title:string body:text published:boolean`
+
+    This will create the AddTitleBodyToPost in db/migrate/20080514090912_add_title_body_to_post.rb with this in the Change migration:
+
+      add_column :posts, :title, :string
+      add_column :posts, :body, :text
+      add_column :posts, :published, :boolean
+
+Migration names containing JoinTable will generate join tables for use with
+has_and_belongs_to_many associations.
+
+Example:
+    `rails g migration CreateMediaJoinTable artists musics:uniq`
+
+    will create the migration
+
+    create_join_table :artists, :musics do |t|
+      # t.index [:artist_id, :music_id]
+      t.index [:music_id, :artist_id], unique: true
+    end
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Kbin/rails g migration ChangeId  MatId id  
+kbin/rails\[1m[37m      invoke[0m  active_record
+[1m[32m      create[0m    db/migrate/20130811193151_change_mat_id.rb
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat[01;37m]% [00m[Kccd db[1m/[0m[0m/migrate[1m/[0m[0m 
+kcd\kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat/db/migrate[01;37m]% [00m[Kee 201308
+[J20130804212319_create_mats.rb[23m  [23m  [23m[J20130811193151_change_mat_id.rb[23m[JM[0m[23m[24m[59Ce 201308[K04212319_create_mats.rb
+[J[3m20130804212319_create_mats.rb  [23m  [23m[J20130811193151_change_mat_id.rb[23m[JM[0m[23m[24m[59Ce 20130804212319_create_mats.rb[K
+[3m20130804212319_create_mats.rb  [23m  [23m[3m20130804212319_create_mats.rb  [23m  [23mM[0m[23m[24m[59Ce 20130804212319_create_mats.rb[K[23D11193151[2Chang[5C_id.rb
+[33C[3m20130811193151_change_mat_id.rb[23m20130804212319_create_mats.rb[23m  [23m  [23mM[0m[23m[24m[59Ce 20130811193151_change_mat_id.rb[K
+[JM[92C[1m [0m[0m 
+[Jke\[24m[0mFontconfig warning: "/etc/fonts/conf.d/56-user.conf", line 9: reading configurations from ~/.fonts.conf is deprecated.
+^Z[1]  + 5375 suspended  e 20130811193151_change_mat_id.rb
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat/db/migrate[01;37m]% [00m[Kbbg
+kbg\[1]  + 5375 continued  e 20130811193151_change_mat_id.rb
+kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat/db/migrate[01;37m]% [00m[Kccd ..
+kcd\kzsh\[0m[23m[24m[J[01;37m[[22;32meveith[22;37m@[01;34mkazumi[01;37m:[22;34m~/Development/digitalbattlemat/db[01;37m]% [00m[Krrake db:migrate
+krake\(in /home/eveith/Development/digitalbattlemat)
+==  ChangeMatId: migrating ====================================================
+-- change_table(:mats)
+rake aborted!
+An error has occurred, this and all later migrations canceled:
+
+undefined method `change_column' for #<ActiveRecord::ConnectionAdapters::Table:0x00000002480538>/home/eveith/Development/digitalbattlemat/db/migrate/20130811193151_change_mat_id.rb:4:in `block in change'
+/home/eveith/.rvm/gems/ruby-2.0.0-p247/gems/activerecord-4.0.0/lib/ac
