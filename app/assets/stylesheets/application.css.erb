@@ -26,6 +26,11 @@ div#navigation-box {
 
   background-image: url(<%= asset_path 'ui-bg_loop_25_000000_21x21.png' %>);
   background-repeat: repeat;
+
+  overflow: hidden;
+  -webkit-transition: height 0.2s linear;
+  -moz-transition: height 0.2s linear;
+  transition: height: 0.2s linear;
 }
 
 
@@ -33,6 +38,11 @@ span#logo {
   width: 350px;
   height: 86px;
   float: left;
+}
+
+
+#navigation-box ul {
+  height: 48px;
 }
 
 
@@ -45,7 +55,7 @@ span#logo {
   display: block;
 
   width: 96px;
-  height: 85px;
+  height: 48px;
 
   float: left;
 
@@ -57,6 +67,11 @@ span#logo {
   text-decoration: none;
   font-weight: bold;
   font-size: small;
+}
+
+
+#navigation-box li:hover {
+  background-color: #003147 !important;
 }
 
 
