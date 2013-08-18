@@ -1,7 +1,8 @@
+<script id="card-template" type="text/x-handlebars-template">
 <div class="charactercard">
   <div class="character-name">
     <h1>
-      Friedrich Grauther
+      {{name}}
       <a href="#"><span class="ui-icon ui-icon-pencil character-action"></span></a>
       <a href="#"><span class="ui-icon ui-icon-copy character-action"></span></a>
     </h1>
@@ -11,3 +12,54 @@
     <dd>100%</dd>
   </dl>
 </div>
+</script>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hash:</strong>
+  <%= @mat.hash %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @mat.user_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @mat.title %>
+</p>
+
+<%= link_to 'Edit', edit_mat_path(@mat) %> |
+<%= link_to 'Back', mats_path %>
+
+<div id="card-container">
+
+</div>
+
+<style>
+
+.charactercard{
+  width: 250px !important;
+  margin: 8px;
+  float: left;
+}
+
+</style>
+
+<script>
+
+// testing the templates
+$(document).ready(function(){
+
+  var template = Handlebars.compile($('#card-template').html());
+  
+  for(var a = 0; a < 5; a++) {
+    $('#card-container').append($(template({ name : 'blub #'+a })));
+  }
+  
+});
+
+</script>
+
