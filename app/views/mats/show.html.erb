@@ -14,39 +14,11 @@
 </div>
 </script>
 
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Hash:</strong>
-  <%= @mat.hash %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @mat.user_id %> 
-</p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @mat.title %>
-</p>
-
-<%= link_to 'Edit', edit_mat_path(@mat) %> |
-<%= link_to 'Back', mats_path %>
-
-<div id="card-container">
-
+<div id="notice">
+  <p><%= notice %></p>
 </div>
 
-<style>
-
-.charactercard{
-  width: 250px !important;
-  margin: 8px;
-  float: left;
-}
-
-</style>
+<div id="card-container"></div>
 
 <script>
 
@@ -59,6 +31,7 @@ $(document).ready(function(){
     $('#card-container').append($(template({ name : 'blub #'+a })));
   }
   
+  $('#card-container').masonry();
 });
 
 </script>
