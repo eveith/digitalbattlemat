@@ -1,7 +1,8 @@
+<script id="card-template" type="text/x-handlebars-template">
 <div class="charactercard">
   <div class="character-name">
     <h1>
-      Friedrich Grauther
+      {{name}}
       <a href="#"><span class="ui-icon ui-icon-pencil character-action"></span></a>
       <a href="#"><span class="ui-icon ui-icon-copy character-action"></span></a>
     </h1>
@@ -11,3 +12,27 @@
     <dd>100%</dd>
   </dl>
 </div>
+</script>
+
+<div id="notice">
+  <p><%= notice %></p>
+</div>
+
+<div id="card-container"></div>
+
+<script>
+
+// testing the templates
+$(document).ready(function(){
+
+  var template = Handlebars.compile($('#card-template').html());
+  
+  for(var a = 0; a < 5; a++) {
+    $('#card-container').append($(template({ name : 'blub #'+a })));
+  }
+  
+  $('#card-container').masonry();
+});
+
+</script>
+
