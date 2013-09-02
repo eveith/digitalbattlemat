@@ -33,4 +33,71 @@
 
         float: none;
     }
+
+
+    input {
+        font-size: 1em;
+        color: #ccc;
+
+        background-color: transparent;
+        box-shadow: 2px 2px 2px #ccc;
+
+        border: 1px solid #ccc;
+
+        display: none;
+    }
+
+
+    dt, dd {
+        display: block;
+        float: left;
+
+        margin: 0;
+    }
+
+
+    dt {
+        color: #ccc;
+        margin-left: 1.2em;
+    }
+
+
+    dt:first-child {
+        margin: 0;
+    }
+
+
+    dd {
+        margin-left: 0.5em;
+        font-weight: bold;
+    }
+
+
+    dd:last-child {
+        //float: none;
+    }
 }
+
+
+div#card-add {
+    padding: 8px;
+    opacity: 0.3;
+    box-shadow: none;
+
+    &:hover {
+        opacity: 1.0;
+        box-shadow: inset 4px 5px 6px -2px #ccc;
+    }
+
+    div {
+        border: 2px dashed white;
+        border-radius: 8px;
+
+        text-align: center;
+
+        padding-bottom: 28px;
+    }
+}
+
+
+

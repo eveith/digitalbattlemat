@@ -1,38 +1,76 @@
-<script id="card-template" type="text/x-handlebars-template">
-<div class="charactercard">
-  <div class="character-name">
-    <h1>
-      {{name}}
-      <a href="#"><span class="ui-icon ui-icon-pencil character-action"></span></a>
-      <a href="#"><span class="ui-icon ui-icon-copy character-action"></span></a>
-    </h1>
+<script id="card-template" type="text/html">
+  <div class="charactercard">
+    <div class="character-name">
+      <h1>
+        <span data-bind="text: name" class="editable"></span><input type="text" data-bind="value: name" />
+        <a href="#" class="character-action-edit"><span class="ui-icon ui-icon-pencil character-action character-action-edit"></span></a>
+        <a href="#"><span class="ui-icon ui-icon-copy character-action character-action-clone"></span></a>
+      </h1>
+    </div>
+
+    <div style="clear: both">
+      <dl>
+        <dt>Class</dt>
+        <dd><span data-bind="text: className"></span></dd>
+        <dt>Level</dt>
+        <dd><span data-bind="text: level" class="editable"></span><input type="text" data-bind="value: level" size="2" /></dd>
+        <dt>Life Points</dt>
+        <dd><span data-bind="text: lifePoints"></span></dd>
+      </dl>
+    </div>
+
+    <h2>Characteristics</h2>
+    <dl>
+      <dt>STR</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.strength"></span>
+        <input type="text" data-bind="value: characteristics.strength" size="2"/>
+      </dd>
+      <dt>CON</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.constitution"></span>
+        <input type="text" data-bind="value: characteristics.constitution" size="2"/>
+      </dd>
+      <dt>DEX</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.dexterity"></span>
+        <input type="text" data-bind="value: characteristics.dexterity" size="2"/>
+      </dd>
+      <dt>AGI</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.agility"></span>
+        <input type="text" data-bind="value: characteristics.agility" size="2"/>
+      </dd>
+      <dt>INT</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.intelligence"></span>
+        <input type="text" data-bind="value: characteristics.intelligence" size="2"/>
+      </dd>
+      <dt>POW</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.power"></span>
+        <input type="text" data-bind="value: characteristics.power" size="2"/>
+      </dd>
+      <dt>WP</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.willpower"></span>
+        <input type="text" data-bind="value: characteristics.willpower" size="2"/>
+      </dd>
+      <dt>PER</dt>
+      <dd>
+        <span class="editable" data-bind="text: characteristics.perception"></span>
+        <input type="text" data-bind="value: characteristics.perception" size="2"/>
+      </dd>
+    </dl>
   </div>
-  <dl>
-    <dt>Hit Points</dt>
-    <dd>100%</dd>
-  </dl>
-</div>
 </script>
 
 <div id="notice">
   <p><%= notice %></p>
 </div>
 
-<div id="card-container"></div>
-
-<script>
-
-// testing the templates
-$(document).ready(function(){
-
-  var template = Handlebars.compile($('#card-template').html());
-  
-  for(var a = 0; a < 5; a++) {
-    $('#card-container').append($(template({ name : 'blub #'+a })));
-  }
-  
-  $('#card-container').masonry();
-});
-
-</script>
-
+<div id="card-container" data-bind="template: { name: 'card-template', foreach:  characters, afterRender: addItems }">
+  <div id="card-add" class="charactercard">
+    <div><a href="#"><%= image_tag 'Icon-Plus-128x128.png' %><br/><span>Add Character</span></a></div>
+  </div>
+</div>
