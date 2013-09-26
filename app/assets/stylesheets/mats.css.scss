@@ -3,6 +3,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+div#navigation-box {
+    border-bottom: 2px inset #ddd;
+    height: 86px !important;
+}
+
+
+div[id|=dialog] {
+    display: none;
+}
+
+
 .charactercard {
     width: 400px;
 
@@ -15,6 +26,7 @@
     border-radius: 8px;
 
     padding: 12px 24px;
+    margin-bottom: 20px;
 
     box-shadow: inset 4px 5px 6px -2px #ccc;
 
@@ -37,12 +49,12 @@
 
     input {
         font-size: 1em;
-        color: #ccc;
+        font-weight: bold;
 
-        background-color: transparent;
-        box-shadow: 2px 2px 2px #ccc;
+        color: #fff;
+        background-color: #111;
 
-        border: 1px solid #ccc;
+        border: none;
 
         display: none;
     }
@@ -100,4 +112,56 @@ div#card-add {
 }
 
 
+div#actionbar {
+    width: 100%;
 
+    background-image: url('ui-bg_loop_25_000000_21x21.png');
+    background-repeat: repeat;
+
+    border-bottom: 1px solid black;
+
+    padding: 0.4em;
+
+
+    div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+
+    div:first-child {
+        width: 400px;
+    }
+
+
+    dl {
+        margin: 0;
+        padding: 0;
+    }
+
+
+    dt, dd {
+        display: block;
+        float: left;
+
+        margin: 0;
+    }
+
+
+    dt {
+        color: #eee;
+        margin-left: 1.2em;
+    }
+
+
+    dt:first-child {
+        margin: 0;
+    }
+
+
+    dd {
+        color: #fff;
+        margin-left: 0.5em;
+        font-weight: bold;
+    }
+}

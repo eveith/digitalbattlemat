@@ -29,6 +29,10 @@ class AnimaCharacter
         this.characteristicsModifier(@characteristics.agility)
 
 
+    fullLifePoints: ->
+        @baseLifePoints()
+
+
     unarmed: ->
         @currentWeapon == null
 
