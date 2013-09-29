@@ -8,14 +8,36 @@ class MatModel
         @characters = ko.observableArray()
         @nRounds = ko.observable(0)
 
+
     addItems: (elements) ->
-        elements.forEach((element, i) ->
+        elements.forEach((element, i) =>
             $(element).find(".characteristics-container").accordion({
                 collapsible: true })
-            $('#card-container').masonry('prepended', element))
+            $('#card-container').masonry('prepended', element)
 
-    edit: (element) ->
-        $(element).children('input').css("display", "inline" )
+            # Setup per-character action buttons:
+
+            $(element).find(".character-actions button:first")
+                .button({
+                    icons: { primary: "ui-icon-trash" },
+                    text: false
+                }).next().button({
+                    icons: { primary: "ui-icon-pencil" },
+                    text: false
+                }).next().button({
+                    icons: { primary: "ui-icon-copy" },
+                    text: false
+                }).next().button({
+                    icons: { primary: "ui-icon-gear" },
+                    text: false,
+                    disabled: true
+                }).next().button({
+                    icons: { primary: "ui-icon-script" },
+                    text: false,
+                    disabled: true
+                })
+            $(element).find(".character-actions").buttonset())
+
 
 
     rollInitiative: ->
@@ -28,13 +50,21 @@ class MatModel
 
         @nRounds(@nRounds()+1)
 
-        @characters().forEach((o, i) =>
+        @characters().forEach((o, i) ->
             o.rollInitiative())
 
         @characters.sort((a, b) ->
             a.initiative() > b.initiative() ? 1 : -1)
-        $('#card-container').masonry()
 
+        # Deactivate some buttons:
+
+        $('.action-edit-character').button("disable")
+        $('.action-remove-character').button("disable")
+
+        # Activate action buttons:
+        
+        $('.action-attack').button("enable")
+        $('.action-cast-spell').button("enable")
 
 
 class CharacterModel
@@ -63,16 +93,19 @@ class CharacterModel
         ), this)
 
 
+    edit: (model, event) ->
+        card = $(event.target).parents('.charactercard')
+        card.find('input').toggle()
+        card.find('span.editable').toggle()
+
+
     rollInitiative: ->
-        @initiative(Math.ceil(Math.random() * 10))
+        @initiative(Math.ceil(Math.random() * 100))
 
 
 
 document.setupActionBar = ->
     $("button").button()
-    $("#actionRollInitiative").button()
-        .click(->
-            window.matModel.rollInitiative())
 
 
 $(document).ready ->
@@ -100,6 +133,7 @@ $(document).ready ->
                 power: 0,
                 willpower: 0,
                 perception: 0 }})))))
+
 
 
     # Allow edit:

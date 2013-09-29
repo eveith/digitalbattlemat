@@ -3,12 +3,10 @@
     <div class="character-name">
       <h1>
         <span data-bind="text: name" class="editable"></span><input type="text" data-bind="value: name" />
-        <a href="#" class="character-action-edit"><span class="ui-icon ui-icon-pencil character-action character-action-edit"></span></a>
-        <a href="#"><span class="ui-icon ui-icon-copy character-action character-action-clone"></span></a>
       </h1>
     </div>
 
-    <div style="clear: both">
+    <div>
       <dl>
         <dt>Class</dt>
         <dd><span data-bind="text: className"></span></dd>
@@ -16,6 +14,8 @@
         <dd><span data-bind="text: level" class="editable"></span><input type="text" data-bind="value: level" size="2" /></dd>
         <dt>Life Points</dt>
         <dd><span data-bind="text: lifePoints"></span></dd>
+        <dt>Initiative</dt>
+        <dd><span data-bind="text: initiative"></span></dd>
       </dl>
     </div>
 
@@ -64,6 +64,15 @@
         </dd>
       </dl>
     </div>
+
+
+    <div class="character-actions">
+      <button class="action-remove-character">Remove Character</button>
+      <button class="action-edit-character" data-bind="click: edit">Edit Character</button>
+      <button class="action-clone-character">Clone Character</button>
+      <button class="action-attack">Attack</button>
+      <button class="action-cast-spell">Cast Spell</button>
+    </div>
   </div>
 </script>
 
@@ -76,8 +85,9 @@
     </dl>
   </div>
   <div>
-    <button id="actionRollInitiative">Roll Initiative</button>
+    <button id="actionRollInitiative" data-bind="click: rollInitiative">Roll Initiative</button>
     <button id="actionSetTrigger">Set Trigger</button>
+    <button id="actionRollDice">Roll Dices</button>
     <button id="actionInvite">Invite Players</button>
   </div>
 </div>

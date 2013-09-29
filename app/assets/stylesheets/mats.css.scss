@@ -3,14 +3,18 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-div#navigation-box {
+#navigation-box ul {
     border-bottom: 2px inset #ddd;
-    height: 86px !important;
 }
 
 
 div[id|=dialog] {
     display: none;
+}
+
+
+#card-container {
+    padding: 0 0.4em;
 }
 
 
@@ -26,33 +30,46 @@ div[id|=dialog] {
     border-radius: 8px;
 
     padding: 12px 24px;
+    padding-bottom: 0;
+
     margin-bottom: 20px;
 
     box-shadow: inset 4px 5px 6px -2px #ccc;
 
+
     .character-name {
+        float: none;
+
+
         h1 {
             font-size: 2em;
         }
 
 
-        float: none;
-
         .ui-icon {
             display: inline-block;
-            //float: left;
         }
+    }
 
-        float: none;
+
+    .characteristics-container {
+        input {
+            width: 2em;
+        }
     }
 
 
     input {
         font-size: 1em;
         font-weight: bold;
+        
+        min-width: 2em;
 
         color: #fff;
         background-color: #111;
+
+        margin: 0;
+        padding: 0;
 
         border: none;
 
@@ -61,9 +78,7 @@ div[id|=dialog] {
 
 
     dt, dd {
-        display: block;
-        float: left;
-
+        display: inline-block;
         margin: 0;
     }
 
@@ -82,11 +97,17 @@ div[id|=dialog] {
     dd {
         margin-left: 0.5em;
         font-weight: bold;
+        min-width: 2em;
     }
 
 
     dd:last-child {
         //float: none;
+    }
+
+
+    .ui-buttonset {
+        margin-top: 1.0em;
     }
 }
 
@@ -117,6 +138,8 @@ div#actionbar {
 
     background-image: url('ui-bg_loop_25_000000_21x21.png');
     background-repeat: repeat;
+    background-attachment: fixed;
+    background-position: 1px 1px;
 
     border-bottom: 1px solid black;
 
