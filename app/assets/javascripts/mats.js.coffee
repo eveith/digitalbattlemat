@@ -7,6 +7,7 @@ class MatModel
     constructor: ->
         @characters = ko.observableArray()
         @nRounds = ko.observable(0)
+        @triggers = []
 
 
     addItems: (elements) ->
@@ -66,13 +67,22 @@ class MatModel
         $('.action-attack').button("enable")
         $('.action-cast-spell').button("enable")
 
+        # Show triggers, if set:
+
+        while @triggers.length > 0 && @triggers[0].round == @nRounds()
+            trigger = @triggers.shift()
+            $.jGrowl(trigger.text, { 
+                    header: "Trigger in Round " + @nRounds(),
+                    life: 10000 })
+
 
 class CharacterModel
-    constructor: (character) ->
+    constructor: (character, mat) ->
         @character = character
         @name = ko.observable("Alric #" + Math.ceil(Math.random() * 100))
         @level = ko.observable(@character.level)
         @className = ko.observable("Warrior")
+        @mat = mat
 
         @characteristics = {}
         $.each(character.characteristics, (i, o) =>
@@ -103,6 +113,11 @@ class CharacterModel
         @initiative(Math.ceil(Math.random() * 100))
 
 
+    cloneCharacter: =>
+        newCharacter = $.extend(true, {}, @character)
+        @mat.characters.unshift(new CharacterModel(newCharacter, @mat))
+
+
 
 document.setupActionBar = ->
     $("button").button()
@@ -121,18 +136,20 @@ $(document).ready ->
 
     $('#card-add a').on('click', (event) => (
         event.preventDefault()
-        window.matModel.characters.unshift(new CharacterModel(new AnimaCharacter({
-            name: "",
-            level: 1,
-            characteristics: {
-                strength: 0,
-                constitution: 0,
-                dexterity: 0,
-                agility: 0,
-                intelligence: 0,
-                power: 0,
-                willpower: 0,
-                perception: 0 }})))))
+        window.matModel.characters.unshift(new CharacterModel(
+            new AnimaCharacter({
+                name: "",
+                level: 1,
+                characteristics: {
+                    strength: 0,
+                    constitution: 0,
+                    dexterity: 0,
+                    agility: 0,
+                    intelligence: 0,
+                    power: 0,
+                    willpower: 0,
+                    perception: 0 }}),
+            matModel))))
 
 
     # Setup roll dice dialog:
@@ -163,9 +180,23 @@ $(document).ready ->
         div.dialog({
             buttons: {
                 "Set Trigger": (->
+                    rollResult = $(div).data("rollResult")
+                    rollTitle = $(div).find(
+                            'input[name=dialog-roll-dice-trigger-title]')
+                            .val()
+
+                    $.jGrowl("Trigger set to fire in " + rollResult +
+                            " rounds: " + rollTitle)
+
+                    matModel.triggers.push({
+                            round: matModel.nRounds() + rollResult,
+                            text: rollTitle
+                        })
+                    matModel.triggers.sort((a, b) ->
+                        return (a.round > b.round ? 1 : -1))
+                    console.log(matModel.triggers)
+
                     $(this).dialog("close")
-                    $.jGrowl("Trigger set to fire in " +
-                            $(div).data("rollResult") + " rounds.")
                     )
                 "Close": -> 
                     $(this).dialog("close")
