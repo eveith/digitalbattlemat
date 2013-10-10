@@ -135,10 +135,44 @@ $(document).ready ->
                 perception: 0 }})))))
 
 
+    # Setup roll dice dialog:
 
-    # Allow edit:
+    $("#action-roll-dice").click(->
+        div = $("#dialog-roll-dice-template").clone()
 
-    $("#card-container").on("click", "a.character-action-edit", (event) ->
-        event.preventDefault()
-        $(this).parents(".charactercard").find(".editable").toggle()
-        $(this).parents(".charactercard").find("input").toggle())
+        div.find('form').first().submit((event) ->
+            event.preventDefault()
+            diceCode = div.find('input[name=dice-roll-dicecode]').val()
+            $.ajax('http://rolz.org/api/?' + diceCode + '.jsonp', {
+                    dataType: 'jsonp'
+                })
+                .done((data)->
+                    $(div).data("rollResult", data.result)
+                    div.find('.dialog-roll-dice-result').text(data.result)
+                    div.find('.dialog-roll-dice-result-p').toggle()
+                    $(div.find('form')[1]).toggle())
+                .fail(->
+                    $('#dialog-roll-error').dialog({
+                        modal: true, 
+                        buttons: {
+                            'OK': ->
+                                $(this).dialog("close")
+                        }
+                    })))
+
+        div.dialog({
+            buttons: {
+                "Set Trigger": (->
+                    $(this).dialog("close")
+                    $.jGrowl("Trigger set to fire in " +
+                            $(div).data("rollResult") + " rounds.")
+                    )
+                "Close": -> 
+                    $(this).dialog("close")
+                }
+            })
+
+        $(div.find('button')[2]).toggle()
+        div.find('input[name=dialog-roll-dice-set-trigger]').click(->
+            $(div.find('button')[2]).toggle())
+    )

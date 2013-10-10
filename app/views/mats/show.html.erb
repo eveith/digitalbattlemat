@@ -87,7 +87,7 @@
   <div>
     <button id="actionRollInitiative" data-bind="click: rollInitiative">Roll Initiative</button>
     <button id="actionSetTrigger">Set Trigger</button>
-    <button id="actionRollDice">Roll Dices</button>
+    <button id="action-roll-dice">Roll Dices</button>
     <button id="actionInvite">Invite Players</button>
   </div>
 </div>
@@ -105,6 +105,28 @@
     </div>
   </div>
 </div>
+
+
+<div id="dialog-roll-dice-template" title="Roll Dice" style="display: none;">
+  <form>
+    <label for="dice-roll-dicecode">
+      Dice Code (e.g., 1d10 – <a href="http://www.rolz.org/">Help</a>):
+    </label>
+    <input type="text" name="dice-roll-dicecode"></input> <button>Roll!</button>
+  </form>
+
+  <p class="dialog-roll-dice-result-p" style="display: none;">
+    <strong>Result:</strong> <span class="dialog-roll-dice-result"></span>
+  </p>
+
+  <form style="display: none;">
+    <p class="dice-roll-set-trigger">
+      <label for="dialog-roll-dice-trigger-title">Trigger Title:</label>
+      <input type="text" name="dialog-roll-dice-trigger-title"/>
+    </p>
+  </form>
+</div>
+
 
 <div id="dialog-roll-error" title="Error during roll">
   <p>
