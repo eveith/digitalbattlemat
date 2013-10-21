@@ -8,6 +8,7 @@ class MatModel
         @characters = ko.observableArray()
         @nRounds = ko.observable(0)
         @triggers = []
+        @isGameMaster = ko.observable(true)
 
 
     addItems: (elements) ->
@@ -46,9 +47,7 @@ class MatModel
             return false
 
         if @nRounds() == 0
-            $("#card-add").hide("highlight", { }, 1000)
             $(".charactercard .ui-accordion").accordion("option", "active", false)
-
         @nRounds(@nRounds()+1)
 
         @characters().forEach((o, i) ->
@@ -61,6 +60,8 @@ class MatModel
 
         $('.action-edit-character').button("disable")
         $('.action-remove-character').button("disable")
+        if not @isGameMaster()
+            $('#card-add').toggle()
 
         # Activate action buttons:
         
@@ -74,6 +75,19 @@ class MatModel
             $.jGrowl(trigger.text, { 
                     header: "Trigger in Round " + @nRounds(),
                     life: 10000 })
+
+        # Sort character card divs:
+
+        divs = $('.character-card').detach()
+        $('#card-container').masonry('reloadItems')
+
+        divs.sort((a, b) ->
+            aval = $(a).find('dd.character-initiative').first().text()
+            bval = $(b).find('dd.character-initiative').first().text()
+            return (aval > bval ? 1 : -1))
+
+        $('#card-container').prepend(divs)
+        $('#card-container').masonry('prepended', divs)
 
 
 class CharacterModel

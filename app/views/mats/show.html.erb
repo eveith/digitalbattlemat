@@ -1,5 +1,5 @@
 <script id="card-template" type="text/html">
-  <div class="charactercard">
+  <div class="charactercard character-card">
     <div class="character-name">
       <h1>
         <span data-bind="text: name" class="editable"></span><input type="text" data-bind="value: name" />
@@ -15,7 +15,7 @@
         <dt>Life Points</dt>
         <dd><span data-bind="text: lifePoints"></span></dd>
         <dt>Initiative</dt>
-        <dd><span data-bind="text: initiative"></span></dd>
+        <dd class="character-initiative"><span data-bind="text: initiative"></span></dd>
       </dl>
     </div>
 
@@ -85,10 +85,12 @@
     </dl>
   </div>
   <div>
-    <button id="actionRollInitiative" data-bind="click: rollInitiative">Roll Initiative</button>
+    <button id="actionRollInitiative" data-bind="click: rollInitiative, visible: isGameMaster">
+      Roll Initiative
+    </button>
     <button id="actionSetTrigger">Set Trigger</button>
     <button id="action-roll-dice">Roll Dices</button>
-    <button id="actionInvite">Invite Players</button>
+    <button id="actionInvite" data-bind="visible: isGameMaster">Invite Players</button>
   </div>
 </div>
 
