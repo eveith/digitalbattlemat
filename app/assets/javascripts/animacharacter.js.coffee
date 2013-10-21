@@ -70,4 +70,14 @@ class AnimaCharacter
         characteristicBonuses[value]
 
 
+class AnimaWeapon
+    constructor: ->
+        @baseDamage = 0
+        @at = 1
+
+
+    hit: (character) ->
+        @character.hitPoints -= @damage
+
+
 window.AnimaCharacter = AnimaCharacter
