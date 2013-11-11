@@ -1,4 +1,5 @@
 Digitalbattlemat::Application.routes.draw do
+  mount MochaRails::Engine => 'mocha' unless Rails.env.production?
   resources :characters
 
   resources :mats

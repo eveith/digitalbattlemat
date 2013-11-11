@@ -1,3 +1,45 @@
+class AnimaCombat
+    hitResult: (difference, at) ->
+        if at > 10
+            return 0
+
+        if 0 > difference
+            if -301 >= difference
+                return -150
+            else if -10 <= difference
+                return -1
+            else
+                if difference % 10 == 0
+                    difference += 1
+                return (Math.floor(difference / 10) + 1) * 5
+        else
+            result = 0
+            if difference <= 29
+                return 0
+            else if difference >= 30 and difference <= 39
+                if at in [0, 1, 2]
+                    return 10
+                else
+                    return 0
+            else if difference >= 40 and difference <= 49
+                if at == 0
+                    return 30
+                else if at in [1, 2]
+                    return 20
+                else if at == 3
+                    return 0
+                else
+                    return 0
+            else if difference >= 50
+                result = difference - (difference % 10) - at * 10
+
+            if result < 0
+                return 0
+            else
+                return result
+
+
+
 class AnimaCharacter 
     constructor: (options) ->
         {
@@ -80,4 +122,6 @@ class AnimaWeapon
         @character.hitPoints -= @damage
 
 
-window.AnimaCharacter = AnimaCharacter
+root = exports ? window  
+root.AnimaCharacter     = AnimaCharacter
+root.AnimaCombat        = AnimaCombat
