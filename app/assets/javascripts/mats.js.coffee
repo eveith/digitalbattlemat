@@ -68,6 +68,8 @@ class MatModel
         $('.action-attack').button("enable")
         $('.action-cast-spell').button("enable")
 
+        $('.action-set-weapon').prop("disabled", false)
+
         # Show triggers, if set:
 
         while @triggers.length > 0 && @triggers[0].round == @nRounds()
@@ -163,7 +165,11 @@ $(document).ready ->
                     power: 0,
                     willpower: 0,
                     perception: 0 }}),
-            matModel))))
+            matModel))
+        $('.action-attack').on('click', (event) -> (
+            $(this).parents('.character-card').find('.action-set-weapon').prop("disabled", true)
+        ))
+    ))
 
 
     # Setup roll dice dialog:
