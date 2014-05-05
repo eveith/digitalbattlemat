@@ -1,3 +1,14 @@
+# A penalty that hinders a character during combat or other actions.
+class AnimaPenalty
+    constructor: (penalty) ->
+        {
+            @value
+            @ratio
+            @unit
+            @type
+        } = penalty
+
+
 class AnimaCombat
     hitResult: (difference, at) ->
         if at > 10
@@ -49,7 +60,8 @@ class AnimaCharacter
             @lifePoints
         } = options
         
-        @currentWeapon = null
+        @currentWeapon  = null
+        @penalties      = []
 
         # Handle parameters:
 
@@ -83,6 +95,14 @@ class AnimaCharacter
         initiative = this.baseInitiative()
         if this.unarmed()
             initiative += 20
+
+        # Consider penalities, and possibly remove/reduce where applicable:
+
+        @penalties = @penalties.filter((penalty) =>
+            penalty.value -= penalty.ratio if penalty.unit = "combat round"
+            return false unless penalty.value > 0
+        )
+
         initiative
 
 

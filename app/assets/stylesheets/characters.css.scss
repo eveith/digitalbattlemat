@@ -1,3 +1,29 @@
 // Place all the styles related to the characters controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div#characters-list {
+    float: left;
+    width: 25em;
+    min-width: 20em;
+
+    h2 {
+        border-bottom: 1px solid grey;
+        padding-left: 3em;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+}
+
+div#characters-view {
+    margin: 0.5em;
+    flex: 1;
+}
+
+
+div#content-box {
+    display: flex;
+}

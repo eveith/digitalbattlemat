@@ -15,6 +15,7 @@ class Item < ActiveRecord::Base
 
 
   ITEM_TYPES = [
+    :character,
     :attribute,
     :skill
   ]

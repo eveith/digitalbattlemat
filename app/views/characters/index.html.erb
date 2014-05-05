@@ -1,31 +1,36 @@
-<h1>Listing characters</h1>
+<div id="characters-list" class="content-box">
+  <h1>All Characters</h1>
+  <input type="text" value="Search..." style="width: 4em;"/>
+  <button id="character-add">Add new Character</button>
+  <div id="characters-list-items" class="ioslist-group-container"></div>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Characteristics</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
+<div id="characters-view" class="content-box">
+  <h1>Character Details</h1>
 
-  <tbody>
-    <% @characters.each do |character| %>
-      <tr>
-        <td><%= character.name %></td>
-        <td><%= character.description %></td>
-        <td><%= character.characteristics %></td>
-        <td><%= link_to 'Show', character %></td>
-        <td><%= link_to 'Edit', edit_character_path(character) %></td>
-        <td><%= link_to 'Destroy', character, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div style="text-align:center">
+    <%= image_tag "Icon-Characters.png" %>
+    <p>Select a character on the left site or click the <em>Add</em> button to display details.</p>
+  </div>
+</div>
 
-<br>
+<%= javascript_tag do -%>
+  $(document).ready(function() {
 
-<%= link_to 'New Character', new_character_path %>
+    $("button#character-add").button({
+      icons: { primary: "ui-icon-plus" }
+    });
+
+    $.getJSON("<%= url_for action: "index" %>")
+      .done(function(data) {
+        window.charactersModel = new CharactersModel([]);
+        ko.applyBindings(window.charactersModel);
+
+        data.forEach(function(o) {
+          window.charactersModel.characters.push(o);
+        });
+
+        //$("#characters-list-items").ioslist();
+      });
+  });
+<% end -%>

@@ -10,6 +10,7 @@
  *
  *= require jquery.ui.all
  *= require jquery-ui/dark-hive
+ *= require jquery.ioslist
  *= require_self
  *= require_tree .
  */
@@ -19,6 +20,42 @@ body {
   margin: 0;
   padding: 0;
   background-image: url("p1-graz.jpg");
+
+  font-family: 'PT Sans', 'Verdana', sans-serif;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lora', serif;
+}
+
+
+p, ol, ul, td {
+  font-family: 'PT Sans', 'Verdana', sans-serif;
+  font-size: 12pt;
+}
+
+
+input {
+  font-family: 'PT Sans', 'Verdana', sans-serif;
+  font-style: italic;
+  font-size: 12pt;
+
+  color: #eee;
+  
+  border: 1px solid #444;
+  border-radius: 6px;
+
+  background: url("/assets/jquery-ui/dark-hive/ui-bg_highlight-soft_35_222222_1x100.png")
+      repeat-x scroll 50% 50% #222222;
+}
+
+input:active, input:focus {
+  font-weight: bold;
+  font-size: 12pt;
+
+  background: url("/assets/jquery-ui/dark-hive/ui-bg_highlight-soft_33_003147_1x100.png")
+      repeat-x scroll 50% 50% #003147;
 }
 
 
@@ -63,6 +100,8 @@ span#logo {
 
 
 #navigation-box li {
+  font-family: 'PT Sans', 'Verdana', sans-serif;
+
   display: block;
 
   width: 96px;
@@ -94,7 +133,7 @@ span#logo {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  font-size: small;
+  font-size: normal;
 }
 
 
@@ -108,4 +147,18 @@ div#content-box {
   top: 86px;
   padding: 0;
   width: 100%;
+}
+
+
+/**
+ * A box with rounded edges and smooth light inset shadow, but no hard border.
+ */
+.content-box {
+    padding: 1em;
+    margin: 0.5em;
+
+    background-image: url(p1.jpg);
+
+    box-shadow: inset 4px 5px 6px -2px #ccc;
+    border-radius: 8px;
 }
