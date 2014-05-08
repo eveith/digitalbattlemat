@@ -1,8 +1,10 @@
 <div id="characters-list" class="content-box">
   <h1>All Characters</h1>
-  <input type="text" value="Search..." style="width: 4em;"/>
-  <button id="character-add">Add new Character</button>
-  <div id="characters-list-items" class="ioslist-group-container"></div>
+  <div class="toolbar ui-widget-header ui-corner-all">
+    <input type="text" value="Search..." style="width: 4em;"/>
+    <button id="character-add">Add new Character</button>
+  </div>
+  <div id="characters-list-items" class="ioslist"></div>
 </div>
 
 <div id="characters-view" class="content-box">
@@ -30,7 +32,7 @@
           window.charactersModel.characters.push(o);
         });
 
-        //$("#characters-list-items").ioslist();
+        $("#characters-list-items").ioslist();
       });
   });
 <% end -%>
