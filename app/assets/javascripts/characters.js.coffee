@@ -1,15 +1,24 @@
 class CharactersListViewModel
     constructor: (characters) ->
         @characters = ko.observableArray(characters)
+        @currentCharacter = ko.observable(undefined)
 
         @characters.subscribe((characters) =>
             this.addCharacter(characters[characters.length-1]))
+
+
+    displayCharacter: (character) ->
+        @currentCharacter(character)
 
 
     addCharacter: (character) ->
         initial = character.name.substr(0, 1).toUpperCase()
         heading = $("#characters-list-items " +
                 ".ioslist-group-header:contains(#{initial})")[0]
+        link = $("<a href='#'>#{character.name}</a>").on("click", (e) => 
+            e.preventDefault()
+            this.displayCharacter(character))
+        li = $("<li></li>").append(link)
 
         unless heading
             container = $('<div class="ioslist-group-container"></div>')
@@ -29,9 +38,9 @@ class CharactersListViewModel
                         return true
                 )
 
-            $("<ul><li>#{character.name}</li></ul>").insertAfter(heading)
+            $("<ul></ul>").insertAfter(heading).append(li)
         else
-            $(heading).next("ul").append("<li>#{character.name}</li>")
+            $(heading).next("ul").append(li)
             ul = $(heading).next("ul").find("li")
             ul.detach()
             ul = ul.sort((a, b) ->
@@ -41,7 +50,7 @@ class CharactersListViewModel
                     return -1
                 return 0)
             $(heading).next("ul").append(ul)
-        heading
+        link
 
 
     sortCharactersList: (list) ->

@@ -8,12 +8,14 @@
 </div>
 
 <div id="characters-view" class="content-box">
-  <h1>Character Details</h1>
 
-  <div style="text-align:center">
+  <div style="text-align:center" id="character-placeholder" data-bind="ifnot: currentCharacter">
+    <h1>Character Details</h1>
     <%= image_tag "Icon-Characters.png" %>
     <p>Select a character on the left site or click the <em>Add</em> button to display details.</p>
   </div>
+
+  <div id="character-details-container" data-bind="template: { name: 'character-template-anima', if: currentCharacter, data: currentCharacter }"></div>
 </div>
 
 <%= javascript_tag do -%>
@@ -36,3 +38,10 @@
       });
   });
 <% end -%>
+
+<script type="text/html" id="character-template-anima">
+  <h1 data-bind="text: name"></h1>
+  <p class="character-details-description" data-bind="text: description"></p>
+
+  <h2>Characteristics</h2>
+</script>
