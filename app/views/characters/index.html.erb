@@ -4,7 +4,7 @@
     <input type="text" value="Search..." style="width: 4em;"/>
     <button id="character-add">Add new Character</button>
   </div>
-  <div id="characters-list-items" class="ioslist"></div>
+  <div id="characters-list-items"></div>
 </div>
 
 <div id="characters-view" class="content-box">
@@ -33,8 +33,6 @@
         data.forEach(function(o) {
           window.charactersModel.characters.push(o);
         });
-
-        $("#characters-list-items").ioslist();
       });
   });
 <% end -%>
@@ -44,4 +42,54 @@
   <p class="character-details-description" data-bind="text: description"></p>
 
   <h2>Characteristics</h2>
+  <table>
+    <thead>
+      <th></th>
+      <th>Base</th>
+      <th>Actual</th>
+      <th>Bonus</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Agility</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Constitution</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Dexterity</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Strength</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Intelligence</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Perception</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Power</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Willpower</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
 </script>
