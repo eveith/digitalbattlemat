@@ -31,7 +31,7 @@
         ko.applyBindings(window.charactersModel);
 
         data.forEach(function(o) {
-          window.charactersModel.characters.push(o);
+          window.charactersModel.characters.push(ko.mapping.fromJS(o));
         });
       });
   });
@@ -39,7 +39,7 @@
 
 <script type="text/html" id="character-template-anima">
   <h1 data-bind="text: name"></h1>
-  <p class="character-details-description" data-bind="text: description"></p>
+  <p class="character-details-description" data-bind="htmlValue: description" contenteditable="true"></p>
 
   <h2>Characteristics</h2>
   <table>

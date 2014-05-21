@@ -12,10 +12,10 @@ class CharactersListViewModel
 
 
     addCharacter: (character) ->
-        initial = character.name.substr(0, 1).toUpperCase()
+        initial = character.name().substr(0, 1).toUpperCase()
         heading = $("#characters-list-items h2:contains(#{initial})")[0]
-        link    = $("<a href='#{window.location}/#{character.id}'>" +
-                "#{character.name}</a>").on("click", (e) =>
+        link    = $("<a href='#{window.location}/#{character.id()}'>" +
+                "#{character.name()}</a>").on("click", (e) =>
             e.preventDefault()
             this.displayCharacter(character))
         li      = $("<li></li>").append(link)
