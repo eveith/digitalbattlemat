@@ -56,6 +56,10 @@ class AnimaCharacter
         if not @lifePoints
             @lifePoints = this.baseLifePoints()
 
+        # Penalties:
+
+        @penalties = []
+
 
     baseLifePoints: ->
         20 + @characteristics.constitution * 10
@@ -79,10 +83,19 @@ class AnimaCharacter
         @currentWeapon == null
 
 
+    # Rolls initiative. Also takes penalties into account, and reduces them,
+    # if possible.
     initiative: ->
         initiative = this.baseInitiative()
         if this.unarmed()
             initiative += 20
+
+        @penalties = @penalties.filter((penalty) =>
+          return penalty unless penalty.unit = "combat round"
+          penalty.value -= penalty.reduceRatio
+          return false unless penalty.value > 0
+          initiative -= penalty.value if penalty.type = "all action"
+        )
         initiative
 
 
@@ -110,6 +123,20 @@ class AnimaCharacter
             40,
             45 ]
         characteristicBonuses[value]
+
+
+    # Attacks another character. Takes this character's penalties, splash
+    # damage, etc into account and rolls the dices. It then handles the attack
+    # state object to the other character's defend method.
+    attack: (character) ->
+      true
+
+
+    # Defends the character against an attack of any kind, taking armor and
+    # damage type into account as well as penalties.
+    defend: (character) ->
+      true
+
 
 
 class AnimaWeapon
