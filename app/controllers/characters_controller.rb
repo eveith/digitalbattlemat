@@ -4,7 +4,7 @@ class CharactersController < ApplicationController
   # GET /characters
   # GET /characters.json
   def index
-    @characters = Item.where(:item_type => 0)
+    @characters = Character.all
   end
 
   # GET /characters/1

@@ -1,4 +1,4 @@
-class AnimaCharacter
+class AnimaCharacter < Character
   include Mongoid::Document
 
 
@@ -12,11 +12,10 @@ class AnimaCharacter
       :willpower => 0
     }
 
-  field :name, type: String
-  field :description, type: String
+
   field :characteristics, type: Hash, default: DEFAULT_CHARACTERISTICS
 
-  validates :name, presence: true
+
   validates_each :characteristics do |record, attr, value|
     unless value.keys == DEFAULT_CHARACTERISTICS.keys then
       record.errors.add(
