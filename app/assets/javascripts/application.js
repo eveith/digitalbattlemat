@@ -13,8 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require jquery.ioslist
 //= require turbolinks
-//= require knockout-2.3.0
+//= require knockout-3.1.0
 //= require knockout.mapping-latest.js
+//= require knockout.htmlValue
 //= require masonry
-//= require_tree .

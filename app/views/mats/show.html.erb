@@ -25,42 +25,42 @@
         <dt>STR</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.strength"></span>
-          <input type="text" data-bind="value: characteristics.strength" size="2"/>
+          <input type="number" data-bind="value: characteristics.strength" size="2"/>
         </dd>
         <dt>CON</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.constitution"></span>
-          <input type="text" data-bind="value: characteristics.constitution" size="2"/>
+          <input type="number" data-bind="value: characteristics.constitution" size="2"/>
         </dd>
         <dt>DEX</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.dexterity"></span>
-          <input type="text" data-bind="value: characteristics.dexterity" size="2"/>
+          <input type="number" data-bind="value: characteristics.dexterity" size="2"/>
         </dd>
         <dt>AGI</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.agility"></span>
-          <input type="text" data-bind="value: characteristics.agility" size="2"/>
+          <input type="number" data-bind="value: characteristics.agility" size="2"/>
         </dd>
         <dt>INT</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.intelligence"></span>
-          <input type="text" data-bind="value: characteristics.intelligence" size="2"/>
+          <input type="number" data-bind="value: characteristics.intelligence" size="2"/>
         </dd>
         <dt>POW</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.power"></span>
-          <input type="text" data-bind="value: characteristics.power" size="2"/>
+          <input type="number" data-bind="value: characteristics.power" size="2"/>
         </dd>
         <dt>WP</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.willpower"></span>
-          <input type="text" data-bind="value: characteristics.willpower" size="2"/>
+          <input type="number" data-bind="value: characteristics.willpower" size="2"/>
         </dd>
         <dt>PER</dt>
         <dd>
           <span class="editable" data-bind="text: characteristics.perception"></span>
-          <input type="text" data-bind="value: characteristics.perception" size="2"/>
+          <input type="number" data-bind="value: characteristics.perception" size="2"/>
         </dd>
       </dl>
     </div>
@@ -148,3 +148,8 @@
 </div>
 
 
+<%= javascript_tag do -%>
+  $(document).ready(function() {
+    setupMat();
+  });
+<% end -%>

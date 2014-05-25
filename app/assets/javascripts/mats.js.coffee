@@ -139,7 +139,7 @@ document.setupActionBar = ->
     $("button").button()
 
 
-$(document).ready ->
+document.setupMat = =>
     $('#card-container')
         .masonry({ 
             itemSelector: '.charactercard',

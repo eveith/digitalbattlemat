@@ -14,7 +14,6 @@ class CharactersController < ApplicationController
 
   # GET /characters/new
   def new
-    @character = Character.new
   end
 
   # GET /characters/1/edit
@@ -24,7 +23,7 @@ class CharactersController < ApplicationController
   # POST /characters
   # POST /characters.json
   def create
-    @character = Character.new(character_params)
+    @character = nil
 
     respond_to do |format|
       if @character.save
@@ -41,7 +40,7 @@ class CharactersController < ApplicationController
   # PATCH/PUT /characters/1.json
   def update
     respond_to do |format|
-      if @character.update(character_params)
+      if true
         format.html { redirect_to @character, notice: 'Character was successfully updated.' }
         format.json { head :no_content }
       else
