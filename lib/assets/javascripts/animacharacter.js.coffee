@@ -1,3 +1,6 @@
+
+
+
 # A penalty that hinders a character during combat or other actions.
 class AnimaPenalty
     constructor: (penalty) ->

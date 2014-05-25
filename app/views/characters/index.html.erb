@@ -27,11 +27,14 @@
 
     $.getJSON("<%= url_for action: "index" %>")
       .done(function(data) {
-        window.charactersModel = new CharactersModel([]);
-        ko.applyBindings(window.charactersModel);
+        window.charactersListViewModel = new CharactersListViewModel([]);
+        ko.applyBindings(window.charactersListViewModel);
 
         data.forEach(function(o) {
-          window.charactersModel.characters.push(ko.mapping.fromJS(o));
+          var characterModel = new CharacterTypeMap[o._type].gameModel(o);
+          var characterViewModel = new CharacterTypeMap[o._type].viewModel(
+              characterModel);
+          window.charactersListViewModel.characters.push(characterViewModel);
         });
       });
   });
@@ -41,54 +44,58 @@
   <h1 data-bind="text: name"></h1>
   <p class="character-details-description" data-bind="htmlValue: description" contenteditable="true"></p>
 
+  <p>
+    <strong><span data-bind="text: class"></span></strong>, 
+    Level <strong><span data-bind="text: level"></span></strong>
+  </p>
+
   <h2>Characteristics</h2>
   <table>
     <thead>
       <th></th>
-      <th>Base</th>
-      <th>Actual</th>
+      <th>Current</th>
       <th>Bonus</th>
     </thead>
     <tbody>
       <tr>
         <td>Agility</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.agility"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.agility())"></td>
       </tr>
       <tr>
         <td>Constitution</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.constitution"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.constitution())"></td>
       </tr>
       <tr>
         <td>Dexterity</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.dexterity"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.dexterity())"></td>
       </tr>
       <tr>
         <td>Strength</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.strength"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.strength())"></td>
       </tr>
       <tr>
         <td>Intelligence</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.intelligence"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.intelligence())"></td>
       </tr>
       <tr>
         <td>Perception</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.perception"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.perception())"></td>
       </tr>
       <tr>
         <td>Power</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.power"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.power())"></td>
       </tr>
       <tr>
         <td>Willpower</td>
-        <td></td>
-        <td></td>
+        <td data-bind="text: characteristics.willpower"></td>
+        <td data-bind="text: character.characteristicsModifier(characteristics.willpower())"></td>
       </tr>
     </tbody>
   </table>

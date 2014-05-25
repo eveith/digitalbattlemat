@@ -19,3 +19,5 @@
 //= require knockout.mapping-latest.js
 //= require knockout.htmlValue
 //= require masonry
+//= require character
+//= require animacharacter

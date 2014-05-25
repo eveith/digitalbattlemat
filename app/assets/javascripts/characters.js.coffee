@@ -64,6 +64,62 @@ class CharactersListViewModel
 
 
 
+class CharacterViewModel
+    constructor: (@character) ->
+        observedCharacter = this.createObservables(@character)
+        for propertyName of observedCharacter
+            Object.defineProperty(
+                this,
+                propertyName,
+                {
+                    value: observedCharacter[propertyName]
+                })
 
-window.CharactersListViewModel = CharactersListViewModel
-window.CharactersModel = CharactersListViewModel
+
+    createObservables: (targetObject) ->
+        observedObject = new Object()
+        Object.keys(targetObject).forEach((property, i) =>
+            propertyValue = targetObject[property]
+
+            if null != propertyValue and "object" == typeof propertyValue
+                observable = this.createObservables(propertyValue)
+            else
+                observable = ko.observable(propertyValue)
+
+                # Handle writing back upon UI change:
+
+                observable.subscribe((newValue) =>
+                    targetObject[property] = newValue)
+
+            # Define a new property on us:
+
+            Object.defineProperty(
+                    observedObject,
+                    property,
+                    {
+                        enumerable: true,
+                        value: observable
+                    })
+        )
+        observedObject
+
+
+class AnimaCharacterViewModel extends CharacterViewModel
+    constructor: (character) ->
+        super character
+
+
+CharacterTypeMap = {
+    "AnimaCharacter": {
+        gameModel: AnimaCharacter,
+        viewModel: AnimaCharacterViewModel
+    }
+}
+
+
+
+root = exports ? window
+root.CharacterTypeMap           = CharacterTypeMap
+root.CharactersListViewModel    = CharactersListViewModel
+root.CharacterViewModel         = CharacterViewModel
+root.AnimaCharacterViewModel    = AnimaCharacterViewModel
