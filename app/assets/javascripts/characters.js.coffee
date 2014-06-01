@@ -7,8 +7,13 @@ class CharactersListViewModel
             this.addCharacter(characters[characters.length-1]))
 
 
-    displayCharacter: (character) ->
-        @currentCharacter(character)
+    displayCharacter: (characterViewModel) ->
+        type = characterViewModel._type()
+        $.getJSON("characters/#{characterViewModel.id["$oid"]()}")
+        .done((data) =>
+            gameModel = new CharacterTypeMap[type].gameModel(data)
+            viewModel = new CharacterTypeMap[type].viewModel(gameModel)
+            @currentCharacter(viewModel))
 
 
     addCharacter: (character) ->
@@ -83,6 +88,9 @@ class CharacterViewModel
 
             if null != propertyValue and "object" == typeof propertyValue
                 observable = this.createObservables(propertyValue)
+            else if "function" == typeof propertyValue
+                observable = ko.computed((propertyValue) ->
+                    propertyValue.call())
             else
                 observable = ko.observable(propertyValue)
 

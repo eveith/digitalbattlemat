@@ -1,4 +1,57 @@
-
+AnimaCharacterClasses = {
+    "Warrior": {
+        "Archetype": "Fighter",
+        "Life Point Multiple": 15,
+        "Life Points": (character) ->
+            15 * character.level
+        "Primary Abilities": {
+            "Combat": {
+                "Limit": 0.6,
+                "Costs": {
+                    "Attack": 2,
+                    "Block": 2,
+                    "Dodge": 2,
+                    "Wear Armor": 2,
+                    "Ki": 2,
+                    "Ki Accumulation Multiple": 20
+                },
+            },
+            "Supernatural": {
+                "Limit": 0.5,
+                "Costs": {
+                }
+            },
+        },
+        "Secondary Abilities": {
+            "Costs": {
+                "Athletics": 2,
+                "Social": 2,
+                "Perceptive": 2,
+                "Intellectual": 3,
+                "Vigor": 2,
+                "Subterfuge": 2,
+                "Creative": 2
+            },
+            "Reduced Costs": {
+                "Feats of Strength": 1
+            }
+        },
+        "Innate Bonuses": {
+            "Primary": {
+                "Attack": (character) ->
+                    Math.min(character.level * 15, 50)
+                "Block": (character) ->
+                    Math.min(character.level * 15, 50)
+                "Wear Armor": (character) ->
+                    5 * character.level
+            },
+            "Secondary": {
+                "Feats of Strength": (character) ->
+                    5 * character.level
+            }
+        }
+    }
+}
 
 
 # A penalty that hinders a character during combat or other actions.
@@ -58,19 +111,29 @@ class AnimaCharacter extends Character
     constructor: (options) ->
         super options
         {
-            @class
+            @className,
             @level,
             @characteristics,
-            @lifePoints
+            @currentLifePoints,
+            @lifePointsBought,
+            @currentDevelopmentPoints
         } = options
-        
+
         @currentWeapon  = null
         @penalties      = []
 
         # Handle parameters:
 
-        if not @lifePoints
-            @lifePoints = this.baseLifePoints()
+        if not @currentLifePoints
+            @currentLifePoints = this.fullLifePoints()
+
+
+    classObject: ->
+        AnimaCharacterClasses[@className]
+
+
+    totalDevelopmentPoints: ->
+        @level * 100
 
 
     baseLifePoints: ->
@@ -88,7 +151,18 @@ class AnimaCharacter extends Character
 
 
     fullLifePoints: ->
-        @baseLifePoints()
+        @baseLifePoints() + this.classObject()["Life Points"](this) +
+            @lifePointsBought
+
+
+    getLifePointsFromDevelopmentPoints: ->
+        multiple = this.classObject()["Life Point Multiple"]
+        if @currentDevelopmentPoints < multiple
+            return 0
+        else
+            @currentDevelopmentPoints -= multiple
+            @lifePointsBought += @characteristics.constitution
+            return @characteristics.constitution
 
 
     unarmed: ->

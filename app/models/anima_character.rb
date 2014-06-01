@@ -13,7 +13,11 @@ class AnimaCharacter < Character
     }
 
 
-  field :characteristics, type: Hash, default: DEFAULT_CHARACTERISTICS
+  field :className,                 type: String
+  field :characteristics,           type: Hash, default: DEFAULT_CHARACTERISTICS
+  field :currentLifePoints,         type: Integer
+  field :currentDevelopmentPoints,  type: Integer, default: 0
+  field :lifePointsBought,          type: Integer, default: 0
 
 
   validates_each :characteristics do |record, attr, value|

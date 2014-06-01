@@ -10,7 +10,7 @@
 <div id="characters-view" class="content-box">
 
   <div style="text-align:center" id="character-placeholder" data-bind="ifnot: currentCharacter">
-    <h1>Character Details</h1>
+    <h1 style="display: block;">Character Details</h1>
     <%= image_tag "Icon-Characters.png" %>
     <p>Select a character on the left site or click the <em>Add</em> button to display details.</p>
   </div>
@@ -31,9 +31,7 @@
         ko.applyBindings(window.charactersListViewModel);
 
         data.forEach(function(o) {
-          var characterModel = new CharacterTypeMap[o._type].gameModel(o);
-          var characterViewModel = new CharacterTypeMap[o._type].viewModel(
-              characterModel);
+          var characterViewModel = new CharacterViewModel(o);
           window.charactersListViewModel.characters.push(characterViewModel);
         });
       });
@@ -42,61 +40,90 @@
 
 <script type="text/html" id="character-template-anima">
   <h1 data-bind="text: name"></h1>
-  <p class="character-details-description" data-bind="htmlValue: description" contenteditable="true"></p>
-
   <p>
-    <strong><span data-bind="text: class"></span></strong>, 
+    <strong><span data-bind="text: className"></span></strong>, 
     Level <strong><span data-bind="text: level"></span></strong>
   </p>
 
-  <h2>Characteristics</h2>
-  <table>
-    <thead>
-      <th></th>
-      <th>Current</th>
-      <th>Bonus</th>
-    </thead>
-    <tbody>
+  <p class="character-details-description" data-bind="htmlValue: description" contenteditable="true"></p>
+  <div class="multicol">
+    <h2>Characteristics</h2>
+    <table>
+      <thead>
+        <th></th>
+        <th>Current</th>
+        <th>Bonus</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Agility</td>
+          <td data-bind="text: characteristics.agility"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.agility())"></td>
+        </tr>
+        <tr>
+          <td>Constitution</td>
+          <td data-bind="text: characteristics.constitution"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.constitution())"></td>
+        </tr>
+        <tr>
+          <td>Dexterity</td>
+          <td data-bind="text: characteristics.dexterity"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.dexterity())"></td>
+        </tr>
+        <tr>
+          <td>Strength</td>
+          <td data-bind="text: characteristics.strength"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.strength())"></td>
+        </tr>
+        <tr>
+          <td>Intelligence</td>
+          <td data-bind="text: characteristics.intelligence"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.intelligence())"></td>
+        </tr>
+        <tr>
+          <td>Perception</td>
+          <td data-bind="text: characteristics.perception"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.perception())"></td>
+        </tr>
+        <tr>
+          <td>Power</td>
+          <td data-bind="text: characteristics.power"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.power())"></td>
+        </tr>
+        <tr>
+          <td>Willpower</td>
+          <td data-bind="text: characteristics.willpower"></td>
+          <td data-bind="text: character.characteristicsModifier(characteristics.willpower())"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Life Points</h2>
+
+    <table>
       <tr>
-        <td>Agility</td>
-        <td data-bind="text: characteristics.agility"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.agility())"></td>
+        <th>Base</th>
+        <td data-bind="text: baseLifePoints"></td>
       </tr>
       <tr>
-        <td>Constitution</td>
-        <td data-bind="text: characteristics.constitution"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.constitution())"></td>
+        <th>Class Bonus</th>
+        <td></td>
       </tr>
       <tr>
-        <td>Dexterity</td>
-        <td data-bind="text: characteristics.dexterity"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.dexterity())"></td>
+        <th>Multiples</th>
+        <td data-bind="text: lifePointsBought"></td>
       </tr>
       <tr>
-        <td>Strength</td>
-        <td data-bind="text: characteristics.strength"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.strength())"></td>
+        <th>Total Full</th>
+        <td></td>
       </tr>
       <tr>
-        <td>Intelligence</td>
-        <td data-bind="text: characteristics.intelligence"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.intelligence())"></td>
+        <th>Current</th>
+        <td></td>
       </tr>
-      <tr>
-        <td>Perception</td>
-        <td data-bind="text: characteristics.perception"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.perception())"></td>
-      </tr>
-      <tr>
-        <td>Power</td>
-        <td data-bind="text: characteristics.power"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.power())"></td>
-      </tr>
-      <tr>
-        <td>Willpower</td>
-        <td data-bind="text: characteristics.willpower"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.willpower())"></td>
-      </tr>
-    </tbody>
-  </table>
+    </table>
+
+    <h2>Fatige</h2>
+    <h2>Initiative</h2>
+  </div>
 </script>

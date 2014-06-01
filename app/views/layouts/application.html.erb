@@ -10,22 +10,28 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-jgrowl/1.2.12/jquery.jgrowl.min.js"></script>
 </head>
 <body>
-  <div id="navigation-box">
-    <span id="logo"><%= image_tag 'Logo.png' %></span>
-    <ul>
-      <li><a href="<%= url_for controller: :characters %>"><span class="navicon"><%= image_tag 'Icon-Characters.png' %></span>Characters</a></li>
-      <li class="<%= params[:controller] == "mats" ? "active" : "" %>">
-        <a href="<%= url_for controller: :mats %>">
-          <span class="navicon"><%= image_tag 'Icon-Swords.png' %></span>
-          Battle Screen
-        </a>
-      </li>
-      <li><a href="#"><span class="navicon"><%= image_tag 'Icon-Maps.png' %></span>Maps</a></li>
-    </ul>
-  </div>
-  <div id="content-box">
-    <%= yield %>
-  </div>
+  <header>
+    <div id="navigation-box">
+      <span id="logo"><%= image_tag 'Logo.png' %></span>
+      <nav>
+        <ul>
+          <li><a href="<%= url_for controller: :characters %>"><span class="navicon"><%= image_tag 'Icon-Characters.png' %></span>Characters</a></li>
+          <li class="<%= params[:controller] == "mats" ? "active" : "" %>">
+            <a href="<%= url_for controller: :mats %>">
+              <span class="navicon"><%= image_tag 'Icon-Swords.png' %></span>
+              Battle Screen
+            </a>
+          </li>
+          <li><a href="#"><span class="navicon"><%= image_tag 'Icon-Maps.png' %></span>Maps</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div id="content-box">
+      <%= yield %>
+    </div>
+  </main>
 
 </body>
 </html>

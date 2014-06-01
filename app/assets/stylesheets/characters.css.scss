@@ -39,6 +39,34 @@ div#characters-list {
 div#characters-view {
     margin: 0.5em;
     flex: 1;
+
+    h1 {
+        display: inline-block;
+    }
+
+    h1 + p {
+        margin-left: 1.5em;
+        display: inline-block;
+    }
+
+    
+    h2 {
+        border-bottom: 1px solid grey;
+    }
+
+
+    div.multicol {
+        columns: 2;
+        -moz-columns: 2;
+
+        column-gap: 2em;
+        -moz-column-gap: 2em;
+
+
+        h2:first-child {
+            margin-top: 0;
+        }
+    }
 }
 
 

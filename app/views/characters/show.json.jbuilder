@@ -1,1 +1,3 @@
-json.extract! @character, :name, :description, :characteristics, :created_at, :updated_at
+json.extract! @character, :id, :_type, :name, :description, :className,
+        :characteristics, :currentLifePoints, :lifePointsBought,
+        :currentDevelopmentPoints
