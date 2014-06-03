@@ -25,6 +25,7 @@ body {
   background-image: url("p1-graz.jpg");
 
   font-family: 'PT Sans', 'Verdana', sans-serif;
+  font-size: 18px;
 
   color: #000;
 }
@@ -39,6 +40,11 @@ p, li, ol, ul, td {
   font-family: 'PT Sans', 'Verdana', sans-serif;
   font-size: 18px;
   color: black;
+}
+
+
+input {
+  font-size: 18px;
 }
 
 
@@ -57,7 +63,6 @@ a:active, a:hover {
 input {
   font-family: 'PT Sans', 'Verdana', sans-serif;
   font-style: italic;
-  font-size: 12pt;
 
   color: #eee;
 
@@ -70,7 +75,6 @@ input {
 
 input:active, input:focus {
   font-weight: bold;
-  font-size: 12pt;
 
   background: url("/assets/jquery-ui/dark-hive/ui-bg_highlight-soft_33_003147_1x100.png")
       repeat-x scroll 50% 50% #003147;
@@ -180,4 +184,12 @@ div#content-box {
 
     box-shadow: inset 4px 5px 6px -2px #ccc;
     border-radius: 8px;
+}
+
+
+/**
+ * Overrides for UI widgets
+ */
+.ui-widget {
+  font-size: 18px;
 }

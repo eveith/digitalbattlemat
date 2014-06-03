@@ -1,8 +1,12 @@
 <div id="characters-list" class="content-box">
   <h1>All Characters</h1>
+  <div id="characters-list-actions">
+    <span class="action-add-character"></span>
+    <span class="action-display-character-search"></span>
+  </div>
   <div class="toolbar ui-widget-header ui-corner-all">
-    <input type="text" value="Search..." style="width: 4em;"/>
-    <button id="character-add">Add new Character</button>
+    <input type="text" value="Search..." class="ui-widget" />
+    <button id="character-add">Create Character</button>
   </div>
   <div id="characters-list-items"></div>
 </div>
@@ -12,7 +16,8 @@
   <div style="text-align:center" id="character-placeholder" data-bind="ifnot: currentCharacter">
     <h1 style="display: block;">Character Details</h1>
     <%= image_tag "Icon-Characters.png" %>
-    <p>Select a character on the left site or click the <em>Add</em> button to display details.</p>
+    <p>Select a character on the left site to display details,<br/>
+      or click the <em>Add</em> button to create a new, blank character.</p>
   </div>
 
   <div id="character-details-container" data-bind="template: { name: 'character-template-anima', if: currentCharacter, data: currentCharacter }"></div>
@@ -42,10 +47,9 @@
   <h1 data-bind="text: name"></h1>
   <p>
     <strong><span data-bind="text: className"></span></strong>, 
-    Level <strong><span data-bind="text: level"></span></strong>
+    Level <strong><span data-bind="text: level"></span></strong>—
+    <span class="character-details-description" data-bind="htmlValue: description" contenteditable="false"></span>
   </p>
-
-  <p class="character-details-description" data-bind="htmlValue: description" contenteditable="true"></p>
   <div class="multicol">
     <h2>Characteristics</h2>
     <table>
