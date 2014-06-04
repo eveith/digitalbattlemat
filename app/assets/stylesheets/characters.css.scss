@@ -19,7 +19,7 @@ div#characters-list {
     margin-bottom: 10px;
 
 
-    div:first-child {
+    & > div:first-child {
         display: flex;
 
         h1 {
@@ -66,15 +66,6 @@ div#characters-list {
 div#characters-view {
     margin: 0.5em;
     flex: 1;
-
-    h1 {
-        display: inline-block;
-    }
-
-    h1 + p {
-        margin-left: 1.5em;
-        display: inline-block;
-    }
 
 
     #characters-view-actions {
