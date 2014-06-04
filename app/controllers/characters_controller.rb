@@ -10,6 +10,9 @@ class CharactersController < ApplicationController
   # GET /characters/1
   # GET /characters/1.json
   def show
+    respond_to do |format|
+      format.knockout_template { render partial: @character._type.underscore }
+    end
   end
 
   # GET /characters/new

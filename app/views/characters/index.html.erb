@@ -5,7 +5,7 @@
       <button class="action-add-character"></button>
     </div>
   </div>
-  <input type="text" value="Search for Character..." />
+  <input type="text" placeholder="Search for Character..." id="search-character" />
   <div id="characters-list-items"></div>
 </div>
 
@@ -29,6 +29,8 @@
       text: false
     });
 
+    $("input#search-character").focus();
+
     $.getJSON("<%= url_for action: "index" %>")
       .done(function(data) {
         window.charactersListViewModel = new CharactersListViewModel([]);
@@ -38,6 +40,11 @@
           var characterViewModel = new CharacterViewModel(o);
           window.charactersListViewModel.characters.push(characterViewModel);
         });
+      });
+
+      $.ajax({
+        url: "characters/5380a4466b617a1e42000000",
+        mimeType: "text/x-knockout-template"
       });
   });
 <% end -%>
