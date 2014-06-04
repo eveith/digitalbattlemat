@@ -1,13 +1,11 @@
 <div id="characters-list" class="content-box">
-  <h1>All Characters</h1>
-  <div id="characters-list-actions">
-    <span class="action-add-character"></span>
-    <span class="action-display-character-search"></span>
+  <div>
+    <h1>All Characters</h1>
+    <div id="characters-list-actions">
+      <button class="action-add-character"></button>
+    </div>
   </div>
-  <div class="toolbar ui-widget-header ui-corner-all">
-    <input type="text" value="Search..." class="ui-widget" />
-    <button id="character-add">Create Character</button>
-  </div>
+  <input type="text" value="Search for Character..." />
   <div id="characters-list-items"></div>
 </div>
 
@@ -26,8 +24,9 @@
 <%= javascript_tag do -%>
   $(document).ready(function() {
 
-    $("button#character-add").button({
-      icons: { primary: "ui-icon-plus" }
+    $("button.action-add-character").button({
+      icons: { primary: "ui-icon-plus" },
+      text: false
     });
 
     $.getJSON("<%= url_for action: "index" %>")

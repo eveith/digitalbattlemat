@@ -2,6 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+div#content-box {
+    display: flex;
+}
+
+
 div#characters-list {
     float: left;
 
@@ -13,60 +19,26 @@ div#characters-list {
     margin-bottom: 10px;
 
 
-    h1 {
-        display: inline-block;
-    }
-
-
-    .toolbar {
+    div:first-child {
         display: flex;
 
+        h1 {
+            flex: 2;
+        }
+
+
+        #characters-list-actions {
+            flex: 1;
+            margin: auto;
+            text-align: right;
+        }
+    }
+
+
+    input {
         width: 100%;
-        max-width: 100%;
-
-
-        input {
-            flex-grow: 1;
-        }
-
-
-        button {
-            flex-grow: 0;
-        }
-
-
-        .ui-widget {
-            font-size: 16px;
-        }
     }
 
-
-    #characters-list-actions {
-        border-left: 1px dotted white;
-        display: inline-block;
-        height: auto;
-
-
-        span[class|="action"] {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-
-            background-repeat: no-repeat;
-            background-image: url('jquery-ui/dark-hive/ui-icons_cccccc_256x240.png');
-            background-position: 50% 50%;
-        }
-
-
-        span.action-add-character {
-            background-position: -160px -112px;
-        }
-
-
-        span.action-display-character-search {
-            background-position: -160px -112px;
-        }
-    }
 
     #characters-list-items {
         position: relative;
@@ -75,18 +47,21 @@ div#characters-list {
 
         margin-top: 1em;
         margin-bottom: 1em;
-    }
 
-    h2 {
-        border-bottom: 1px solid grey;
-        padding-left: 3em;
-    }
 
-    ul {
-        list-style-type: none;
-        padding: 0;
+        h2 {
+            border-bottom: 1px solid grey;
+            padding-left: 3em;
+        }
+
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
     }
 }
+
 
 div#characters-view {
     margin: 0.5em;
@@ -101,7 +76,14 @@ div#characters-view {
         display: inline-block;
     }
 
-    
+
+    #characters-view-actions {
+        flex: 1;
+        margin: auto;
+        text-align: right;
+    }
+
+
     h2 {
         border-bottom: 1px solid grey;
     }
@@ -121,7 +103,3 @@ div#characters-view {
     }
 }
 
-
-div#content-box {
-    display: flex;
-}
