@@ -5,12 +5,28 @@
       <button class="action-add-character"></button>
     </div>
   </div>
-  <input type="text" placeholder="Search for Character..." id="search-character" />
+
+  <div id="new-character-dialog" title="Create a new Character">
+    <form name="character">
+      <fieldset>
+        <label for="character[name]">Name</label>
+        <input type="text" name="character[name]" placeholder="Character Name" />
+
+        <label for "character[type]">Rule System</label>
+        <select name="character[type]" class="ui-widget">
+          <option value="AnimaCharacter">Anima</option>
+        </select>
+      </fieldset>
+    </form>
+  </div>
+
+  <input type="search" placeholder="Search for Character..." id="search-character" />
+
   <div id="characters-list-items"></div>
 </div>
 
-<div id="characters-view" class="content-box">
 
+<div id="characters-view" class="content-box">
   <div style="text-align:center" id="character-placeholder" data-bind="ifnot: currentCharacter">
     <h1 style="display: block;">Character Details</h1>
     <%= image_tag "Icon-Characters.png" %>
@@ -18,8 +34,13 @@
       or click the <em>Add</em> button to create a new, blank character.</p>
   </div>
 
-  <div id="character-details-container" data-bind="template: { name: 'character-template-anima', if: currentCharacter, data: currentCharacter }"></div>
+  <div id="character-details-container" data-bind="template: { 
+      name: 'character-template',
+      if: currentCharacter,
+      data: currentCharacter,
+      afterRender: setupTemplateUI }"></div>
 </div>
+
 
 <%= javascript_tag do -%>
   $(document).ready(function() {
@@ -41,99 +62,8 @@
           window.charactersListViewModel.characters.push(characterViewModel);
         });
       });
-
-      $.ajax({
-        url: "characters/5380a4466b617a1e42000000",
-        mimeType: "text/x-knockout-template"
-      });
   });
 <% end -%>
 
-<script type="text/html" id="character-template-anima">
-  <h1 data-bind="text: name"></h1>
-  <p>
-    <strong><span data-bind="text: className"></span></strong>, 
-    Level <strong><span data-bind="text: level"></span></strong>—
-    <span class="character-details-description" data-bind="htmlValue: description" contenteditable="false"></span>
-  </p>
-  <div class="multicol">
-    <h2>Characteristics</h2>
-    <table>
-      <thead>
-        <th></th>
-        <th>Current</th>
-        <th>Bonus</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Agility</td>
-          <td data-bind="text: characteristics.agility"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.agility())"></td>
-        </tr>
-        <tr>
-          <td>Constitution</td>
-          <td data-bind="text: characteristics.constitution"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.constitution())"></td>
-        </tr>
-        <tr>
-          <td>Dexterity</td>
-          <td data-bind="text: characteristics.dexterity"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.dexterity())"></td>
-        </tr>
-        <tr>
-          <td>Strength</td>
-          <td data-bind="text: characteristics.strength"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.strength())"></td>
-        </tr>
-        <tr>
-          <td>Intelligence</td>
-          <td data-bind="text: characteristics.intelligence"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.intelligence())"></td>
-        </tr>
-        <tr>
-          <td>Perception</td>
-          <td data-bind="text: characteristics.perception"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.perception())"></td>
-        </tr>
-        <tr>
-          <td>Power</td>
-          <td data-bind="text: characteristics.power"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.power())"></td>
-        </tr>
-        <tr>
-          <td>Willpower</td>
-          <td data-bind="text: characteristics.willpower"></td>
-          <td data-bind="text: character.characteristicsModifier(characteristics.willpower())"></td>
-        </tr>
-      </tbody>
-    </table>
 
-    <h2>Life Points</h2>
-
-    <table>
-      <tr>
-        <th>Base</th>
-        <td data-bind="text: baseLifePoints"></td>
-      </tr>
-      <tr>
-        <th>Class Bonus</th>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Multiples</th>
-        <td data-bind="text: lifePointsBought"></td>
-      </tr>
-      <tr>
-        <th>Total Full</th>
-        <td></td>
-      </tr>
-      <tr>
-        <th>Current</th>
-        <td></td>
-      </tr>
-    </table>
-
-    <h2>Fatige</h2>
-    <h2>Initiative</h2>
-  </div>
-</script>
+<script type="text/html" id="character-template"></script>

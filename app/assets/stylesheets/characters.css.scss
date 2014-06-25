@@ -35,6 +35,11 @@ div#characters-list {
     }
 
 
+    #new-character-dialog {
+        display: none;
+    }
+
+
     input {
         width: 100%;
     }
@@ -94,3 +99,18 @@ div#characters-view {
     }
 }
 
+
+div.toolbarheader {
+    display: flex;
+
+    
+    h1 {
+        flex: 2;
+    }
+
+
+    & > div {
+        flex: 1;
+        margin: auto;
+    }
+}

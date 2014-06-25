@@ -11,7 +11,10 @@ class CharactersController < ApplicationController
   # GET /characters/1.json
   def show
     respond_to do |format|
-      format.knockout_template { render partial: @character._type.underscore }
+      format.knockout_template do
+        render partial: "#{@character._type.underscore}.html"
+      end
+      format.json { render json: @character }
     end
   end
 
@@ -26,10 +29,13 @@ class CharactersController < ApplicationController
   # POST /characters
   # POST /characters.json
   def create
-    @character = nil
+    type = params[:character].delete :type
+    @character = Character::TYPES.select {|i| i == type.to_sym }.map do |i|
+      Kernel.const_get(:AnimaCharacter).new character_params
+    end.first
 
     respond_to do |format|
-      if @character.save
+      if @character && @character.save
         format.html { redirect_to @character, notice: 'Character was successfully created.' }
         format.json { render action: 'show', status: :created, location: @character }
       else
@@ -71,6 +77,6 @@ class CharactersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def character_params
-      params.require(:character).permit(:name, :description, :characteristics)
+      params.require(:character).permit(:name, :description)
     end
 end

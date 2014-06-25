@@ -6,14 +6,64 @@ class CharactersListViewModel
         @characters.subscribe((characters) =>
             this.addCharacter(characters[characters.length-1]))
 
+        $(document).ready(=>
+            this.setupActionButtons())
+
+
+    setupActionButtons: ->
+        $("#new-character-dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind"
+            },
+            hide: {
+                effect: "blind"
+            },
+            buttons: {
+                "Create": ->
+                    $.post(
+                        "characters",
+                        $("#new-character-dialog form").serialize())
+                "Cancel": ->
+                    $("#new-character-dialog input[name=name]")
+                        .val("")
+                    $("#new-character-dialog").dialog("close")
+            }
+        })
+
+        $("#new-character-dialog select").select2()
+
+        $(".action-add-character").click(->
+            $("#new-character-dialog").dialog("open"))
+
+        $("#search-character").on("input", (event) =>
+            this.search($("#search-character").val()))
+
 
     displayCharacter: (characterViewModel) ->
         type = characterViewModel._type()
-        $.getJSON("characters/#{characterViewModel.id["$oid"]()}")
-        .done((data) =>
-            gameModel = new CharacterTypeMap[type].gameModel(data)
-            viewModel = new CharacterTypeMap[type].viewModel(gameModel)
-            @currentCharacter(viewModel))
+        id = characterViewModel.id["$oid"]()
+
+        # Retrieve template:
+
+        $.ajax({
+            url: "characters/#{id}",
+            mimeType: "text/x-knockout-template",
+            accepts: [ "text/html" ]
+        }).done((data) =>
+            $("#character-template").text(data))
+        .then(
+            $.getJSON("characters/#{id}").done((data) =>
+                gameModel = new CharacterTypeMap[type].gameModel(data)
+                viewModel = new CharacterTypeMap[type].viewModel(gameModel)
+                @currentCharacter(viewModel)))
+
+
+    setupTemplateUI: ->
+      $("#action-character-editable-toggle").button({
+        text: false,
+        icons: { primary: "ui-icon-pencil" }
+      })
 
 
     addCharacter: (character) ->
@@ -58,6 +108,18 @@ class CharactersListViewModel
         link
 
 
+    search: (name) ->
+        if "" == name
+            $("#characters-list-items li").css("display", "list-item")
+            return true
+
+        $("#characters-list-items li").each((i, li) =>
+            if null != $(li).children("a").text().match(new RegExp(name, "i"))
+                $(li).css("display", "list-item")
+            else
+                $(li).css("display", "none"))
+
+
     sortCharactersList: (list) ->
         list.sort((a, b) ->
             if a.name > b.name
@@ -88,9 +150,6 @@ class CharacterViewModel
 
             if null != propertyValue and "object" == typeof propertyValue
                 observable = this.createObservables(propertyValue)
-            else if "function" == typeof propertyValue
-                observable = ko.computed((propertyValue) ->
-                    propertyValue.call())
             else
                 observable = ko.observable(propertyValue)
 
@@ -102,13 +161,31 @@ class CharacterViewModel
             # Define a new property on us:
 
             Object.defineProperty(
-                    observedObject,
-                    property,
-                    {
-                        enumerable: true,
-                        value: observable
-                    })
+                observedObject,
+                property,
+                {
+                    enumerable: true,
+                    value: observable
+                })
         )
+
+        # Now do the same for functions:
+
+        Object.keys(targetObject.__proto__).forEach((f, i) =>
+            fun = targetObject[f]
+            return if fun.length > 0
+
+            observable = ko.computed(->
+                boundFunction = targetObject[f].bind(targetObject)
+                boundFunction.call())
+            Object.defineProperty(
+                observedObject,
+                f,
+                {
+                    enumerable: true,
+                    value: observable
+                }))
+
         observedObject
 
 

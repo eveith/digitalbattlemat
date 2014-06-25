@@ -11,6 +11,7 @@
  *= require jquery.ui.all
  *= require jquery-ui/dark-hive
  *= require jquery.ioslist
+ *= require select2
  *= require_self
  *= require_tree .
  */
@@ -78,6 +79,16 @@ input:active, input:focus {
 
   background: url("/assets/jquery-ui/dark-hive/ui-bg_highlight-soft_33_003147_1x100.png")
       repeat-x scroll 50% 50% #003147;
+}
+
+
+.ui-dialog label, .ui-dialog input, .ui-dialog select {
+  display: block;
+}
+
+
+.ui-dialog label {
+  margin-top: 8px;
 }
 
 

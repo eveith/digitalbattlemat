@@ -5,4 +5,8 @@ class Character
   field :description, type: String
 
   validates_presence_of :name
+
+  TYPES = [
+    :AnimaCharacter
+  ]
 end

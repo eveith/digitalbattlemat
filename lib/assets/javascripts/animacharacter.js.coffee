@@ -127,6 +127,9 @@ class AnimaCharacter extends Character
         if not @currentLifePoints
             @currentLifePoints = this.fullLifePoints()
 
+        @level = 1 unless @level
+        @className = "Warrior" unless @className
+
 
     classObject: ->
         AnimaCharacterClasses[@className]
