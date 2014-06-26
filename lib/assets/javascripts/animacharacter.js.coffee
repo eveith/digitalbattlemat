@@ -121,14 +121,9 @@ class AnimaCharacter extends Character
 
         @currentWeapon  = null
         @penalties      = []
-
-        # Handle parameters:
-
-        if not @currentLifePoints
-            @currentLifePoints = this.fullLifePoints()
-
-        @level = 1 unless @level
-        @className = "Warrior" unless @className
+        @className      = "Warrior" unless @className
+        @level          = 1 unless @level
+        @currentLifePoints = this.fullLifePoints() unless @currentLifePoints
 
 
     classObject: ->

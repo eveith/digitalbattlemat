@@ -9,7 +9,8 @@ class AnimaCharacter < Character
       :constitution => 0,
       :intelligence => 0,
       :power => 0,
-      :willpower => 0
+      :willpower => 0,
+      :perception => 0
     }
 
 

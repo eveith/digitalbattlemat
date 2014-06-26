@@ -10,36 +10,6 @@ class CharactersListViewModel
             this.setupActionButtons())
 
 
-    setupActionButtons: ->
-        $("#new-character-dialog").dialog({
-            autoOpen: false,
-            show: {
-                effect: "blind"
-            },
-            hide: {
-                effect: "blind"
-            },
-            buttons: {
-                "Create": ->
-                    $.post(
-                        "characters",
-                        $("#new-character-dialog form").serialize())
-                "Cancel": ->
-                    $("#new-character-dialog input[name=name]")
-                        .val("")
-                    $("#new-character-dialog").dialog("close")
-            }
-        })
-
-        $("#new-character-dialog select").select2()
-
-        $(".action-add-character").click(->
-            $("#new-character-dialog").dialog("open"))
-
-        $("#search-character").on("input", (event) =>
-            this.search($("#search-character").val()))
-
-
     displayCharacter: (characterViewModel) ->
         type = characterViewModel._type()
         id = characterViewModel.id["$oid"]()
@@ -130,6 +100,41 @@ class CharactersListViewModel
         list
 
 
+    setupActionButtons: ->
+        $("#new-character-dialog").dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind"
+            },
+            hide: {
+                effect: "blind"
+            },
+            buttons: {
+                "Create": =>
+                    $.post(
+                        "characters",
+                        $("#new-character-dialog form").serialize(),
+                        true,
+                        'json')
+                    .done((data) =>
+                        this.addCharacter(new CharacterViewModel(data))
+                        $("#new-character-dialog").dialog("close"))
+                "Cancel": ->
+                    $("#new-character-dialog input[name=name]")
+                        .val("")
+                    $("#new-character-dialog").dialog("close")
+            }
+        })
+
+        $("#new-character-dialog select").select2()
+
+        $(".action-add-character").click(->
+            $("#new-character-dialog").dialog("open"))
+
+        $("#search-character").on("input", (event) =>
+            this.search($("#search-character").val()))
+
+
 
 class CharacterViewModel
     constructor: (@character) ->
@@ -178,14 +183,7 @@ class CharacterViewModel
             observable = ko.computed(->
                 boundFunction = targetObject[f].bind(targetObject)
                 boundFunction.call())
-            Object.defineProperty(
-                observedObject,
-                f,
-                {
-                    enumerable: true,
-                    value: observable
-                }))
-
+            observedObject[f] = observable)
         observedObject
 
 
