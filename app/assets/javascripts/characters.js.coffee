@@ -30,10 +30,18 @@ class CharactersListViewModel
 
 
     setupTemplateUI: ->
-      $("#action-character-editable-toggle").button({
-        text: false,
-        icons: { primary: "ui-icon-pencil" }
-      })
+        $("#action-character-editable-toggle").button({
+            text: false,
+            icons: { primary: "ui-icon-pencil" }
+        })
+        .on("click", (event) ->
+            event.preventDefault()
+            $("#character-details-container *[contenteditable]").each((i, o) ->
+                if $(o).attr("contenteditable") == "true"
+                    $(o).attr("contenteditable", "false")
+                else
+                    $(o).attr("contenteditable", "true")))
+
 
 
     addCharacter: (character) ->
