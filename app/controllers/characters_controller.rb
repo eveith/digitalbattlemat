@@ -30,14 +30,12 @@ class CharactersController < ApplicationController
   # POST /characters.json
   def create
     type = params[:character].delete :type
-    @character = Character::TYPES.select {|i| i == type.to_sym }.map do |i|
-      Kernel.const_get(:AnimaCharacter).new character_params
-    end.first
+    @character = Character::TYPES[type.to_sym].new(character_params)
 
     respond_to do |format|
       if @character && @character.save
         format.html { redirect_to @character, notice: 'Character was successfully created.' }
-        format.json { render json: @character }
+        format.json
       else
         format.html { render action: 'new' }
         format.json { render json: @character.errors, status: :unprocessable_entity }

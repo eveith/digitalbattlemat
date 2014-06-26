@@ -129,6 +129,7 @@ class CharactersListViewModel
         $("#new-character-dialog select").select2()
 
         $(".action-add-character").click(->
+            $("#new-character-dialog input").val("")
             $("#new-character-dialog").dialog("open"))
 
         $("#search-character").on("input", (event) =>

@@ -6,7 +6,7 @@ class Character
 
   validates_presence_of :name
 
-  TYPES = [
-    :AnimaCharacter
-  ]
+  TYPES = {
+    :AnimaCharacter => AnimaCharacter
+  }
 end
