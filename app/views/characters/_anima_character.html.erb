@@ -95,6 +95,14 @@
 <h2>Inventory</h2>
 
 <ul id="character-inventory" data-bind="foreach: inventory">
-  <li data-bind="text: $data"></li>
+  <li class="editable" data-bind="click: $parent.toggleInventoryItemEditable">
+    <button style="display: none"></button> 
+    <span data-bind="text: $data"></span>
+  </li>
 </ul>
-<input type="text" placeholder="Add item to inventory..." id="character-action-inventory-add" />
+
+<input 
+    type="text"
+    placeholder="Add item to inventory..."
+    id="character-action-inventory-add"
+    style="display: none" />

@@ -40,7 +40,10 @@ class CharactersListViewModel
                 if $(o).attr("contenteditable") == "true"
                     $(o).attr("contenteditable", "false")
                 else
-                    $(o).attr("contenteditable", "true")))
+                    $(o).attr("contenteditable", "true"))
+
+            $("#character-details-container input").toggle())
+
 
         $("#character-details-container *[pattern]").on("keydown", (event) ->
             return unless 1 == event.key.length
@@ -151,7 +154,6 @@ class CharactersListViewModel
             this.search($("#search-character").val()))
 
 
-
 class CharacterViewModel
     constructor: (@character) ->
         observedCharacter = this.createObservables(@character)
@@ -210,6 +212,19 @@ class CharacterViewModel
             return unless "Enter" == event.key
             this.inventory.push($(event.target).val())
             $(event.target).val(""))
+
+
+        @inventory.subscribe((contents) =>
+            $("#character-inventory button").button({
+                text: false,
+                icons: {
+                    primary: "ui-icon-trash"
+                }
+            }))
+
+    toggleInventoryItemEditable: (data, event) ->
+        $(event.currentTarget).toggleClass("editable-active")
+        $(event.currentTarget).children("button").toggle()
 
 
 class AnimaCharacterViewModel extends CharacterViewModel
