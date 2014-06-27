@@ -20,43 +20,43 @@
     <tbody>
       <tr>
         <th>Agility</th>
-        <td contenteditable="false" data-bind="text: characteristics.agility"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.agility" pattern="^[0-9]+$"></td>
         <td data-bind="text: character.characteristicsModifier(characteristics.agility())"></td>
       </tr>
       <tr>
         <th>Constitution</th>
-        <td contenteditable="false"  data-bind="text: characteristics.constitution"></td>
+        <td contenteditable="false"  data-bind="htmlValue: characteristics.constitution" pattern="^[0-9]+$"></td>
         <td data-bind="text: character.characteristicsModifier(characteristics.constitution())"></td>
       </tr>
       <tr>
         <th>Dexterity</th>
-        <td contenteditable="false" data-bind="text: characteristics.dexterity"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.dexterity())"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.dexterity" pattern="^[0-9]+$"></td>
+        <td data-bind="htmlValue: character.characteristicsModifier(characteristics.dexterity())"></td>
       </tr>
       <tr>
         <th>Strength</th>
-        <td contenteditable="false" data-bind="text: characteristics.strength"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.strength())"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.strength" pattern="^[0-9]+$"></td>
+        <td data-bind="htmlValue: character.characteristicsModifier(characteristics.strength())"></td>
       </tr>
       <tr>
         <th>Intelligence</th>
-        <td contenteditable="false" data-bind="text: characteristics.intelligence"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.intelligence())"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.intelligence" pattern="^[0-9]+$"></td>
+        <td data-bind="htmlValue: character.characteristicsModifier(characteristics.intelligence())"></td>
       </tr>
       <tr>
         <th>Perception</th>
-        <td contenteditable="false" data-bind="text: characteristics.perception"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.perception())"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.perception" pattern="^[0-9]+$"></td>
+        <td data-bind="htmlValue: character.characteristicsModifier(characteristics.perception())"></td>
       </tr>
       <tr>
         <th>Power</th>
-        <td contenteditable="false" data-bind="text: characteristics.power"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.power())"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.power" pattern="^[0-9]+$"></td>
+        <td data-bind="htmlValue: character.characteristicsModifier(characteristics.power())"></td>
       </tr>
       <tr>
         <th>Willpower</th>
-        <td contenteditable="false" data-bind="text: characteristics.willpower"></td>
-        <td data-bind="text: character.characteristicsModifier(characteristics.willpower())"></td>
+        <td contenteditable="false" data-bind="htmlValue: characteristics.willpower" pattern="^[0-9]+$"></td>
+        <td data-bind="htmlValue: character.characteristicsModifier(characteristics.willpower())"></td>
       </tr>
     </tbody>
   </table>

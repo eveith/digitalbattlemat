@@ -42,6 +42,12 @@ class CharactersListViewModel
                 else
                     $(o).attr("contenteditable", "true")))
 
+        $("#character-details-container *[pattern]").on("keydown", (event) ->
+            return unless 1 == event.key.length
+            text    = $(event.target).text() + event.key
+            pattern = new RegExp($(event.target).attr("pattern"))
+            event.preventDefault() unless pattern.exec(text))
+
 
 
     addCharacter: (character) ->
