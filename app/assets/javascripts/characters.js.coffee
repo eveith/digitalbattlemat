@@ -1,7 +1,7 @@
 class CharactersListViewModel
     constructor: (characters) ->
-        @characters = ko.observableArray(characters)
-        @currentCharacter = ko.observable(undefined)
+        @characters         = ko.observableArray(characters)
+        @currentCharacter   = ko.observable(undefined)
 
         @characters.subscribe((characters) =>
             this.addCharacter(characters[characters.length-1]))
@@ -11,8 +11,8 @@ class CharactersListViewModel
 
 
     displayCharacter: (characterViewModel) ->
-        type = characterViewModel._type()
-        id = characterViewModel.id["$oid"]()
+        type    = characterViewModel._type()
+        id      = characterViewModel.id["$oid"]()
 
         # Retrieve template:
 
@@ -29,7 +29,7 @@ class CharactersListViewModel
                 @currentCharacter(viewModel)))
 
 
-    setupTemplateUI: ->
+    setupTemplateUI: (elements, model) ->
         $("#action-character-editable-toggle").button({
             text: false,
             icons: { primary: "ui-icon-pencil" }
@@ -48,6 +48,7 @@ class CharactersListViewModel
             pattern = new RegExp($(event.target).attr("pattern"))
             event.preventDefault() unless pattern.exec(text))
 
+        model.setupTemplateUI()
 
 
     addCharacter: (character) ->
@@ -168,7 +169,9 @@ class CharacterViewModel
         Object.keys(targetObject).forEach((property, i) =>
             propertyValue = targetObject[property]
 
-            if null != propertyValue and "object" == typeof propertyValue
+            if propertyValue && propertyValue instanceof Array
+                observable = ko.observableArray(propertyValue)
+            else if null != propertyValue and "object" == typeof propertyValue
                 observable = this.createObservables(propertyValue)
             else
                 observable = ko.observable(propertyValue)
@@ -200,6 +203,13 @@ class CharacterViewModel
                 boundFunction.call())
             observedObject[f] = observable)
         observedObject
+
+
+    setupTemplateUI: ->
+        $("#character-action-inventory-add").on("keypress", (event) =>
+            return unless "Enter" == event.key
+            this.inventory.push($(event.target).val())
+            $(event.target).val(""))
 
 
 class AnimaCharacterViewModel extends CharacterViewModel

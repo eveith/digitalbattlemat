@@ -88,5 +88,13 @@
 
   <h2>Fatige</h2>
   <h2>Initiative</h2>
+</div>
 
+<h2>Secondary Abilities</h2>
 
+<h2>Inventory</h2>
+
+<ul id="character-inventory" data-bind="foreach: inventory">
+  <li data-bind="text: $data"></li>
+</ul>
+<input type="text" placeholder="Add item to inventory..." id="character-action-inventory-add" />
