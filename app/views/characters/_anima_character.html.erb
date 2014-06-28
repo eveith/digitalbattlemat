@@ -96,8 +96,8 @@
 
 <ul id="character-inventory" data-bind="foreach: inventory">
   <li class="editable" data-bind="click: $parent.toggleInventoryItemEditable">
-    <button style="display: none"></button> 
-    <span data-bind="text: $data"></span>
+    <button style="display: none" data-bind="click: $parent.removeInventoryItem"></button> 
+    <span data-bind="text: $data" contenteditable="false"></span>
   </li>
 </ul>
 

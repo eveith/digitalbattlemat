@@ -30,19 +30,7 @@ class CharactersListViewModel
 
 
     setupTemplateUI: (elements, model) ->
-        $("#action-character-editable-toggle").button({
-            text: false,
-            icons: { primary: "ui-icon-pencil" }
-        })
-        .on("click", (event) ->
-            event.preventDefault()
-            $("#character-details-container *[contenteditable]").each((i, o) ->
-                if $(o).attr("contenteditable") == "true"
-                    $(o).attr("contenteditable", "false")
-                else
-                    $(o).attr("contenteditable", "true"))
 
-            $("#character-details-container input").toggle())
 
 
         $("#character-details-container *[pattern]").on("keydown", (event) ->
@@ -138,8 +126,7 @@ class CharactersListViewModel
                         this.addCharacter(new CharacterViewModel(data))
                         $("#new-character-dialog").dialog("close"))
                 "Cancel": ->
-                    $("#new-character-dialog input[name=name]")
-                        .val("")
+                    $("#new-character-dialog input[name=name]").val("")
                     $("#new-character-dialog").dialog("close")
             }
         })
@@ -155,6 +142,11 @@ class CharactersListViewModel
 
 
 class CharacterViewModel
+
+
+    # Constructs a new CharacterViewModel. 
+    # Requires an initialized Character object.
+    #
     constructor: (@character) ->
         observedCharacter = this.createObservables(@character)
         for propertyName of observedCharacter
@@ -165,15 +157,33 @@ class CharacterViewModel
                     value: observedCharacter[propertyName]
                 })
 
+        @editable = ko.observable(false)
 
+        # Knockout callback helpers:
+
+        @toggleInventoryItemEditable = (data, event) =>
+            return unless @editable()
+            return if event.target.tagName == "SPAN" and 
+                $(event.currentTarget).hasClass("editable-active")
+            $(event.currentTarget).toggleClass("editable-active")
+            $(event.currentTarget).children("button").fadeToggle()
+
+        @removeInventoryItem = (item) =>
+            @inventory.remove(item)
+
+
+    # Creates observables from a given Character object
+    #
     createObservables: (targetObject) ->
         observedObject = new Object()
         Object.keys(targetObject).forEach((property, i) =>
             propertyValue = targetObject[property]
 
-            if propertyValue && propertyValue instanceof Array
+            if null == propertyValue or undefined == propertyValue
+                observable = ko.observable(propertyValue)
+            else if propertyValue instanceof Array
                 observable = ko.observableArray(propertyValue)
-            else if null != propertyValue and "object" == typeof propertyValue
+            else if "object" == typeof propertyValue
                 observable = this.createObservables(propertyValue)
             else
                 observable = ko.observable(propertyValue)
@@ -207,12 +217,38 @@ class CharacterViewModel
         observedObject
 
 
+    # Sets up actions within the Character UI template.
+    #
     setupTemplateUI: ->
+
+        # Set up the edit character toggle button:
+
+        $("#action-character-editable-toggle").button({
+            text: false,
+            icons: { primary: "ui-icon-pencil" }
+        })
+        .on("click", (event) =>
+            event.preventDefault()
+
+            @editable(true)
+
+            $("#character-details-container *[contenteditable]").each((i, o) ->
+                if $(o).attr("contenteditable") == "true"
+                    $(o).attr("contenteditable", "false")
+                else
+                    $(o).attr("contenteditable", "true"))
+
+            $("#character-details-container input").toggle())
+
+        # Action for adding items to the inventory:
+
         $("#character-action-inventory-add").on("keypress", (event) =>
             return unless "Enter" == event.key
             this.inventory.push($(event.target).val())
             $(event.target).val(""))
 
+
+        # Setup/style inventory items:
 
         @inventory.subscribe((contents) =>
             $("#character-inventory button").button({
@@ -220,11 +256,13 @@ class CharacterViewModel
                 icons: {
                     primary: "ui-icon-trash"
                 }
-            }))
+            })
 
-    toggleInventoryItemEditable: (data, event) ->
-        $(event.currentTarget).toggleClass("editable-active")
-        $(event.currentTarget).children("button").toggle()
+            if @editable()
+                $("#character-inventory span").attr("contenteditable", "true")
+            else
+                $("#character-inventory span").attr("contenteditable", "false"))
+
 
 
 class AnimaCharacterViewModel extends CharacterViewModel

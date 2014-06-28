@@ -83,12 +83,9 @@ input:active, input:focus {
 
 
 *[contenteditable="true"] {
-  background-color: white;
-  opacity: 0.4;
+  background-color: rgba(255, 255, 255, 0.4);
 
   border: 1px dotted black;
-
-  color: black;
 }
 
 
@@ -97,11 +94,26 @@ li.editable {
 
   padding-top: 0.2em;
   padding-bottom: 0.2em;
+
+  list-style: none inside;
 }
 
 
 li.editable-active {
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+li.editable-active span[contenteditable="true"] {
+  min-width: 6em;
+  background: none;
+  border: none;
+}
+
+
+li.editable button.ui-button-icon-only {
+  float: left;
+  margin-right: 1em;
 }
 
 

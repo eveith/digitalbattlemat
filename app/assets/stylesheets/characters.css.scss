@@ -97,6 +97,17 @@ div#characters-view {
             margin-top: 0;
         }
     }
+
+
+    ul#character-inventory {
+        padding: 0;
+
+
+        span {
+            display: inline-block;
+            opacity: 1;
+        }
+    }
 }
 
 
