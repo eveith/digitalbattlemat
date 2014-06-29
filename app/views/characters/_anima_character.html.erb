@@ -70,7 +70,7 @@
     </tr>
     <tr>
       <th>Class Bonus</th>
-      <td></td>
+      <td data-bind="text: classBonusLifePoints"></td>
     </tr>
     <tr>
       <th>Multiples</th>
@@ -82,11 +82,31 @@
     </tr>
     <tr>
       <th>Current</th>
-      <td></td>
+      <td data-bind="htmlValue: currentLifePoints" contenteditable="false" pattern="^[0-9]+$"></td>
     </tr>
   </table>
 
   <h2>Fatige</h2>
+
+  <table>
+    <tr>
+      <th>Base</th>
+      <td data-bind="text: baseFatigue"></td>
+    </tr>
+    <tr>
+      <th>Bonus</th>
+      <td data-bind="text: bonusFatigue"></td>
+    </tr>
+    <tr>
+      <th>Total Full</th>
+      <td data-bind="text: fullFatigue"></td>
+    </tr>
+    <tr>
+      <th>Current</th>
+      <td data-bind="htmlValue: currentFatigue" contenteditable="false" pattern="^[0-9]+$"></td>
+    </tr>
+  </table>
+
   <h2>Initiative</h2>
 </div>
 

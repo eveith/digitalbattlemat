@@ -113,17 +113,19 @@ class AnimaCharacter extends Character
         {
             @className,
             @level,
+            @currentDevelopmentPoints,
             @characteristics,
             @currentLifePoints,
             @lifePointsBought,
-            @currentDevelopmentPoints
+            @currentFatigue
         } = options
 
         @currentWeapon  = null
         @penalties      = []
         @className      = "Warrior" unless @className
         @level          = 1 unless @level
-        @currentLifePoints = this.fullLifePoints() unless @currentLifePoints
+        @currentLifePoints = @fullLifePoints() unless @currentLifePoints
+        @currentFatigue = @fullFatigue() unless @currentFatigue
 
 
     classObject: ->
@@ -132,10 +134,6 @@ class AnimaCharacter extends Character
 
     totalDevelopmentPoints: ->
         @level * 100
-
-
-    baseLifePoints: ->
-        20 + @characteristics.constitution * 10
 
 
     basePresence: ->
@@ -148,9 +146,16 @@ class AnimaCharacter extends Character
         this.characteristicsModifier(@characteristics.agility)
 
 
+    baseLifePoints: ->
+        20 + @characteristics.constitution * 10
+
+
+    classBonusLifePoints: ->
+        @classObject()["Life Points"](this) 
+
+
     fullLifePoints: ->
-        @baseLifePoints() + this.classObject()["Life Points"](this) +
-            @lifePointsBought
+        @baseLifePoints() + @classBonusLifePoints() + @lifePointsBought
 
 
     getLifePointsFromDevelopmentPoints: ->
@@ -161,6 +166,18 @@ class AnimaCharacter extends Character
             @currentDevelopmentPoints -= multiple
             @lifePointsBought += @characteristics.constitution
             return @characteristics.constitution
+
+
+    baseFatigue: ->
+        @characteristics.constitution * 1  # Forces conversion to integer
+
+
+    bonusFatigue: ->
+        0
+
+
+    fullFatigue: ->
+        @baseFatigue() + @bonusFatigue()
 
 
     unarmed: ->
