@@ -125,7 +125,7 @@ div#characters-view {
         input[data-bind] {
             display: none;
 
-            width: 100%;
+            max-width: 100%;
             box-sizing: border-box;
 
             background-image: none;
@@ -150,7 +150,7 @@ div.toolbarheader {
     display: flex;
 
     
-    h1 {
+    h1, h2, h3, h4, h5 {
         flex: 2;
     }
 

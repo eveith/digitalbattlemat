@@ -249,6 +249,14 @@ class CharacterViewModel
 
             $("#character-details-container input").toggle())
 
+
+        # Handle addition/deletion of armor:
+
+        $("#action-character-add-armor").button({
+            text: false,
+            icons: { primary: "ui-icon-plus" }
+        })
+
         # Action for adding items to the inventory:
 
         $("#character-action-inventory-add").on("keypress", (event) =>

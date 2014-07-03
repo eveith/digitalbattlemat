@@ -106,6 +106,46 @@ class AnimaCombat
                 return result
 
 
+class AnimaArmor
+    templateTypes = [
+        {
+            armorType: "Padded",
+            armorClass: "Soft",
+            location: "Shirt",
+            armorRequirement: 0,
+            naturalPenality: -5,
+            movementRestriction: 0,
+            fortitude: 10,
+            presence: 25,
+            cut: 1,
+            impact: 1,
+            thrust: 1,
+            heat: 1,
+            electricity: 2,
+            cold: 2,
+            energy: 0
+        }
+    ]
+
+    constructor: (options) ->
+        {
+            @armorType,
+            @armorClass,
+            @location,
+            @armorRequirement,
+            @naturalPenalty,
+            @movementRestriction,
+            @fortitude,
+            @presence,
+            @cut,
+            @impact,
+            @thrust,
+            @head,
+            @electricity,
+            @cold
+        } = options
+
+
 
 class AnimaCharacter extends Character
     constructor: (options) ->

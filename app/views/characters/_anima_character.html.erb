@@ -6,9 +6,12 @@
 </div>
 <p>
   <strong><span data-bind="text: className"></span></strong>, 
-  Level <strong><span data-bind="text: level"></span></strong>
-  <input type="number" min="1" max="20" data-bind="value: level" />—
-  <span class="character-details-description" data-bind="htmlValue: description" contenteditable="false"></span>
+  Level <strong><span data-bind="text: level"></span>
+  <input type="number" min="1" max="20" data-bind="value: level" /></strong>—
+  <span 
+      class="character-details-description" 
+      data-bind="htmlValue: description" contenteditable="false">
+  </span>
 </p>
 
 <div class="multicol">
@@ -141,7 +144,13 @@
     </tr>
     <tr>
       <th>Current</th>
-      <td data-bind="htmlValue: currentLifePoints" contenteditable="false" pattern="^[0-9]+$"></td>
+      <td>
+        <span data-bind="text: currentLifePoints"></span>
+        <input
+            type="number"
+            name="currentLifePoints"
+            data-bind="value: currentLifePoints" />
+      </td>
     </tr>
   </table>
 
@@ -183,7 +192,14 @@
     </tr>
     <tr>
       <th>Current</th>
-      <td data-bind="htmlValue: currentFatigue" contenteditable="false" pattern="^[0-9]+$"></td>
+      <td>
+        <span data-bind="htmlValue: currentFatigue"></span>
+        <input 
+          type="number"
+          name="currentFatigue"
+          min="0"
+          data-bind="value: currentFatigue" />
+      </td>
     </tr>
   </table>
 </div>
@@ -283,7 +299,30 @@
 
 <h2>Armor</h2>
 
-<h3>Armor Worn</h3>
+<div class="toolbarheader">
+  <h3>Armor Worn</h3>
+  <div class=".ui-toolbar">
+    <button id="action-character-add-armor"></button>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Location</th>
+      <th>Cut</th>
+      <th>Impact</th>
+      <th>Thrust</th>
+      <th>Heat</th>
+      <th>Electricity</th>
+      <th>Cold</th>
+      <th>Energy</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 
 <h3>Wear Armor</h3>
 
