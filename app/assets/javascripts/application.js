@@ -13,12 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
-//= require jquery.ioslist
-//= require select2
 //= require turbolinks
 //= require knockout-3.1.0
-//= require knockout.mapping-latest.js
+//= require knockout.mapping-latest
 //= require knockout.htmlValue
+//= require knockout.forcibleComputed
 //= require masonry
 //= require character
 //= require animacharacter

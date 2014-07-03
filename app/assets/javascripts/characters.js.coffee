@@ -30,9 +30,6 @@ class CharactersListViewModel
 
 
     setupTemplateUI: (elements, model) ->
-
-
-
         $("#character-details-container *[pattern]").on("keydown", (event) ->
             return unless 1 == event.key.length
             text    = $(event.target).text() + event.key
@@ -131,8 +128,6 @@ class CharactersListViewModel
             }
         })
 
-        $("#new-character-dialog select").select2()
-
         $(".action-add-character").click(->
             $("#new-character-dialog input").val("")
             $("#new-character-dialog").dialog("open"))
@@ -157,6 +152,8 @@ class CharacterViewModel
                     value: observedCharacter[propertyName]
                 })
 
+        # Toggle the character editable/read-only:
+
         @editable = ko.observable(false)
 
         # Knockout callback helpers:
@@ -176,6 +173,8 @@ class CharacterViewModel
     #
     createObservables: (targetObject) ->
         observedObject = new Object()
+        observedObject.forcibleComputedObservables = []
+
         Object.keys(targetObject).forEach((property, i) =>
             propertyValue = targetObject[property]
 
@@ -188,10 +187,13 @@ class CharacterViewModel
             else
                 observable = ko.observable(propertyValue)
 
-                # Handle writing back upon UI change:
+                # Handle writing back upon UI change and notification of
+                # forcibleComputed observables:
 
                 observable.subscribe((newValue) =>
-                    targetObject[property] = newValue)
+                    targetObject[property] = newValue
+                    @forcibleComputedObservables.forEach((o, i) ->
+                        o.evaluateImmediate()))
 
             # Define a new property on us:
 
@@ -207,13 +209,14 @@ class CharacterViewModel
         # Now do the same for functions:
 
         Object.keys(targetObject.__proto__).forEach((f, i) =>
-            fun = targetObject[f]
-            return if fun.length > 0
+            fn = targetObject[f]
+            return if fn.length > 0
 
-            observable = ko.computed(->
-                boundFunction = targetObject[f].bind(targetObject)
+            observable = ko.forcibleComputed(->
+                boundFunction = fn.bind(targetObject)
                 boundFunction.call())
-            observedObject[f] = observable)
+            observedObject[f] = observable
+            observedObject.forcibleComputedObservables.push(observable))
         observedObject
 
 
