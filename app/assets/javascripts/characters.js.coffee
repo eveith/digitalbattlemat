@@ -232,6 +232,12 @@ class CharacterViewModel
 
             @editable(true)
 
+            $("#character-details-container span[data-bind]").each((i, o) ->
+                data_bind = $(o).attr("data-bind").replace(/^text/, "value")
+                siblings = $(o).siblings("input[data-bind='#{data_bind}']")
+                    
+                $(o).toggle() if siblings.length > 0)
+
             $("#character-details-container *[contenteditable]").each((i, o) ->
                 if $(o).attr("contenteditable") == "true"
                     $(o).attr("contenteditable", "false")
@@ -244,7 +250,7 @@ class CharacterViewModel
 
         $("#character-action-inventory-add").on("keypress", (event) =>
             return unless "Enter" == event.key
-            this.inventory.push($(event.target).val())
+            @inventory.push($(event.target).val())
             $(event.target).val(""))
 
 
