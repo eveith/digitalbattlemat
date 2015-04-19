@@ -106,6 +106,7 @@ class CharactersListViewModel
     setupActionButtons: ->
         $("#new-character-dialog").dialog({
             autoOpen: false,
+            modal: true,
             show: {
                 effect: "blind"
             },
@@ -128,9 +129,14 @@ class CharactersListViewModel
             }
         })
 
-        $(".action-add-character").click(->
+
+        $(".action-add-character").button({
+            icons: { primary: "ui-icon-plus" },
+            text: false
+        }).click(->
             $("#new-character-dialog input").val("")
             $("#new-character-dialog").dialog("open"))
+
 
         $("#search-character").on("input", (event) =>
             this.search($("#search-character").val()))

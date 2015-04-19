@@ -44,18 +44,13 @@
 
 <%= javascript_tag do -%>
   $(document).ready(function() {
-
-    $("button.action-add-character").button({
-      icons: { primary: "ui-icon-plus" },
-      text: false
-    });
+    window.charactersListViewModel = new CharactersListViewModel([]);
+    ko.applyBindings(window.charactersListViewModel);
 
     $("input#search-character").focus();
 
     $.getJSON("<%= url_for action: "index" %>")
       .done(function(data) {
-        window.charactersListViewModel = new CharactersListViewModel([]);
-        ko.applyBindings(window.charactersListViewModel);
 
         data.forEach(function(o) {
           var characterViewModel = new CharacterViewModel(o);
